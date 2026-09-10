@@ -5,7 +5,7 @@ import { X, Play } from "lucide-react";
 import reel1 from "../assets/videos/Instagram Reel 1.mp4";
 import reel2 from "../assets/videos/Instagram Reel 2.mp4";
 import reel3 from "../assets/videos/Instagram Reel 3.mp4";
-import podcast1 from "../assets/videos/Podcast 1.mp4";
+import podcast1 from "../assets/videos/podcast 1.mp4";
 import podcast2 from "../assets/videos/podcast 2.mp4";
 import podcast3 from "../assets/videos/podcast 3.mp4";
 import podcast4 from "../assets/videos/podcast 4.mp4";
