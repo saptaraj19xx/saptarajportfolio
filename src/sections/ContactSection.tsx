@@ -19,11 +19,6 @@ const links = [
     value: "behance.net/saptaraborthak",
     href: "https://www.behance.net/saptaraborthak",
   },
-  {
-    label: "GITHUB",
-    value: "github.com/saptaraj19xx",
-    href: "https://github.com/saptaraj19xx",
-  },
 ];
 
 export function ContactSection() {
@@ -78,7 +73,7 @@ export function ContactSection() {
           </motion.div>
 
           <div className="mt-16 border-t border-[#D7E2EA]/10 sm:mt-24">
-            <div className="grid divide-y divide-[#D7E2EA]/10 sm:grid-cols-2 lg:grid-cols-4 sm:divide-x sm:divide-y-0">
+            <div className="grid divide-y divide-[#D7E2EA]/10 sm:grid-cols-2 lg:grid-cols-3 sm:divide-x sm:divide-y-0">
               {links.map((link) => (
                 <a
                   key={link.label}
