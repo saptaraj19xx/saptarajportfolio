@@ -61,9 +61,8 @@ body {
 }
 
 /* =========================================================
-   ABOUT SECTION — MOBILE MOTION
-   Decorative objects gently float on touch devices.
-   Desktop remains unchanged.
+   ABOUT SECTION — CONTINUOUS FLOATING MOTION
+   Works on desktop, tablet and mobile.
    ========================================================= */
 
 .about-mobile-float {
@@ -71,26 +70,24 @@ body {
   will-change: transform;
 }
 
-/* Star */
-@media (hover: none) and (pointer: coarse) {
-  .about-mobile-float-star {
-    animation: about-star-float 5.2s ease-in-out infinite;
-  }
+/* STAR */
+.about-mobile-float-star {
+  animation: about-star-float 5.2s ease-in-out infinite;
+}
 
-  /* Planet */
-  .about-mobile-float-planet {
-    animation: about-planet-float 6.5s ease-in-out infinite;
-  }
+/* PLANET */
+.about-mobile-float-planet {
+  animation: about-planet-float 6.5s ease-in-out infinite;
+}
 
-  /* Smiley */
-  .about-mobile-float-smiley {
-    animation: about-smiley-float 5.8s ease-in-out infinite;
-  }
+/* SMILEY */
+.about-mobile-float-smiley {
+  animation: about-smiley-float 5.8s ease-in-out infinite;
+}
 
-  /* Cursor */
-  .about-mobile-float-cursor {
-    animation: about-cursor-float 4.8s ease-in-out infinite;
-  }
+/* CURSOR */
+.about-mobile-float-cursor {
+  animation: about-cursor-float 4.8s ease-in-out infinite;
 }
 
 /* =========================================================
