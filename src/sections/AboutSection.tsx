@@ -20,7 +20,7 @@ export function AboutSection() {
           DECORATIVE 3D ASSETS
           ========================================================= */}
 
-      {/* Top-left — Crystal Star */}
+      {/* STAR */}
       <FadeIn
         delay={0.1}
         x={-80}
@@ -28,15 +28,17 @@ export function AboutSection() {
         duration={0.9}
         className="pointer-events-none absolute left-[3%] top-[3%] z-0 w-[110px] sm:left-[5%] sm:w-[145px] md:left-[6%] md:w-[175px]"
       >
-        <img
-          src={crystalStar}
-          alt=""
-          aria-hidden="true"
-          className="h-auto w-full object-contain"
-        />
+        <div className="about-mobile-float about-mobile-float-star">
+          <img
+            src={crystalStar}
+            alt=""
+            aria-hidden="true"
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </FadeIn>
 
-      {/* Top-right — Ringed Planet */}
+      {/* PLANET */}
       <FadeIn
         delay={0.2}
         x={80}
@@ -44,15 +46,17 @@ export function AboutSection() {
         duration={0.9}
         className="pointer-events-none absolute right-[3%] top-[4%] z-0 w-[115px] sm:right-[5%] sm:w-[150px] md:right-[6%] md:w-[185px]"
       >
-        <img
-          src={ringedPlanet}
-          alt=""
-          aria-hidden="true"
-          className="h-auto w-full object-contain"
-        />
+        <div className="about-mobile-float about-mobile-float-planet">
+          <img
+            src={ringedPlanet}
+            alt=""
+            aria-hidden="true"
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </FadeIn>
 
-      {/* Bottom-left — Neon Smiley */}
+      {/* SMILEY */}
       <FadeIn
         delay={0.3}
         x={-80}
@@ -60,15 +64,17 @@ export function AboutSection() {
         duration={0.9}
         className="pointer-events-none absolute bottom-[8%] left-[5%] z-0 w-[105px] sm:left-[8%] sm:w-[140px] md:left-[10%] md:w-[170px]"
       >
-        <img
-          src={neonSmiley}
-          alt=""
-          aria-hidden="true"
-          className="h-auto w-full object-contain"
-        />
+        <div className="about-mobile-float about-mobile-float-smiley">
+          <img
+            src={neonSmiley}
+            alt=""
+            aria-hidden="true"
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </FadeIn>
 
-      {/* Bottom-right — Neon Cursor */}
+      {/* CURSOR */}
       <FadeIn
         delay={0.4}
         x={80}
@@ -76,12 +82,14 @@ export function AboutSection() {
         duration={0.9}
         className="pointer-events-none absolute bottom-[7%] right-[5%] z-0 w-[105px] sm:right-[8%] sm:w-[140px] md:right-[10%] md:w-[170px]"
       >
-        <img
-          src={neonCursor}
-          alt=""
-          aria-hidden="true"
-          className="h-auto w-full object-contain"
-        />
+        <div className="about-mobile-float about-mobile-float-cursor">
+          <img
+            src={neonCursor}
+            alt=""
+            aria-hidden="true"
+            className="h-auto w-full object-contain"
+          />
+        </div>
       </FadeIn>
 
       {/* =========================================================
@@ -89,7 +97,6 @@ export function AboutSection() {
           ========================================================= */}
 
       <div className="relative z-10 flex flex-col items-center gap-10 sm:gap-14 md:gap-16">
-        {/* Heading */}
         <FadeIn delay={0} y={40}>
           <h2
             className="hero-heading text-center font-black uppercase leading-none tracking-tight"
@@ -101,14 +108,12 @@ export function AboutSection() {
           </h2>
         </FadeIn>
 
-        {/* Animated Description */}
         <AnimatedText
           text={ABOUT_TEXT}
           className="max-w-[560px] text-center text-[clamp(1rem,2vw,1.35rem)] font-medium leading-relaxed text-[#D7E2EA]"
         />
       </div>
 
-      {/* Contact Button */}
       <div className="relative z-10 mt-14 sm:mt-20 md:mt-24">
         <ContactButton />
       </div>

@@ -33,9 +33,9 @@ body {
 }
 
 /* =========================================================
-   MOBILE MOTION
+   HERO / MAGNET MOBILE MOTION
    Desktop keeps the existing mouse-based Magnet behavior.
-   Touch devices get a subtle automatic floating animation.
+   Touch devices get subtle automatic floating motion.
    ========================================================= */
 
 .magnet-mobile-float {
@@ -61,6 +61,99 @@ body {
 }
 
 /* =========================================================
+   ABOUT SECTION — MOBILE MOTION
+   Decorative objects gently float on touch devices.
+   Desktop remains unchanged.
+   ========================================================= */
+
+.about-mobile-float {
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+/* Star */
+@media (hover: none) and (pointer: coarse) {
+  .about-mobile-float-star {
+    animation: about-star-float 5.2s ease-in-out infinite;
+  }
+
+  /* Planet */
+  .about-mobile-float-planet {
+    animation: about-planet-float 6.5s ease-in-out infinite;
+  }
+
+  /* Smiley */
+  .about-mobile-float-smiley {
+    animation: about-smiley-float 5.8s ease-in-out infinite;
+  }
+
+  /* Cursor */
+  .about-mobile-float-cursor {
+    animation: about-cursor-float 4.8s ease-in-out infinite;
+  }
+}
+
+/* =========================================================
+   ABOUT — STAR
+   ========================================================= */
+
+@keyframes about-star-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(0, -12px, 0) rotate(4deg);
+  }
+}
+
+/* =========================================================
+   ABOUT — PLANET
+   ========================================================= */
+
+@keyframes about-planet-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(8px, -14px, 0) rotate(-3deg);
+  }
+}
+
+/* =========================================================
+   ABOUT — SMILEY
+   ========================================================= */
+
+@keyframes about-smiley-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(-8px, -11px, 0) rotate(-4deg);
+  }
+}
+
+/* =========================================================
+   ABOUT — CURSOR
+   ========================================================= */
+
+@keyframes about-cursor-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+
+  50% {
+    transform: translate3d(8px, -13px, 0) rotate(5deg);
+  }
+}
+
+/* =========================================================
    REDUCED MOTION
    ========================================================= */
 
@@ -74,7 +167,8 @@ body {
     scroll-behavior: auto !important;
   }
 
-  .magnet-mobile-float {
+  .magnet-mobile-float,
+  .about-mobile-float {
     animation: none !important;
   }
 }
