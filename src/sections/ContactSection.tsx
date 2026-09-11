@@ -11,13 +11,18 @@ const links = [
   },
   {
     label: "LINKEDIN",
-    value: "Connect on LinkedIn",
-    href: "#",
+    value: "linkedin.com/in/saptaraj-borthakur-94741b28b",
+    href: "https://www.linkedin.com/in/saptaraj-borthakur-94741b28b/",
   },
   {
     label: "BEHANCE",
-    value: "View Portfolio",
-    href: "#",
+    value: "behance.net/saptaraborthak",
+    href: "https://www.behance.net/saptaraborthak",
+  },
+  {
+    label: "GITHUB",
+    value: "github.com/saptaraj19xx",
+    href: "https://github.com/saptaraj19xx",
   },
 ];
 
@@ -73,19 +78,14 @@ export function ContactSection() {
           </motion.div>
 
           <div className="mt-16 border-t border-[#D7E2EA]/10 sm:mt-24">
-            <div className="grid divide-y divide-[#D7E2EA]/10 sm:grid-cols-3 sm:divide-x sm:divide-y-0">
+            <div className="grid divide-y divide-[#D7E2EA]/10 sm:grid-cols-2 lg:grid-cols-4 sm:divide-x sm:divide-y-0">
               {links.map((link) => (
                 <a
                   key={link.label}
                   href={link.href}
-                  target={link.href === "#" ? undefined : "_blank"}
-                  rel={link.href === "#" ? undefined : "noreferrer"}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noopener noreferrer" : undefined}
                   className="group py-6 sm:px-7 sm:py-7 first:sm:pl-0 last:sm:pr-0"
-                  onClick={(event) => {
-                    if (link.href === "#") {
-                      event.preventDefault();
-                    }
-                  }}
                 >
                   <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.3em] text-[#52616C]">
                     {link.label}

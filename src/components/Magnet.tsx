@@ -33,17 +33,27 @@ export function Magnet({
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
 
-      const distX = Math.max(rect.left - padding - e.clientX, e.clientX - (rect.right + padding), 0);
-      const distY = Math.max(rect.top - padding - e.clientY, e.clientY - (rect.bottom + padding), 0);
+      const distX = Math.max(
+        rect.left - padding - e.clientX,
+        e.clientX - (rect.right + padding),
+        0,
+      );
+      const distY = Math.max(
+        rect.top - padding - e.clientY,
+        e.clientY - (rect.bottom + padding),
+        0,
+      );
       const withinRange = distX === 0 && distY === 0;
 
       if (withinRange) {
         const x = (e.clientX - centerX) / strength;
         const y = (e.clientY - centerY) / strength;
+
         if (!isActiveRef.current) {
           el.style.transition = activeTransition;
           isActiveRef.current = true;
         }
+
         el.style.transform = `translate3d(${x}px, ${y}px, 0)`;
       } else if (isActiveRef.current) {
         el.style.transition = inactiveTransition;
@@ -57,8 +67,12 @@ export function Magnet({
   }, [padding, strength, activeTransition, inactiveTransition, disabled]);
 
   return (
-    <div ref={wrapperRef} className={className} style={{ willChange: "transform" }}>
-      {children}
+    <div
+      ref={wrapperRef}
+      className={className}
+      style={{ willChange: "transform" }}
+    >
+      <div className="magnet-mobile-float">{children}</div>
     </div>
   );
 }
