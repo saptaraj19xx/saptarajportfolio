@@ -12,19 +12,33 @@ const NAV_LINKS = [
 export function HeroSection() {
   return (
     <section
-      className="relative min-h-[760px] h-[100svh] overflow-hidden"
+      className="relative flex min-h-[720px] h-[100svh] flex-col overflow-hidden"
     >
       {/* =========================================================
-          NAVIGATION
+          TOP NAVIGATION
+          KEEPING WORK / ABOUT / CONTACT
           ========================================================= */}
 
       <FadeIn delay={0} y={-20} as="nav">
-        <div className="absolute left-0 right-0 top-0 z-30 flex items-center justify-between px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
+        <div className="relative z-40 flex items-center justify-between gap-4 px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}
               href={link.href}
-              className="text-[10px] font-medium uppercase tracking-[0.12em] text-[#D7E2EA] transition-opacity duration-200 hover:opacity-70 sm:text-xs sm:tracking-wider md:text-lg lg:text-[1.4rem]"
+              className="
+                text-[10px]
+                font-medium
+                uppercase
+                tracking-[0.12em]
+                text-[#D7E2EA]
+                transition-opacity
+                duration-200
+                hover:opacity-70
+                sm:text-xs
+                sm:tracking-wider
+                md:text-lg
+                lg:text-[1.4rem]
+              "
             >
               {link.label}
             </a>
@@ -41,15 +55,16 @@ export function HeroSection() {
           absolute
           left-0
           right-0
-          top-[29%]
+          top-[30%]
           z-10
           flex
+          w-full
           justify-center
-          px-3
-          sm:top-[30%]
-          sm:px-5
-          md:top-[34%]
-          md:px-8
+          px-2
+          sm:top-[31%]
+          sm:px-4
+          md:top-[35%]
+          md:px-6
         "
       >
         <FadeIn delay={0.15} y={40}>
@@ -65,15 +80,17 @@ export function HeroSection() {
               sm:tracking-[-0.045em]
             "
             style={{
-              fontSize: "clamp(4.2rem, 12.2vw, 13rem)",
+              fontSize: "clamp(4rem, 11.8vw, 13rem)",
             }}
           >
-            <span className="sm:hidden">
+            {/* Mobile */}
+            <span className="block sm:hidden">
               HI, I&apos;M
               <br />
               SAPTARAJ
             </span>
 
+            {/* Tablet / Desktop */}
             <span className="hidden sm:inline">
               HI, I&apos;M SAPTARAJ
             </span>
@@ -82,7 +99,7 @@ export function HeroSection() {
       </div>
 
       {/* =========================================================
-          CHARACTER
+          SAPTARAJ CHARACTER
           ========================================================= */}
 
       <Magnet
@@ -92,10 +109,10 @@ export function HeroSection() {
         inactiveTransition="transform 0.6s ease-in-out"
         className="
           absolute
-          bottom-[12%]
+          bottom-[8%]
           left-1/2
           z-20
-          w-[245px]
+          w-[235px]
           -translate-x-1/2
           sm:bottom-0
           sm:w-[340px]
@@ -121,10 +138,10 @@ export function HeroSection() {
       <div
         className="
           absolute
-          bottom-6
+          bottom-5
           left-4
           z-30
-          sm:bottom-8
+          sm:bottom-7
           sm:left-6
           md:bottom-10
           md:left-10
@@ -165,10 +182,10 @@ export function HeroSection() {
       <div
         className="
           absolute
-          bottom-6
+          bottom-5
           right-4
           z-30
-          sm:bottom-8
+          sm:bottom-7
           sm:right-6
           md:bottom-10
           md:right-10
