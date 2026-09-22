@@ -63,6 +63,7 @@ const VIDEOS: VideoItem[] = [
     title: "Podcast 05",
   },
 ];
+export const VIDEO_COUNT = VIDEOS.length;
 
 
 function VideoCard({

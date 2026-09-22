@@ -7,6 +7,7 @@ import { ProjectVideo } from "../components/ProjectVideo";
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
 import { CATEGORIES } from "../data/projects";
+import { VIDEO_COUNT } from "./VideoShowcaseSection";
 
 const INITIAL_PROJECT_COUNT = 3;
 
@@ -176,9 +177,13 @@ export function ProjectsSection() {
   const [selected, setSelected] = useState<Project | null>(null);
   const [activeFilter, setActiveFilter] = useState("All");
 
-  const filteredProjects = activeFilter === "All"
+const filteredProjects =
+  activeFilter === "All"
     ? projects
-    : projects.filter((project) => project.category.toLowerCase() === activeFilter.toLowerCase());
+    : projects.filter(
+        (project) =>
+          project.category.toLowerCase() === activeFilter.toLowerCase()
+      );
 
   const graphicProjects = filteredProjects.filter((project) => {
     const category = project.category.toLowerCase();
@@ -224,35 +229,67 @@ export function ProjectsSection() {
         </FadeIn>
 
         <div className="mx-auto mb-12 max-w-6xl sm:mb-16">
-          <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Filter projects by category">
-            {["All", ...CATEGORIES].map((category) => {
-              const isActive = activeFilter === category;
-              const count = category === "All"
-                ? projects.length
-                : projects.filter((project) => project.category.toLowerCase() === category.toLowerCase()).length;
+  <div
+    className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    role="tablist"
+    aria-label="Filter projects by category"
+  >
+    {["All", ...CATEGORIES].map((category) => {
+      const isActive = activeFilter === category;
 
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setActiveFilter(category)}
-                  className={`shrink-0 rounded-full border px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-all duration-300 sm:px-5 sm:py-3 sm:text-xs ${
-                    isActive
-                      ? "border-[#D7E2EA] bg-[#D7E2EA] text-[#08090A]"
-                      : "border-[#D7E2EA]/20 bg-[#101012] text-[#D7E2EA]/55 hover:border-[#D7E2EA]/45 hover:text-[#D7E2EA]"
-                  }`}
-                >
-                  {category}
-                  <span className={`ml-2 ${isActive ? "text-[#08090A]/55" : "text-[#D7E2EA]/30"}`}>
-                    {count}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+      const count =
+        category === "All"
+          ? projects.length
+          : category === "Video Editing"
+            ? VIDEO_COUNT
+            : projects.filter(
+                (project) =>
+                  project.category.toLowerCase() ===
+                  category.toLowerCase()
+              ).length;
+
+      return (
+        <button
+          key={category}
+          type="button"
+          role="tab"
+          aria-selected={isActive}
+          onClick={() => {
+            setActiveFilter(category);
+
+            if (category === "Video Editing") {
+              requestAnimationFrame(() => {
+                document
+                  .getElementById("video-work")
+                  ?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                  });
+              });
+            }
+          }}
+          className={`shrink-0 rounded-full border px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-all duration-300 sm:px-5 sm:py-3 sm:text-xs ${
+            isActive
+              ? "border-[#D7E2EA] bg-[#D7E2EA] text-[#08090A]"
+              : "border-[#D7E2EA]/20 bg-[#101012] text-[#D7E2EA]/55 hover:border-[#D7E2EA]/45 hover:text-[#D7E2EA]"
+          }`}
+        >
+          {category}
+
+          <span
+            className={`ml-2 ${
+              isActive
+                ? "text-[#08090A]/55"
+                : "text-[#D7E2EA]/30"
+            }`}
+          >
+            {count}
+          </span>
+        </button>
+      );
+    })}
+  </div>
+</div>
 
         <div className="mx-auto max-w-6xl">
           {loading || error ? (
