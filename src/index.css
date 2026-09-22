@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =========================================================
+   GLOBAL RESET
+   ========================================================= */
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -25,6 +29,10 @@ body {
   overflow-x: clip;
 }
 
+/* =========================================================
+   TYPOGRAPHY
+   ========================================================= */
+
 .hero-heading {
   background: linear-gradient(180deg, #646973 0%, #bbccd7 100%);
   -webkit-background-clip: text;
@@ -33,19 +41,18 @@ body {
 }
 
 /* =========================================================
-   HERO / MAGNET MOBILE MOTION
-   Desktop keeps the existing mouse-based Magnet behavior.
-   Touch devices get subtle automatic floating motion.
+   HERO / MAGNET MOTION
    ========================================================= */
 
 .magnet-mobile-float {
   transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
+/* Desktop + touch devices */
 @media (hover: none) and (pointer: coarse) {
   .magnet-mobile-float {
     animation: magnet-mobile-float 4.8s ease-in-out infinite;
-    will-change: transform;
   }
 }
 
@@ -62,7 +69,6 @@ body {
 
 /* =========================================================
    ABOUT SECTION — CONTINUOUS FLOATING MOTION
-   Works on desktop, tablet and mobile.
    ========================================================= */
 
 .about-mobile-float {
@@ -70,29 +76,21 @@ body {
   will-change: transform;
 }
 
-/* STAR */
 .about-mobile-float-star {
   animation: about-star-float 5.2s ease-in-out infinite;
 }
 
-/* PLANET */
 .about-mobile-float-planet {
   animation: about-planet-float 6.5s ease-in-out infinite;
 }
 
-/* SMILEY */
 .about-mobile-float-smiley {
   animation: about-smiley-float 5.8s ease-in-out infinite;
 }
 
-/* CURSOR */
 .about-mobile-float-cursor {
   animation: about-cursor-float 4.8s ease-in-out infinite;
 }
-
-/* =========================================================
-   ABOUT — STAR
-   ========================================================= */
 
 @keyframes about-star-float {
   0%,
@@ -105,10 +103,6 @@ body {
   }
 }
 
-/* =========================================================
-   ABOUT — PLANET
-   ========================================================= */
-
 @keyframes about-planet-float {
   0%,
   100% {
@@ -119,10 +113,6 @@ body {
     transform: translate3d(8px, -14px, 0) rotate(-3deg);
   }
 }
-
-/* =========================================================
-   ABOUT — SMILEY
-   ========================================================= */
 
 @keyframes about-smiley-float {
   0%,
@@ -135,10 +125,6 @@ body {
   }
 }
 
-/* =========================================================
-   ABOUT — CURSOR
-   ========================================================= */
-
 @keyframes about-cursor-float {
   0%,
   100% {
@@ -147,6 +133,168 @@ body {
 
   50% {
     transform: translate3d(8px, -13px, 0) rotate(5deg);
+  }
+}
+
+/* =========================================================
+   MOBILE SPACING FIX
+   Keeps desktop exactly as it is.
+   Removes unnecessary giant black spaces on phones.
+   ========================================================= */
+
+@media (max-width: 767px) {
+
+  /*
+   * Don't force sections to fill huge vertical areas.
+   * This is the biggest cause of the empty black spaces.
+   */
+  section {
+    min-height: auto !important;
+  }
+
+  /*
+   * Reduce excessive vertical padding used by desktop layouts.
+   */
+  section {
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /*
+   * About section needs a little more room because
+   * it contains the floating decorative elements.
+   */
+  #about {
+    min-height: 620px !important;
+    padding-top: 4rem !important;
+    padding-bottom: 4rem !important;
+  }
+
+  /*
+   * Experience should feel compact on mobile.
+   */
+  #experience {
+    padding-top: 4.5rem !important;
+    padding-bottom: 4.5rem !important;
+  }
+
+  /*
+   * Prevent huge gaps created by common Tailwind
+   * margin utilities inside sections.
+   */
+  section .mb-28 {
+    margin-bottom: 4rem !important;
+  }
+
+  section .mb-24 {
+    margin-bottom: 3.5rem !important;
+  }
+
+  section .mb-20 {
+    margin-bottom: 3rem !important;
+  }
+
+  /*
+   * Large heading margins should be smaller on phones.
+   */
+  section h2.mb-28 {
+    margin-bottom: 3rem !important;
+  }
+
+  section h2.mb-20 {
+    margin-bottom: 2.5rem !important;
+  }
+
+  /*
+   * Experience content spacing.
+   */
+  #experience .mb-16 {
+    margin-bottom: 3rem !important;
+  }
+
+  /*
+   * Keep project/experience rows comfortable
+   * without creating giant gaps.
+   */
+  #experience article {
+    padding-top: 2rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  /*
+   * Education / certification / tools shouldn't
+   * create excessive vertical gaps.
+   */
+  #experience .gap-16 {
+    gap: 3.5rem !important;
+  }
+
+  /*
+   * Prevent horizontal overflow from oversized
+   * typography or decorative elements.
+   */
+  h1,
+  h2,
+  h3,
+  h4 {
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
+
+  /*
+   * Keep decorative About assets visible but
+   * slightly smaller on narrow phones.
+   */
+  .about-mobile-float-star {
+    animation-duration: 5.2s;
+  }
+
+  .about-mobile-float-planet {
+    animation-duration: 6.5s;
+  }
+
+  .about-mobile-float-smiley {
+    animation-duration: 5.8s;
+  }
+
+  .about-mobile-float-cursor {
+    animation-duration: 4.8s;
+  }
+}
+
+/* =========================================================
+   EXTRA SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+  section {
+    padding-top: 3.25rem !important;
+    padding-bottom: 3.25rem !important;
+  }
+
+  #about {
+    min-height: 590px !important;
+    padding-top: 3rem !important;
+    padding-bottom: 3rem !important;
+  }
+
+  #experience {
+    padding-top: 3.5rem !important;
+    padding-bottom: 3.5rem !important;
+  }
+
+  section .mb-28 {
+    margin-bottom: 3rem !important;
+  }
+
+  section .mb-20 {
+    margin-bottom: 2.25rem !important;
+  }
+
+  #experience article {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
   }
 }
 
