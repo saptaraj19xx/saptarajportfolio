@@ -6,6 +6,7 @@ import { LiveProjectButton } from "../components/LiveProjectButton";
 import { ProjectVideo } from "../components/ProjectVideo";
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
+import { CATEGORIES } from "../data/projects";
 
 const INITIAL_PROJECT_COUNT = 3;
 
@@ -39,28 +40,28 @@ function ProjectCard({ project, index, total, onOpen }: {
     <div
       ref={containerRef}
       style={stackStyle}
-      className="sticky top-[calc(4.5rem_+_var(--stack-offset))] mb-6 h-[72vh] min-h-[520px] sm:top-[calc(5.5rem_+_var(--stack-offset))] sm:mb-8 sm:h-[76vh] sm:min-h-[560px] md:top-[calc(7rem_+_var(--stack-offset))]"
+      className="sticky top-[calc(5.5rem_+_var(--stack-offset))] mb-8 h-[76vh] min-h-[560px] md:top-[calc(7rem_+_var(--stack-offset))]"
     >
       <motion.div
         style={{ scale: reduce ? 1 : scale }}
-        className="flex h-full flex-col overflow-hidden rounded-[28px] border border-[#D7E2EA]/20 bg-[#0A0A0A] p-4 shadow-[0_20px_80px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:border-[#D7E2EA]/35 sm:rounded-[44px] sm:p-7 md:rounded-[52px] md:p-8"
+        className="flex h-full flex-col overflow-hidden rounded-[34px] border border-[#D7E2EA]/20 bg-[#0A0A0A] p-5 shadow-[0_20px_80px_rgba(0,0,0,0.35)] transition-colors duration-300 hover:border-[#D7E2EA]/35 sm:rounded-[44px] sm:p-7 md:rounded-[52px] md:p-8"
       >
-        <div className="flex flex-wrap items-start justify-between gap-3 pb-4 sm:items-center sm:gap-5 sm:pb-6 md:pb-8">
-          <div className="flex min-w-0 flex-1 items-center gap-3 sm:gap-5 md:gap-7">
-            <span className="shrink-0 font-black leading-[0.8] text-[#E8E8E8]" style={{ fontSize: "clamp(3.25rem, 9vw, 130px)" }}>
+        <div className="flex flex-wrap items-center justify-between gap-5 pb-6 md:pb-8">
+          <div className="flex min-w-0 items-center gap-5 md:gap-7">
+            <span className="shrink-0 font-black leading-[0.8] text-[#E8E8E8]" style={{ fontSize: "clamp(4.5rem, 9vw, 130px)" }}>
               {project.number}
             </span>
             <div className="min-w-0">
               <p className="mb-1 text-[10px] font-semibold uppercase tracking-[0.28em] text-[#D7E2EA]/45 sm:text-xs">
                 {project.category}
               </p>
-              <h3 className="max-w-[46vw] truncate text-lg font-semibold uppercase tracking-tight text-[#D7E2EA] sm:max-w-[55vw] sm:text-3xl md:text-4xl">
+              <h3 className="max-w-[55vw] truncate text-2xl font-semibold uppercase tracking-tight text-[#D7E2EA] sm:text-3xl md:text-4xl">
                 {project.name}
               </h3>
             </div>
           </div>
 
-          <div className="flex w-full gap-2 sm:w-auto">
+          <div className="flex gap-2">
             {project.live_url ? <LiveProjectButton href={project.live_url} /> : null}
             <button
               type="button"
@@ -74,7 +75,7 @@ function ProjectCard({ project, index, total, onOpen }: {
 
         <button type="button" onClick={() => onOpen(project)} className="group min-h-0 flex-1 text-left" aria-label={`Open ${project.name}`}>
           {previewGallery.length >= 4 ? (
-            <div className="grid h-full min-h-0 grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+            <div className="grid h-full min-h-0 grid-cols-2 gap-3 md:gap-4">
               {previewGallery.slice(0, 4).map((image, previewIndex) => (
                 <GalleryImage
                   key={`${project.id}-preview-${previewIndex}`}
@@ -85,15 +86,15 @@ function ProjectCard({ project, index, total, onOpen }: {
               ))}
             </div>
           ) : previewGallery.length >= 3 ? (
-            <div className="grid h-full min-h-0 grid-cols-[40%_60%] gap-2 sm:gap-3 md:gap-4">
-              <div className="grid min-h-0 grid-rows-[38%_62%] gap-2 sm:gap-3 md:gap-4">
+            <div className="grid h-full min-h-0 grid-cols-[40%_60%] gap-3 md:gap-4">
+              <div className="grid min-h-0 grid-rows-[38%_62%] gap-3 md:gap-4">
                 <GalleryImage src={previewGallery[0]} alt={`${project.name} preview 1`} />
                 <GalleryImage src={previewGallery[1]} alt={`${project.name} preview 2`} />
               </div>
               <GalleryImage src={previewGallery[2]} alt={`${project.name} preview 3`} large />
             </div>
           ) : previewGallery.length === 2 ? (
-            <div className="grid h-full min-h-0 grid-cols-2 gap-2 sm:gap-3 md:gap-4">
+            <div className="grid h-full min-h-0 grid-cols-2 gap-3 md:gap-4">
               <GalleryImage src={previewGallery[0]} alt={`${project.name} preview 1`} />
               <GalleryImage src={previewGallery[1]} alt={`${project.name} preview 2`} />
             </div>
@@ -113,7 +114,7 @@ function GalleryImage({ src, alt, large = false, contain = false }: {
   contain?: boolean;
 }) {
   return (
-    <div className="relative min-h-0 overflow-hidden rounded-[18px] bg-[#111214] sm:rounded-[34px] md:rounded-[42px]">
+    <div className="relative min-h-0 overflow-hidden rounded-[26px] bg-[#111214] sm:rounded-[34px] md:rounded-[42px]">
       <img
         src={src}
         alt={alt}
@@ -127,12 +128,12 @@ function GalleryImage({ src, alt, large = false, contain = false }: {
 
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   return (
-    <div className="fixed inset-0 z-[100] overflow-y-auto bg-[#0C0C0C]/95 p-3 backdrop-blur-md sm:p-8" role="dialog" aria-modal="true">
-      <div className="mx-auto max-w-6xl rounded-[28px] border border-[#D7E2EA]/20 bg-[#101012] p-4 sm:rounded-[50px] sm:p-8">
+    <div className="fixed inset-0 z-[100] overflow-y-auto bg-[#0C0C0C]/95 p-4 backdrop-blur-md sm:p-8" role="dialog" aria-modal="true">
+      <div className="mx-auto max-w-6xl rounded-[35px] border border-[#D7E2EA]/20 bg-[#101012] p-5 sm:rounded-[50px] sm:p-8">
         <div className="mb-6 flex items-start justify-between gap-6">
           <div>
             <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#D7E2EA]/50">{project.category}</p>
-            <h3 className="max-w-[75vw] text-2xl font-black uppercase leading-tight text-[#D7E2EA] sm:text-5xl">{project.name}</h3>
+            <h3 className="text-3xl font-black uppercase text-[#D7E2EA] sm:text-5xl">{project.name}</h3>
           </div>
           <button type="button" onClick={onClose} aria-label="Close project" className="rounded-full border border-[#D7E2EA]/30 p-3 text-[#D7E2EA] transition hover:bg-white/10">
             <X size={20} />
@@ -173,8 +174,13 @@ function EmptyState({ loading, error }: { loading: boolean; error: string }) {
 export function ProjectsSection() {
   const { projects, loading, error } = useProjects();
   const [selected, setSelected] = useState<Project | null>(null);
+  const [activeFilter, setActiveFilter] = useState("All");
 
-  const graphicProjects = projects.filter((project) => {
+  const filteredProjects = activeFilter === "All"
+    ? projects
+    : projects.filter((project) => project.category.toLowerCase() === activeFilter.toLowerCase());
+
+  const graphicProjects = filteredProjects.filter((project) => {
     const category = project.category.toLowerCase();
     return (
       category.includes("graphic design") ||
@@ -184,12 +190,12 @@ export function ProjectsSection() {
     );
   });
 
-  const brandingProjects = projects.filter((project) => {
+  const brandingProjects = filteredProjects.filter((project) => {
     const category = project.category.toLowerCase();
     return category.includes("branding");
   });
 
-  const uiuxProjects = projects.filter((project) => {
+  const uiuxProjects = filteredProjects.filter((project) => {
     const category = project.category.toLowerCase();
     return category.includes("ui/ux") || category.includes("ui ux");
   });
@@ -217,37 +223,80 @@ export function ProjectsSection() {
           </div>
         </FadeIn>
 
+        <div className="mx-auto mb-12 max-w-6xl sm:mb-16">
+          <div className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" role="tablist" aria-label="Filter projects by category">
+            {["All", ...CATEGORIES].map((category) => {
+              const isActive = activeFilter === category;
+              const count = category === "All"
+                ? projects.length
+                : projects.filter((project) => project.category.toLowerCase() === category.toLowerCase()).length;
+
+              return (
+                <button
+                  key={category}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  onClick={() => setActiveFilter(category)}
+                  className={`shrink-0 rounded-full border px-4 py-2.5 text-[10px] font-bold uppercase tracking-[0.18em] transition-all duration-300 sm:px-5 sm:py-3 sm:text-xs ${
+                    isActive
+                      ? "border-[#D7E2EA] bg-[#D7E2EA] text-[#08090A]"
+                      : "border-[#D7E2EA]/20 bg-[#101012] text-[#D7E2EA]/55 hover:border-[#D7E2EA]/45 hover:text-[#D7E2EA]"
+                  }`}
+                >
+                  {category}
+                  <span className={`ml-2 ${isActive ? "text-[#08090A]/55" : "text-[#D7E2EA]/30"}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <div className="mx-auto max-w-6xl">
           {loading || error ? (
             <EmptyState loading={loading} error={error} />
           ) : (
             <>
-              <ProjectCategoryBlock
-                projects={graphicProjects}
-                title="Graphic Design"
-                subtitle="POSTERS · CAMPAIGNS · VISUAL DESIGN"
-                onOpen={setSelected}
-                largeTitle
-              />
-
-              {brandingProjects.length > 0 ? (
-                <div className="mt-24 sm:mt-32">
+              {activeFilter === "All" ? (
+                <>
                   <ProjectCategoryBlock
-                    projects={brandingProjects}
-                    title="Branding"
-                    subtitle="IDENTITY · VISUAL SYSTEMS · BRAND APPLICATIONS"
+                    projects={graphicProjects}
+                    title="Graphic Design"
+                    subtitle="POSTERS · CAMPAIGNS · VISUAL DESIGN"
                     onOpen={setSelected}
                     largeTitle
                   />
-                </div>
-              ) : null}
+
+                  {brandingProjects.length > 0 ? (
+                    <div className="mt-24 sm:mt-32">
+                      <ProjectCategoryBlock
+                        projects={brandingProjects}
+                        title="Branding"
+                        subtitle="IDENTITY · VISUAL SYSTEMS · BRAND APPLICATIONS"
+                        onOpen={setSelected}
+                        largeTitle
+                      />
+                    </div>
+                  ) : null}
+                </>
+              ) : (
+                <ProjectCategoryBlock
+                  projects={filteredProjects}
+                  title={activeFilter}
+                  subtitle={activeFilter === "Video Editing" ? "REELS · SHORTS · VIDEO PRODUCTION" : `SELECTED ${activeFilter.toUpperCase()}`}
+                  onOpen={setSelected}
+                  largeTitle
+                />
+              )}
             </>
           )}
         </div>
       </section>
 
       {/* UI/UX projects */}
-      {!loading && !error && uiuxProjects.length > 0 ? (
+      {!loading && !error && activeFilter === "All" && uiuxProjects.length > 0 ? (
         <section
           id="uiux-projects"
           className="relative z-10 bg-[#0C0C0C] px-5 pb-28 pt-8 sm:px-8 md:px-10 md:pt-12"
@@ -357,15 +406,15 @@ function ProjectCategoryBlock({
       {hasMoreProjects ? (
         <div className="relative z-[100] flex justify-center pt-2 sm:pt-4">
           <button
-  type="button"
-  onClick={() => setShowAll((current) => !current)}
-  className="relative z-[101] inline-flex items-center gap-4 rounded-full border-2 border-[#D7E2EA] bg-[#D7E2EA] px-8 py-4 text-xs font-bold uppercase tracking-[0.25em] text-[#08090A] shadow-[0_15px_50px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-white hover:bg-white sm:px-10 sm:py-5 sm:text-sm"
->
-  {showAll ? "Show Less" : `Show More — ${projects.length - INITIAL_PROJECT_COUNT} More`}
-  <span className="text-lg transition-transform duration-300">
-    {showAll ? "↑" : "↓"}
-  </span>
-</button>
+            type="button"
+            onClick={() => setShowAll((current) => !current)}
+            className="relative z-[101] inline-flex items-center gap-4 rounded-full border border-[#D7E2EA]/25 bg-[#101012] px-8 py-4 text-xs font-bold uppercase tracking-[0.25em] text-[#D7E2EA] shadow-[0_15px_50px_rgba(0,0,0,0.25)] transition-all duration-300 hover:-translate-y-1 hover:border-[#D7E2EA]/55 hover:bg-[#171719] sm:px-10 sm:py-5 sm:text-sm"
+          >
+            {showAll ? "Show Less" : `Show More — ${projects.length - INITIAL_PROJECT_COUNT} More`}
+            <span className="text-lg transition-transform duration-300">
+              {showAll ? "↑" : "↓"}
+            </span>
+          </button>
         </div>
       ) : null}
     </div>
