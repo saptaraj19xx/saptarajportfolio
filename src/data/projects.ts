@@ -198,6 +198,13 @@ const projectConfig: Record<
       "A cohesive brand identity system developed across visual direction, colour, typography, presentation and real-world applications.",
   },
 
+  "THE AFTER REP": {
+  name: "THE AFTER REP",
+  category: "Graphic Design",
+  description:
+    "A complete campaign design system developed across promotional posters, visual direction, digital applications, gym screens and point-of-sale advertising.",
+},
+
 
   /* -----------------------------------------------------
      UI/UX
