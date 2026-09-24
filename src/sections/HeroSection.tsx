@@ -23,53 +23,57 @@ export function HeroSection() {
       "
     >
       {/* =========================================================
-          TOP NAVIGATION
-          ========================================================= */}
+    TOP NAVIGATION
+    ========================================================= */}
 
-      <FadeIn delay={0} y={-20} as="nav">
-        <div
-          className="
-            absolute
-            left-0
-            right-0
-            top-0
-            z-40
-            flex
-            items-center
-            justify-between
-            gap-4
-            px-4
-            pt-5
-            sm:px-6
-            sm:pt-6
-            md:px-10
-            md:pt-8
-          "
-        >
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="
-                text-[10px]
-                font-medium
-                uppercase
-                tracking-[0.12em]
-                text-[#D7E2EA]
-                transition-opacity
-                duration-200
-                hover:opacity-70
-                sm:text-xs
-                sm:tracking-wider
-                md:text-lg
-                lg:text-[1.4rem]
-              "
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-      </FadeIn>
+<nav
+  className="
+    absolute
+    left-0
+    right-0
+    top-0
+    z-[100]
+    flex
+    items-center
+    justify-between
+    gap-4
+    px-4
+    pt-5
+    sm:px-6
+    sm:pt-6
+    md:px-10
+    md:pt-8
+  "
+>
+  {NAV_LINKS.map((link, index) => (
+    <FadeIn
+      key={link.label}
+      delay={index * 0.08}
+      y={-15}
+    >
+      <a
+        href={link.href}
+        className="
+          block
+          text-[10px]
+          font-medium
+          uppercase
+          tracking-[0.12em]
+          text-[#D7E2EA]
+          transition-opacity
+          duration-200
+          hover:opacity-70
+          sm:text-xs
+          sm:tracking-wider
+          md:text-lg
+          lg:text-[1.4rem]
+        "
+      >
+        {link.label}
+      </a>
+    </FadeIn>
+  ))}
+</nav>
 
       {/* =========================================================
           HERO NAME
