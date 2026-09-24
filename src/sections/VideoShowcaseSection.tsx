@@ -76,6 +76,7 @@ function VideoCard({
   onOpen: (video: VideoItem) => void;
 }) {
   const ref = useRef<HTMLButtonElement>(null);
+
   const inView = useInView(ref, {
     once: true,
     margin: "-80px",
@@ -93,11 +94,12 @@ function VideoCard({
         delay: index * 0.06,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/15 bg-[#111214] text-left shadow-[0_20px_70px_rgba(0,0,0,0.25)] sm:rounded-[36px] ${
+      className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/15 bg-[#111214] text-left shadow-[0_20px_70px_rgba(0,0,0,0.25)] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[36px] ${
         video.vertical ? "aspect-[9/14]" : "aspect-video"
       }`}
       aria-label={`Open ${video.title}`}
     >
+      {/* Video */}
       <video
         src={video.src}
         muted
@@ -105,25 +107,50 @@ function VideoCard({
         autoPlay
         playsInline
         preload="metadata"
-        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.045]"
+        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
       />
 
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-90" />
+      {/* Subtle gradient */}
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
 
-      <div className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-4 p-5 sm:p-6">
-        <div>
-          <p className="mb-1 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#D7E2EA]/55 sm:text-[10px]">
-            {video.label}
-          </p>
+      {/* Play button */}
+      <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/25 text-white/75 backdrop-blur-md transition-all duration-300 group-hover:bg-[#D7E2EA] group-hover:text-[#08090A] sm:right-5 sm:top-5 sm:h-10 sm:w-10">
+        <Play size={14} fill="currentColor" />
+      </span>
 
-          <h3 className="text-xl font-semibold uppercase tracking-tight text-[#D7E2EA] sm:text-2xl">
-            {video.title}
-          </h3>
+      {/* Small premium caption */}
+      <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
+        <div className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-[#08090A]/55 px-4 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#08090A]/70 sm:px-5 sm:py-3">
+          
+          <div className="min-w-0">
+            <p className="mb-0.5 truncate text-[7px] font-medium uppercase tracking-[0.28em] text-[#D7E2EA]/45 sm:text-[8px]">
+              {video.label}
+            </p>
+
+            <h3 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-[#E2E8ED] transition-colors duration-300 group-hover:text-white sm:text-base">
+              {video.title}
+            </h3>
+          </div>
+
+          <span className="flex shrink-0 items-center gap-1.5 text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/40 transition-colors duration-300 group-hover:text-[#D7E2EA]/75 sm:text-[8px]">
+            View
+
+            <svg
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              aria-hidden="true"
+            >
+              <path
+                d="M4 12L12 4M6 4H12V10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
         </div>
-
-        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#D7E2EA]/35 bg-black/30 text-[#D7E2EA] backdrop-blur-sm transition duration-300 group-hover:bg-[#D7E2EA] group-hover:text-[#0C0C0C]">
-          <Play size={15} fill="currentColor" />
-        </span>
       </div>
     </motion.button>
   );

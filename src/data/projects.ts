@@ -198,6 +198,10 @@ const projectConfig: Record<
       "A cohesive brand identity system developed across visual direction, colour, typography, presentation and real-world applications.",
   },
 
+    /* -----------------------------------------------------
+    THE AFTER REP
+  ----------------------------------------------------- */
+
   "THE AFTER REP": {
   name: "THE AFTER REP",
   category: "Graphic Design",
