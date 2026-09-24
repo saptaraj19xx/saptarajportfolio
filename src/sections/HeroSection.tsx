@@ -12,15 +12,40 @@ const NAV_LINKS = [
 export function HeroSection() {
   return (
     <section
-      className="relative flex min-h-[720px] h-[100svh] flex-col overflow-hidden"
+      className="
+        relative
+        h-[760px]
+        w-full
+        overflow-hidden
+        sm:h-[100svh]
+        sm:min-h-[720px]
+        md:min-h-[720px]
+      "
     >
       {/* =========================================================
           TOP NAVIGATION
-          KEEPING WORK / ABOUT / CONTACT
           ========================================================= */}
 
       <FadeIn delay={0} y={-20} as="nav">
-        <div className="relative z-40 flex items-center justify-between gap-4 px-4 pt-5 sm:px-6 sm:pt-6 md:px-10 md:pt-8">
+        <div
+          className="
+            absolute
+            left-0
+            right-0
+            top-0
+            z-40
+            flex
+            items-center
+            justify-between
+            gap-4
+            px-4
+            pt-5
+            sm:px-6
+            sm:pt-6
+            md:px-10
+            md:pt-8
+          "
+        >
           {NAV_LINKS.map((link) => (
             <a
               key={link.label}
@@ -55,19 +80,19 @@ export function HeroSection() {
           absolute
           left-0
           right-0
-          top-[30%]
+          top-[22%]
           z-10
           flex
           w-full
           justify-center
-          px-2
+          px-3
           sm:top-[31%]
           sm:px-4
           md:top-[35%]
           md:px-6
         "
       >
-        <FadeIn delay={0.15} y={40}>
+        <FadeIn delay={0.15} y={35}>
           <h1
             className="
               hero-heading
@@ -75,12 +100,12 @@ export function HeroSection() {
               font-black
               uppercase
               leading-[0.82]
-              tracking-[-0.035em]
+              tracking-[-0.055em]
               sm:whitespace-nowrap
               sm:tracking-[-0.045em]
             "
             style={{
-              fontSize: "clamp(4rem, 11.8vw, 13rem)",
+              fontSize: "clamp(4.2rem, 11.8vw, 13rem)",
             }}
           >
             {/* Mobile */}
@@ -109,10 +134,10 @@ export function HeroSection() {
         inactiveTransition="transform 0.6s ease-in-out"
         className="
           absolute
-          bottom-[8%]
+          bottom-[15%]
           left-1/2
           z-20
-          w-[235px]
+          w-[245px]
           -translate-x-1/2
           sm:bottom-0
           sm:w-[340px]
@@ -150,13 +175,14 @@ export function HeroSection() {
         <FadeIn delay={0.35} y={20}>
           <p
             className="
-              max-w-[125px]
+              max-w-[145px]
               font-light
               uppercase
-              leading-snug
-              tracking-[0.04em]
+              leading-[1.35]
+              tracking-[0.035em]
               text-[#D7E2EA]
               sm:max-w-[220px]
+              sm:leading-snug
               sm:tracking-wide
               md:max-w-[260px]
             "
