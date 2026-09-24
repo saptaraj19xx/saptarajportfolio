@@ -48,20 +48,64 @@ export function ContactButton({ className = "" }: { className?: string }) {
   return (
     <>
       <button
-        type="button"
-        onClick={() => setOpen(true)}
-        className={`inline-flex items-center justify-center rounded-full px-8 py-3 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:-translate-y-1 hover:scale-105 sm:px-10 sm:py-3.5 sm:text-sm md:px-12 md:py-4 md:text-base ${className}`}
-        style={{
-          background:
-            "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
-          boxShadow:
-            "0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset, 0 0 24px rgba(181, 1, 167, 0.22)",
-          outline: "2px solid white",
-          outlineOffset: "-3px",
-        }}
-      >
-        Contact Me
-      </button>
+  type="button"
+  onClick={() => setOpen(true)}
+  className={`
+    group
+    inline-flex
+    items-center
+    justify-center
+    gap-3
+    rounded-full
+    border
+    border-[#304653]
+    bg-[#25292A]
+    px-8
+    py-3.5
+    text-xs
+    font-semibold
+    uppercase
+    tracking-[0.18em]
+    text-[#F1F1ED]
+    shadow-[0_8px_24px_rgba(0,0,0,0.18)]
+    transition-all
+    duration-300
+    hover:-translate-y-0.5
+    hover:border-[#526775]
+    hover:bg-[#2C3132]
+    sm:px-10
+    sm:py-4
+    sm:text-sm
+    md:px-11
+    md:py-4
+    md:text-base
+    ${className}
+  `}
+>
+  <span>Contact Me</span>
+
+  <svg
+    viewBox="0 0 16 16"
+    fill="none"
+    className="
+      h-3.5
+      w-3.5
+      transition-transform
+      duration-300
+      group-hover:translate-x-0.5
+      group-hover:-translate-y-0.5
+    "
+    aria-hidden="true"
+  >
+    <path
+      d="M4 12L12 4M6 4H12V10"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+</button>
 
       <AnimatePresence>
         {open && (
@@ -186,15 +230,29 @@ export function ContactButton({ className = "" }: { className?: string }) {
                   <div className="mt-6 flex flex-wrap gap-4">
                     <button
                       type="submit"
-                      className="rounded-full px-8 py-3.5 text-xs font-bold uppercase tracking-widest text-white transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] sm:px-10 sm:text-sm"
-                      style={{
-                        background:
-                          "linear-gradient(123deg, #18011F 7%, #B600A8 37%, #7621B0 72%, #BE4C00 100%)",
-                        boxShadow:
-                          "0px 4px 4px rgba(181, 1, 167, 0.25), 4px 4px 12px #7721B1 inset, 0 0 25px rgba(181, 1, 167, 0.25)",
-                        outline: "2px solid white",
-                        outlineOffset: "-3px",
-                      }}
+                      className="
+                        inline-flex
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        border-white
+                        bg-white
+                        px-8
+                        py-3.5
+                        text-xs
+                        font-semibold
+                        uppercase
+                        tracking-[0.18em]
+                        text-[#08090A]
+                        transition-all
+                        duration-300
+                        hover:-translate-y-0.5
+                        hover:bg-[#D7E2EA]
+                        hover:border-[#D7E2EA]
+                        sm:px-10
+                        sm:text-sm
+                      "
                     >
                       Send Message
                     </button>
