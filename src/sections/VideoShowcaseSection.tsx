@@ -94,12 +94,11 @@ function VideoCard({
         delay: index * 0.06,
         ease: [0.22, 1, 0.36, 1],
       }}
-      className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/15 bg-[#111214] text-left shadow-[0_20px_70px_rgba(0,0,0,0.25)] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[36px] ${
+      className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/10 bg-[#0C0C0C] text-left transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[36px] ${
         video.vertical ? "aspect-[9/14]" : "aspect-video"
       }`}
       aria-label={`Open ${video.title}`}
     >
-      {/* Video */}
       <video
         src={video.src}
         muted
@@ -107,34 +106,27 @@ function VideoCard({
         autoPlay
         playsInline
         preload="metadata"
-        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
+        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
       />
 
-      {/* Subtle gradient */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
-
-      {/* Play button */}
-      <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/25 text-white/75 backdrop-blur-md transition-all duration-300 group-hover:bg-[#D7E2EA] group-hover:text-[#08090A] sm:right-5 sm:top-5 sm:h-10 sm:w-10">
-        <Play size={14} fill="currentColor" />
+      <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/75 transition-all duration-300 group-hover:bg-black/65 group-hover:text-white sm:right-5 sm:top-5 sm:h-9 sm:w-9">
+        <Play size={13} fill="currentColor" />
       </span>
 
-      {/* Small premium caption */}
-      <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
-        <div className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-[#08090A]/55 px-4 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#08090A]/70 sm:px-5 sm:py-3">
-          
+      <div className="absolute inset-x-0 bottom-0 px-4 pb-4 pt-12">
+        <div className="flex items-end justify-between gap-3">
           <div className="min-w-0">
-            <p className="mb-0.5 truncate text-[7px] font-medium uppercase tracking-[0.28em] text-[#D7E2EA]/45 sm:text-[8px]">
+            <p className="mb-1 truncate text-[8px] font-medium uppercase tracking-[0.28em] text-white/48 sm:text-[9px]">
               {video.label}
             </p>
 
-            <h3 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-[#E2E8ED] transition-colors duration-300 group-hover:text-white sm:text-base">
+            <h3 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-white/85 transition-colors duration-300 group-hover:text-white sm:text-base">
               {video.title}
             </h3>
           </div>
 
-          <span className="flex shrink-0 items-center gap-1.5 text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/40 transition-colors duration-300 group-hover:text-[#D7E2EA]/75 sm:text-[8px]">
+          <span className="flex shrink-0 items-center gap-1 text-[8px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors duration-300 group-hover:text-white/70 sm:text-[9px]">
             View
-
             <svg
               viewBox="0 0 16 16"
               fill="none"
@@ -207,9 +199,6 @@ export function VideoShowcaseSection() {
         id="video-work"
         className="relative overflow-hidden bg-[#0C0C0C] px-5 pb-24 pt-16 sm:px-8 sm:pb-28 sm:pt-20 md:px-10 md:pb-36 md:pt-28"
       >
-        {/* Ambient glow */}
-        <div className="pointer-events-none absolute left-1/2 top-[20%] h-[500px] w-[500px] -translate-x-1/2 rounded-full bg-[#273747]/10 blur-[140px]" />
-
         <div className="relative z-10 mx-auto max-w-[1500px]">
           {/* Header */}
           <motion.div

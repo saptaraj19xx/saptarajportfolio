@@ -124,7 +124,7 @@ function ProjectGalleryCard({
         delay: Math.min(index * 0.06, 0.3),
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="group relative overflow-hidden rounded-[26px] border border-[#D7E2EA]/12 bg-[#101012] shadow-[0_18px_60px_rgba(0,0,0,0.22)] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[32px]"
+      className="group relative overflow-hidden rounded-[26px] border border-[#D7E2EA]/10 bg-[#0C0C0C] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[32px]"
     >
       <button
         type="button"
@@ -133,10 +133,6 @@ function ProjectGalleryCard({
         aria-label={`Open ${project.name}`}
       >
         <div className="relative aspect-[4/3] overflow-hidden bg-[#151618]">
-          {/* -------------------------------------------------------------- */}
-          {/* Artwork                                                        */}
-          {/* -------------------------------------------------------------- */}
-
           {preview.length > 1 ? (
             <div className="grid h-full grid-cols-2 gap-px">
               {preview.map((image, imageIndex) => (
@@ -148,7 +144,7 @@ function ProjectGalleryCard({
                     src={image}
                     alt={`${project.name} preview ${imageIndex + 1}`}
                     loading="lazy"
-                    className="h-full w-full object-contain transition duration-700 ease-out group-hover:scale-[1.025]"
+                    className="h-full w-full object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
               ))}
@@ -158,62 +154,40 @@ function ProjectGalleryCard({
               src={preview[0]}
               alt={`${project.name} preview`}
               loading="lazy"
-              className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
+              className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
             />
           )}
 
-          {/* -------------------------------------------------------------- */}
-          {/* Subtle cinematic gradient                                      */}
-          {/* -------------------------------------------------------------- */}
-
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent opacity-80 transition-opacity duration-500 group-hover:opacity-95" />
-
-          {/* -------------------------------------------------------------- */}
-          {/* Top project number                                             */}
-          {/* -------------------------------------------------------------- */}
-
           <div className="pointer-events-none absolute left-4 top-4 sm:left-5 sm:top-5">
-            <span className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.25em] text-white/65 backdrop-blur-md sm:text-[9px]">
+            <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-white/55 sm:text-[10px]">
               {String(index + 1).padStart(2, "0")}
             </span>
           </div>
 
-          {/* -------------------------------------------------------------- */}
-          {/* Arrow                                                          */}
-          {/* -------------------------------------------------------------- */}
-
-          <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/25 text-white/70 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 sm:right-5 sm:top-5 sm:h-10 sm:w-10">
-            <ArrowUpRight size={16} strokeWidth={1.8} />
+          <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/70 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:right-5 sm:top-5 sm:h-9 sm:w-9">
+            <ArrowUpRight size={15} strokeWidth={1.7} />
           </span>
+        </div>
 
-          {/* -------------------------------------------------------------- */}
-          {/* Premium information panel                                     */}
-          {/* -------------------------------------------------------------- */}
+        <div className="px-1 pb-1 pt-4 sm:pt-5">
+          <div className="mb-2 flex items-center justify-between gap-4">
+            <p className="truncate text-[8px] font-medium uppercase tracking-[0.28em] text-[#D7E2EA]/38 sm:text-[9px]">
+              {project.category}
+            </p>
 
-          <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
-  <div className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-[#08090A]/55 px-4 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#08090A]/70 sm:px-5 sm:py-3">
-    
-    <div className="min-w-0">
-      <p className="mb-0.5 truncate text-[7px] font-medium uppercase tracking-[0.28em] text-[#D7E2EA]/45 sm:text-[8px]">
-        {project.category}
-      </p>
+            <span className="flex shrink-0 items-center gap-1 text-[8px] font-medium uppercase tracking-[0.18em] text-[#D7E2EA]/32 transition-colors duration-300 group-hover:text-[#D7E2EA]/65 sm:text-[9px]">
+              View
+              <ArrowUpRight
+                size={11}
+                strokeWidth={1.5}
+                className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              />
+            </span>
+          </div>
 
-      <h4 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-[#E2E8ED] transition-colors duration-300 group-hover:text-white sm:text-base">
-        {project.name}
-      </h4>
-    </div>
-
-    <span className="flex shrink-0 items-center gap-1.5 text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/40 transition-colors duration-300 group-hover:text-[#D7E2EA]/75 sm:text-[8px]">
-      View
-      <ArrowUpRight
-        size={12}
-        strokeWidth={1.7}
-        className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-      />
-    </span>
-
-  </div>
-</div>
+          <h4 className="truncate text-base font-semibold uppercase tracking-[-0.01em] text-[#D7E2EA]/82 transition-colors duration-300 group-hover:text-[#D7E2EA] sm:text-lg">
+            {project.name}
+          </h4>
         </div>
       </button>
 
