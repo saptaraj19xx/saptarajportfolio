@@ -690,11 +690,9 @@ export function ProjectsSection() {
         {/* ---------------------------------------------------------------- */}
 
         <div className="mx-auto mb-14 max-w-6xl sm:mb-20">
-          <div
-            className="flex flex-wrap gap-2 pb-2"
+          <div className="flex flex-wrap justify-center gap-3 pb-2">
             role="tablist"
             aria-label="Filter projects by category"
-          >
             {["All", ...CATEGORIES].map((category) => {
               const isActive = activeFilter === category;
 
