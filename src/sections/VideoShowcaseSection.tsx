@@ -19,52 +19,17 @@ type VideoItem = {
 };
 
 const VIDEOS: VideoItem[] = [
-  {
-    src: reel1,
-    label: "Instagram Reel",
-    title: "Reel 01",
-    vertical: true,
-  },
-  {
-    src: reel2,
-    label: "Instagram Reel",
-    title: "Reel 02",
-    vertical: true,
-  },
-  {
-    src: reel3,
-    label: "Instagram Reel",
-    title: "Reel 03",
-    vertical: true,
-  },
-  {
-    src: podcast1,
-    label: "Podcast Edit",
-    title: "Podcast 01",
-  },
-  {
-    src: podcast2,
-    label: "Podcast Edit",
-    title: "Podcast 02",
-  },
-  {
-    src: podcast3,
-    label: "Podcast Edit",
-    title: "Podcast 03",
-  },
-  {
-    src: podcast4,
-    label: "Podcast Edit",
-    title: "Podcast 04",
-  },
-  {
-    src: podcast5,
-    label: "Podcast Edit",
-    title: "Podcast 05",
-  },
+  { src: reel1, label: "Instagram Reel", title: "Reel 01", vertical: true },
+  { src: reel2, label: "Instagram Reel", title: "Reel 02", vertical: true },
+  { src: reel3, label: "Instagram Reel", title: "Reel 03", vertical: true },
+  { src: podcast1, label: "Podcast Edit", title: "Podcast 01" },
+  { src: podcast2, label: "Podcast Edit", title: "Podcast 02" },
+  { src: podcast3, label: "Podcast Edit", title: "Podcast 03" },
+  { src: podcast4, label: "Podcast Edit", title: "Podcast 04" },
+  { src: podcast5, label: "Podcast Edit", title: "Podcast 05" },
 ];
-export const VIDEO_COUNT = VIDEOS.length;
 
+export const VIDEO_COUNT = VIDEOS.length;
 
 function VideoCard({
   video,
@@ -77,10 +42,15 @@ function VideoCard({
 }) {
   const ref = useRef<HTMLButtonElement>(null);
 
-  const inView = useInView(ref, {
+  // Reveal the card once, but load/unload its heavy video preview near the viewport.
+  const hasEnteredView = useInView(ref, {
     once: true,
     margin: "-80px",
   });
+const shouldLoadVideo = useInView(ref, {
+  once: true,
+  margin: "180px",
+});
 
   return (
     <motion.button
@@ -88,10 +58,10 @@ function VideoCard({
       type="button"
       onClick={() => onOpen(video)}
       initial={{ opacity: 0, y: 50 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      animate={hasEnteredView ? { opacity: 1, y: 0 } : {}}
       transition={{
         duration: 0.7,
-        delay: index * 0.06,
+        delay: hasEnteredView ? Math.min(index * 0.04, 0.2) : 0,
         ease: [0.22, 1, 0.36, 1],
       }}
       className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/10 bg-[#0C0C0C] text-left transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[36px] ${
@@ -99,15 +69,23 @@ function VideoCard({
       }`}
       aria-label={`Open ${video.title}`}
     >
-      <video
-        src={video.src}
-        muted
-        loop
-        autoPlay
-        playsInline
-        preload="metadata"
-        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
-      />
+      {shouldLoadVideo ? (
+        <video
+          src={video.src}
+          muted
+          loop
+          autoPlay
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
+        />
+      ) : (
+        <div
+          className="absolute inset-0 bg-gradient-to-br from-[#17191B] to-[#08090A]"
+          aria-hidden="true"
+        />
+      )}
 
       <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/75 transition-all duration-300 group-hover:bg-black/65 group-hover:text-white sm:right-5 sm:top-5 sm:h-9 sm:w-9">
         <Play size={13} fill="currentColor" />
@@ -119,7 +97,6 @@ function VideoCard({
             <p className="mb-1 truncate text-[8px] font-medium uppercase tracking-[0.28em] text-white/48 sm:text-[9px]">
               {video.label}
             </p>
-
             <h3 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-white/85 transition-colors duration-300 group-hover:text-white sm:text-base">
               {video.title}
             </h3>
@@ -181,6 +158,7 @@ function VideoModal({
           controls
           autoPlay
           playsInline
+          preload="auto"
           className={`mx-auto max-h-[88vh] w-full rounded-[22px] object-contain ${
             video.vertical ? "max-w-[520px]" : ""
           }`}
@@ -212,7 +190,6 @@ export function VideoShowcaseSection() {
               <p className="mb-3 text-[10px] font-semibold uppercase tracking-[0.35em] text-[#D7E2EA]/40 sm:text-xs">
                 Motion / Reels / Shorts
               </p>
-
               <h2
                 className="hero-heading font-black uppercase leading-[0.82] tracking-tight"
                 style={{ fontSize: "clamp(4rem, 12vw, 150px)" }}
@@ -252,10 +229,7 @@ export function VideoShowcaseSection() {
       </section>
 
       {selected ? (
-        <VideoModal
-          video={selected}
-          onClose={() => setSelected(null)}
-        />
+        <VideoModal video={selected} onClose={() => setSelected(null)} />
       ) : null}
     </>
   );
