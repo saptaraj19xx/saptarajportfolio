@@ -691,7 +691,7 @@ export function ProjectsSection() {
 
         <div className="mx-auto mb-14 max-w-6xl sm:mb-20">
           <div
-            className="flex gap-2 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            className="flex flex-wrap gap-2 pb-2"
             role="tablist"
             aria-label="Filter projects by category"
           >
