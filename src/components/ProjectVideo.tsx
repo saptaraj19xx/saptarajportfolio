@@ -30,7 +30,7 @@ export function ProjectVideo({
     }
     if (isFile) {
       return (
-        <video src={videoUrl} controls autoPlay playsInline className={`${className} object-cover`}>
+        <video src={videoUrl} controls autoPlay playsInline preload="none" className={`${className} object-cover`}>
           Your browser doesn&apos;t support embedded video.
         </video>
       );
@@ -47,7 +47,7 @@ export function ProjectVideo({
       aria-label={`Play video: ${title}`}
     >
       {thumbnail && (
-        <img src={thumbnail} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+        <img src={thumbnail} alt="" className="absolute inset-0 h-full w-full object-cover" loading="lazy" decoding="async" />
       )}
       <span className="absolute inset-0 bg-black/30 transition-colors group-hover:bg-black/45" />
       <span className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#D7E2EA] transition-transform group-hover:scale-110">
