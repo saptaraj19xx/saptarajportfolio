@@ -104,14 +104,12 @@ function ProjectGalleryCard({
     ? project.gallery
     : [project.cover_image];
 
-  const isBranding = project.category
-    .toLowerCase()
-    .includes("branding");
-
-  const preview =
-    isBranding && gallery.length > 1
-      ? [gallery[0], gallery[gallery.length - 1]]
-      : gallery.slice(0, 2);
+  const imageAspect =
+    index % 5 === 0
+      ? "aspect-[4/5]"
+      : index % 3 === 0
+        ? "aspect-square"
+        : "aspect-[4/3]";
 
   return (
     <motion.div
@@ -123,7 +121,7 @@ function ProjectGalleryCard({
         delay: Math.min(index * 0.06, 0.3),
         ease: [0.22, 1, 0.36, 1],
       }}
-      className="group relative overflow-hidden rounded-[26px] border border-[#D7E2EA]/10 bg-[#0C0C0C] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[32px]"
+      className="group relative mb-5 inline-block w-full break-inside-avoid overflow-hidden rounded-[26px] border border-[#D7E2EA]/10 bg-[#0C0C0C] align-top transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[32px]"
     >
       <button
         type="button"
@@ -131,45 +129,31 @@ function ProjectGalleryCard({
         className="block w-full text-left"
         aria-label={`Open ${project.name}`}
       >
-        <div className="relative aspect-[4/3] overflow-hidden bg-[#151618]">
-          {preview.length > 1 ? (
-            <div className="grid h-full grid-cols-2 gap-px">
-              {preview.map((image, imageIndex) => (
-                <div
-                  key={`${project.id}-${imageIndex}`}
-                  className="min-w-0 overflow-hidden bg-white"
-                >
-                  <img
-                    src={image}
-                    alt={`${project.name} preview ${imageIndex + 1}`}
-                    loading="lazy"
-                    decoding="async"
-                    fetchPriority="low"
-                    className="h-full w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02]"
-                  />
-                </div>
-              ))}
-            </div>
-          ) : (
-            <img
-              src={preview[0]}
-              alt={`${project.name} preview`}
-              loading="lazy"
-              decoding="async"
-              fetchPriority="low"
-              className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.025]"
-            />
-          )}
+        <div className={`relative ${imageAspect} overflow-hidden bg-[#151618]`}>
+          <img
+            src={project.cover_image}
+            alt={`${project.name} project cover`}
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            className="h-full w-full object-contain p-2 transition duration-500 ease-out group-hover:scale-[1.025] sm:p-3"
+          />
 
           <div className="pointer-events-none absolute left-4 top-4 sm:left-5 sm:top-5">
-            <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-white/55 sm:text-[10px]">
+            <span className="text-[9px] font-medium uppercase tracking-[0.22em] text-white/65 sm:text-[10px]">
               {String(index + 1).padStart(2, "0")}
             </span>
           </div>
 
-          <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/70 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:right-5 sm:top-5 sm:h-9 sm:w-9">
+          <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/75 opacity-0 transition-all duration-300 group-hover:opacity-100 sm:right-5 sm:top-5 sm:h-9 sm:w-9">
             <ArrowUpRight size={15} strokeWidth={1.7} />
           </span>
+
+          {gallery.length > 1 ? (
+            <span className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-black/55 px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.2em] text-white/75 backdrop-blur sm:left-5">
+              +{gallery.length - 1} project visuals
+            </span>
+          ) : null}
         </div>
 
         <div className="px-1 pb-1 pt-4 sm:pt-5">
@@ -524,7 +508,7 @@ function ProjectCategoryBlock({
         count={projects.length}
       />
 
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 sm:gap-5">
+      <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3">
         {visibleProjects.map((project, index) => (
           <ProjectGalleryCard
             key={project.id}
