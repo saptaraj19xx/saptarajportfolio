@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
 import { ROW1_ITEMS, ROW2_ITEMS } from "../data/marqueeItems";
 
-import chromeVideoCamera from "../assets/services/chrome-video-camera.png";
-import glassPlayOrb from "../assets/services/glass-play-orb.png";
-import holographicFilmReel from "../assets/services/holographic-film-reel.png";
-import cyberpunkInterface from "../assets/services/iridescent-cyberpunk-interface-orbit.png";
-import compassGyroscope from "../assets/services/neon-iridescent-compass-gyroscope.png";
-import motionPrism from "../assets/services/neon-motion-play-prism.png";
-import socialMediaOrbit from "../assets/services/neon-social-media-orbit.png";
-import neonWaveform from "../assets/services/neon-waveform.png";
+import chromeVideoCamera from "../assets/services/chrome-video-camera.webp";
+import glassPlayOrb from "../assets/services/glass-play-orb.webp";
+import holographicFilmReel from "../assets/services/holographic-film-reel.webp";
+import cyberpunkInterface from "../assets/services/iridescent-cyberpunk-interface-orbit.webp";
+import compassGyroscope from "../assets/services/neon-iridescent-compass-gyroscope.webp";
+import motionPrism from "../assets/services/neon-motion-play-prism.webp";
+import socialMediaOrbit from "../assets/services/neon-social-media-orbit.webp";
+import neonWaveform from "../assets/services/neon-waveform.webp";
 
 const SERVICE_ASSETS: Record<string, string> = {
   "graphic design": chromeVideoCamera,
@@ -66,6 +66,8 @@ function Tile({ label }: { label: string }) {
             src={asset}
             alt=""
             aria-hidden="true"
+            loading="lazy"
+            decoding="async"
             className="
               pointer-events-none
               h-[105px]
@@ -107,36 +109,43 @@ export function MarqueeSection() {
   const row2Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let frameId = 0;
+    let sectionTop = sectionRef.current?.offsetTop ?? 0;
+
     function handleScroll() {
-      const section = sectionRef.current;
+      if (frameId) return;
 
-      if (!section) return;
+      frameId = window.requestAnimationFrame(() => {
+        frameId = 0;
+        const section = sectionRef.current;
+        if (!section) return;
 
-      const sectionTop =
-        section.getBoundingClientRect().top + window.scrollY;
+        const offset =
+          (window.scrollY - sectionTop + window.innerHeight) * 0.3;
 
-      const offset =
-        (window.scrollY - sectionTop + window.innerHeight) * 0.3;
+        if (row1Ref.current) {
+          row1Ref.current.style.transform = `translate3d(${offset - 200}px, 0, 0)`;
+        }
 
-      if (row1Ref.current) {
-        row1Ref.current.style.transform =
-          `translateX(${offset - 200}px)`;
-      }
+        if (row2Ref.current) {
+          row2Ref.current.style.transform = `translate3d(${-(offset - 200)}px, 0, 0)`;
+        }
+      });
+    }
 
-      if (row2Ref.current) {
-        row2Ref.current.style.transform =
-          `translateX(${-(offset - 200)}px)`;
-      }
+    function handleResize() {
+      sectionTop = sectionRef.current?.offsetTop ?? 0;
+      handleScroll();
     }
 
     handleScroll();
-
-    window.addEventListener("scroll", handleScroll, {
-      passive: true,
-    });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+      if (frameId) window.cancelAnimationFrame(frameId);
     };
   }, []);
 

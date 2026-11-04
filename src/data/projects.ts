@@ -5,6 +5,7 @@ export type Project = {
   category: string;
   description?: string;
   cover_image: string;
+  thumbnail_image?: string;
   secondary_image: string;
   gallery: string[];
   hero_image?: string;
@@ -25,24 +26,37 @@ export type Project = {
  *
  * Individual project images:
  *
- *   src/assets/projects/image.png
+ *   src/assets/projects/image.webp
  *
  * Multi-image projects:
  *
- *   src/assets/projects/Brand Identity/image1.png
- *   src/assets/projects/Brand Identity/image2.png
+ *   src/assets/projects/Brand Identity/image1.webp
+ *   src/assets/projects/Brand Identity/image2.webp
  *
  * Each folder represents ONE project.
  */
 
 const files = import.meta.glob(
-  "../assets/projects/**/*.{png,jpg,jpeg,webp,gif}",
+  "../assets/projects/**/*.webp",
   {
     eager: true,
     query: "?url",
     import: "default",
   },
 ) as Record<string, string>;
+
+const thumbnails = import.meta.glob("../assets/project-thumbnails/**/*.webp", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const thumbnailFor = (projectAssetPath: string, fallback: string) => {
+  const thumbnailPath = projectAssetPath
+    .replace("../assets/projects/", "../assets/project-thumbnails/")
+    .replace(/\.[^/.]+$/, ".webp");
+  return thumbnails[thumbnailPath] ?? fallback;
+};
 
 
 /* -------------------------------------------------------
@@ -266,7 +280,7 @@ const getParentFolder = (path: string) => {
   /*
    * Example:
    *
-   * ../assets/projects/Brand Identity/01-logo-evolution.png
+   * ../assets/projects/Brand Identity/01-logo-evolution.webp
    *
    * returns:
    *
@@ -299,20 +313,25 @@ const groupedProjects = new Map<
     category: string;
     description: string;
     images: string[];
+    thumbnail: string;
   }
 >();
 
 
 Object.entries(files)
-  .sort(([a], [b]) =>
-    a.localeCompare(
-      b,
-      undefined,
-      {
-        numeric: true,
-      },
-    ),
-  )
+  .sort(([a], [b]) => {
+    const aIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.webp$/i.test(a);
+    const bIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.webp$/i.test(b);
+    const aFolder = a.slice(0, a.lastIndexOf("/"));
+    const bFolder = b.slice(0, b.lastIndexOf("/"));
+
+    // Put an explicitly named cover first inside a project's image folder.
+    if (aFolder === bFolder && aIsCover !== bIsCover) {
+      return aIsCover ? -1 : 1;
+    }
+
+    return a.localeCompare(b, undefined, { numeric: true });
+  })
   .forEach(([path, url]) => {
 
     const parentFolder =
@@ -324,7 +343,7 @@ Object.entries(files)
 
        Example:
 
-       projects/Navratri_2.jpg
+       projects/Navratri_2.webp
 
        This remains an individual project.
     --------------------------------------------------- */
@@ -357,6 +376,8 @@ Object.entries(files)
           `Selected ${category.toLowerCase()} work by Saptaraj.`,
 
         cover_image: url,
+
+        thumbnail_image: thumbnailFor(path, url),
 
         secondary_image: "",
 
@@ -415,6 +436,7 @@ Object.entries(files)
             config.description,
 
           images: [url],
+          thumbnail: thumbnailFor(path, url),
         },
       );
     }
@@ -456,6 +478,9 @@ const folderProjects: Project[] =
 
         cover_image:
           images[0],
+
+        thumbnail_image:
+          project.thumbnail,
 
         secondary_image:
           images[1] ?? "",

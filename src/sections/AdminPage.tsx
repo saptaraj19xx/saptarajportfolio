@@ -370,7 +370,7 @@ function Dashboard({ session }: { session: Session }) {
             {projects.map((project) => (
               <article key={project.id} className="overflow-hidden rounded-[30px] border border-[#D7E2EA]/10 bg-[#111113]">
                 <div className="relative aspect-[4/3] overflow-hidden bg-[#0C0C0C]">
-                  <img src={project.cover_image} alt="" className="h-full w-full object-cover" />
+                  <img src={project.cover_image} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />
                   <span className={`absolute left-3 top-3 rounded-full px-3 py-1 text-[10px] font-semibold uppercase tracking-widest ${project.published ? "bg-[#D7E2EA] text-[#0C0C0C]" : "bg-black/70 text-[#D7E2EA]"}`}>
                     {project.published ? "Published" : "Draft"}
                   </span>

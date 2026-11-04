@@ -1,47 +1,31 @@
-# Saptaraj Portfolio — Local Projects
+# Saptaraj Portfolio
 
-This version does **not** use Supabase, a database, or environment variables.
+Personal portfolio built with React, TypeScript, Vite, Tailwind CSS and Framer Motion.
 
 ## Add new work
 
-Put images directly in:
+For a single-image project, add a **WebP** file directly to:
 
 `src/assets/projects/`
 
-Supported formats:
-- PNG
-- JPG / JPEG
-- WEBP
-- GIF
+The project is automatically discovered and placed in the Graphic Design category.
 
-You do not need to edit `projects.ts`.
+For a multi-image project, create a folder under `src/assets/projects/` and add its folder name, title, category and description to `projectConfig` in `src/data/projects.ts`. Name the main image `cover.webp` so it is used as the card cover. Add a matching thumbnail under `src/assets/project-thumbnails/` using the same relative folder and filename.
 
-The site automatically discovers every image in that folder and displays it in the Projects section.
-
-## Run
+## Run locally
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
-For a production build:
+## Production build
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Notes
+The Vite base path is configured for GitHub Pages at `/saptarajportfolio/`.
 
-The project metadata is generated from the filename. For example:
-
-`my-awesome-poster_01.png`
-
-becomes:
-
-`My Awesome Poster 01`
-
-The default category is `Graphic Design`.
-
-For different categories, descriptions, videos, or individual project pages, the project data can later be extended without adding a database.
+See [OPTIMIZATION_NOTES.md](./OPTIMIZATION_NOTES.md) for the media and performance changes in this package.

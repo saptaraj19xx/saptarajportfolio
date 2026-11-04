@@ -22,6 +22,15 @@ const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
 const videoUrl = (filename: string) =>
   videoFiles[`../assets/videos/${filename}`] ?? "";
 
+const posterFiles = import.meta.glob("../assets/video-posters/*.webp", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const posterUrl = (filename: string) =>
+  posterFiles[`../assets/video-posters/${filename}`] ?? "";
+
 /* -------------------------------------------------------------------------- */
 /* Types                                                                     */
 /* -------------------------------------------------------------------------- */
@@ -30,6 +39,7 @@ type VideoItem = {
   src: string;
   label: string;
   title: string;
+  poster: string;
   vertical?: boolean;
 };
 
@@ -40,46 +50,59 @@ type VideoItem = {
 const VIDEOS: VideoItem[] = [
   {
     src: videoUrl("Instagram Reel 1.mp4"),
+    poster: posterUrl("Instagram Reel 1.webp"),
     label: "Instagram Reel",
     title: "Reel 01",
     vertical: true,
   },
   {
     src: videoUrl("Instagram Reel 2.mp4"),
+    poster: posterUrl("Instagram Reel 2.webp"),
     label: "Instagram Reel",
     title: "Reel 02",
     vertical: true,
   },
   {
     src: videoUrl("Instagram Reel 3.mp4"),
+    poster: posterUrl("Instagram Reel 3.webp"),
     label: "Instagram Reel",
     title: "Reel 03",
     vertical: true,
   },
   {
     src: videoUrl("podcast 1.mp4"),
+    poster: posterUrl("podcast 1.webp"),
     label: "Podcast Edit",
     title: "Podcast 01",
+    vertical: true,
   },
   {
     src: videoUrl("podcast 2.mp4"),
+    poster: posterUrl("podcast 2.webp"),
     label: "Podcast Edit",
     title: "Podcast 02",
+    vertical: true,
   },
   {
     src: videoUrl("podcast 3.mp4"),
+    poster: posterUrl("podcast 3.webp"),
     label: "Podcast Edit",
     title: "Podcast 03",
+    vertical: true,
   },
   {
     src: videoUrl("podcast 4.mp4"),
+    poster: posterUrl("podcast 4.webp"),
     label: "Podcast Edit",
     title: "Podcast 04",
+    vertical: true,
   },
   {
     src: videoUrl("podcast 5.mp4"),
+    poster: posterUrl("podcast 5.webp"),
     label: "Podcast Edit",
     title: "Podcast 05",
+    vertical: true,
   },
 ];
 
@@ -131,7 +154,7 @@ function ProjectGalleryCard({
       >
         <div className={`relative ${imageAspect} overflow-hidden bg-[#151618]`}>
           <img
-            src={project.cover_image}
+            src={project.thumbnail_image || project.cover_image}
             alt={`${project.name} project cover`}
             loading="lazy"
             decoding="async"
@@ -222,17 +245,14 @@ function VideoGalleryCard({
       {/* Video                                                          */}
       {/* -------------------------------------------------------------- */}
 
-      <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-[#202328] via-[#111214] to-[#08090A]">
-        <span className="grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-black/35 text-white/85 backdrop-blur">
-          <Play size={17} fill="currentColor" />
-        </span>
-      </div>
-
-      {/* -------------------------------------------------------------- */}
-      {/* Subtle cinematic gradient                                      */}
-      {/* -------------------------------------------------------------- */}
-
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent opacity-70 transition-opacity duration-500 group-hover:opacity-90" />
+      <img
+        src={video.poster}
+        alt={`${video.title} video preview`}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-black/10" />
 
       {/* -------------------------------------------------------------- */}
       {/* Play button                                                     */}
@@ -311,6 +331,7 @@ function VideoModal({
           controls
           autoPlay
           playsInline
+          preload="none"
           className={`mx-auto max-h-[88vh] w-full rounded-[22px] object-contain ${
             video.vertical ? "max-w-[520px]" : ""
           }`}

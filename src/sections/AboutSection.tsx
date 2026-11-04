@@ -2,10 +2,10 @@ import { FadeIn } from "../components/FadeIn";
 import { AnimatedText } from "../components/AnimatedText";
 import { ContactButton } from "../components/ContactButton";
 
-import crystalStar from "../assets/about/crystal-star.png";
-import neonCursor from "../assets/about/neon-cursor.png";
-import neonSmiley from "../assets/about/neon-smiley.png";
-import ringedPlanet from "../assets/about/ringed-planet.png";
+import crystalStar from "../assets/about/crystal-star.webp";
+import neonCursor from "../assets/about/neon-cursor.webp";
+import neonSmiley from "../assets/about/neon-smiley.webp";
+import ringedPlanet from "../assets/about/ringed-planet.webp";
 
 const ABOUT_TEXT =
   "I enjoy turning ideas into visuals, interfaces and experiences that feel clear, expressive and memorable — from a poster to a full product interface to the final cut of a film.";
@@ -33,7 +33,7 @@ export function AboutSection() {
             src={crystalStar}
             alt=""
             aria-hidden="true"
-            className="h-auto w-full object-contain"
+            loading="lazy" decoding="async" className="h-auto w-full object-contain"
           />
         </div>
       </FadeIn>
@@ -51,7 +51,7 @@ export function AboutSection() {
             src={ringedPlanet}
             alt=""
             aria-hidden="true"
-            className="h-auto w-full object-contain"
+            loading="lazy" decoding="async" className="h-auto w-full object-contain"
           />
         </div>
       </FadeIn>
@@ -69,7 +69,7 @@ export function AboutSection() {
             src={neonSmiley}
             alt=""
             aria-hidden="true"
-            className="h-auto w-full object-contain"
+            loading="lazy" decoding="async" className="h-auto w-full object-contain"
           />
         </div>
       </FadeIn>
@@ -87,7 +87,7 @@ export function AboutSection() {
             src={neonCursor}
             alt=""
             aria-hidden="true"
-            className="h-auto w-full object-contain"
+            loading="lazy" decoding="async" className="h-auto w-full object-contain"
           />
         </div>
       </FadeIn>

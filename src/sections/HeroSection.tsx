@@ -1,7 +1,7 @@
 import { FadeIn } from "../components/FadeIn";
 import { Magnet } from "../components/Magnet";
 import { ContactButton } from "../components/ContactButton";
-import saptarajCharacter from "../assets/saptaraj-character.png";
+import saptarajCharacter from "../assets/saptaraj-character.webp";
 
 const NAV_LINKS = [
   { label: "Work", href: "#work" },
@@ -154,6 +154,8 @@ export function HeroSection() {
             <img
               src={saptarajCharacter}
               alt="Saptaraj"
+              fetchPriority="high"
+              decoding="async"
               className="block h-auto w-full object-contain object-bottom"
             />
           </div>

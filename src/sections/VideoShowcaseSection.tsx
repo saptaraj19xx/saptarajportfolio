@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { X, Play } from "lucide-react";
+import { X } from "lucide-react";
 
 const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
   eager: true,
@@ -11,22 +11,32 @@ const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
 const videoUrl = (filename: string) =>
   videoFiles[`../assets/videos/${filename}`] ?? "";
 
+const posterFiles = import.meta.glob("../assets/video-posters/*.webp", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const posterUrl = (filename: string) =>
+  posterFiles[`../assets/video-posters/${filename}`] ?? "";
+
 type VideoItem = {
   src: string;
   label: string;
   title: string;
+  poster: string;
   vertical?: boolean;
 };
 
 const VIDEOS: VideoItem[] = [
-  { src: videoUrl("Instagram Reel 1.mp4"), label: "Instagram Reel", title: "Reel 01", vertical: true },
-  { src: videoUrl("Instagram Reel 2.mp4"), label: "Instagram Reel", title: "Reel 02", vertical: true },
-  { src: videoUrl("Instagram Reel 3.mp4"), label: "Instagram Reel", title: "Reel 03", vertical: true },
-  { src: videoUrl("podcast 1.mp4"), label: "Podcast Edit", title: "Podcast 01" },
-  { src: videoUrl("podcast 2.mp4"), label: "Podcast Edit", title: "Podcast 02" },
-  { src: videoUrl("podcast 3.mp4"), label: "Podcast Edit", title: "Podcast 03" },
-  { src: videoUrl("podcast 4.mp4"), label: "Podcast Edit", title: "Podcast 04" },
-  { src: videoUrl("podcast 5.mp4"), label: "Podcast Edit", title: "Podcast 05" },
+  { src: videoUrl("Instagram Reel 1.mp4"), poster: posterUrl("Instagram Reel 1.webp"), label: "Instagram Reel", title: "Reel 01", vertical: true },
+  { src: videoUrl("Instagram Reel 2.mp4"), poster: posterUrl("Instagram Reel 2.webp"), label: "Instagram Reel", title: "Reel 02", vertical: true },
+  { src: videoUrl("Instagram Reel 3.mp4"), poster: posterUrl("Instagram Reel 3.webp"), label: "Instagram Reel", title: "Reel 03", vertical: true },
+  { src: videoUrl("podcast 1.mp4"), poster: posterUrl("podcast 1.webp"), label: "Podcast Edit", title: "Podcast 01", vertical: true },
+  { src: videoUrl("podcast 2.mp4"), poster: posterUrl("podcast 2.webp"), label: "Podcast Edit", title: "Podcast 02", vertical: true },
+  { src: videoUrl("podcast 3.mp4"), poster: posterUrl("podcast 3.webp"), label: "Podcast Edit", title: "Podcast 03", vertical: true },
+  { src: videoUrl("podcast 4.mp4"), poster: posterUrl("podcast 4.webp"), label: "Podcast Edit", title: "Podcast 04", vertical: true },
+  { src: videoUrl("podcast 5.mp4"), poster: posterUrl("podcast 5.webp"), label: "Podcast Edit", title: "Podcast 05", vertical: true },
 ];
 
 export const VIDEO_COUNT = VIDEOS.length;
@@ -66,14 +76,14 @@ function VideoCard({
       }`}
       aria-label={`Open ${video.title}`}
     >
-      <div
-        className="absolute inset-0 grid place-items-center bg-gradient-to-br from-[#202328] via-[#111214] to-[#08090A]"
-        aria-hidden="true"
-      >
-        <span className="grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-black/35 text-white/85 backdrop-blur">
-          <Play size={17} fill="currentColor" />
-        </span>
-      </div>
+      <img
+        src={video.poster}
+        alt={`${video.title} video preview`}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]"
+      />
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-black/10" />
 
       <div className="absolute inset-x-0 bottom-0 px-4 pb-4 pt-12">
         <div className="flex items-end justify-between gap-3">
