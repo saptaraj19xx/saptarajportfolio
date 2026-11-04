@@ -6,3 +6,7 @@ dist-ssr
 .env.*
 !.env.example
 .DS_Store
+
+# Local build and Vite cache
+.vite/
+*.tsbuildinfo
