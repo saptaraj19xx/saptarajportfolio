@@ -13,15 +13,14 @@ import { CATEGORIES } from "../data/projects";
 /* Video assets                                                               */
 /* -------------------------------------------------------------------------- */
 
-import reel1 from "../assets/videos/Instagram Reel 1.mp4";
-import reel2 from "../assets/videos/Instagram Reel 2.mp4";
-import reel3 from "../assets/videos/Instagram Reel 3.mp4";
+const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
 
-import podcast1 from "../assets/videos/podcast 1.mp4";
-import podcast2 from "../assets/videos/podcast 2.mp4";
-import podcast3 from "../assets/videos/podcast 3.mp4";
-import podcast4 from "../assets/videos/podcast 4.mp4";
-import podcast5 from "../assets/videos/podcast 5.mp4";
+const videoUrl = (filename: string) =>
+  videoFiles[`../assets/videos/${filename}`] ?? "";
 
 /* -------------------------------------------------------------------------- */
 /* Types                                                                     */
@@ -40,45 +39,45 @@ type VideoItem = {
 
 const VIDEOS: VideoItem[] = [
   {
-    src: reel1,
+    src: videoUrl("Instagram Reel 1.mp4"),
     label: "Instagram Reel",
     title: "Reel 01",
     vertical: true,
   },
   {
-    src: reel2,
+    src: videoUrl("Instagram Reel 2.mp4"),
     label: "Instagram Reel",
     title: "Reel 02",
     vertical: true,
   },
   {
-    src: reel3,
+    src: videoUrl("Instagram Reel 3.mp4"),
     label: "Instagram Reel",
     title: "Reel 03",
     vertical: true,
   },
   {
-    src: podcast1,
+    src: videoUrl("podcast 1.mp4"),
     label: "Podcast Edit",
     title: "Podcast 01",
   },
   {
-    src: podcast2,
+    src: videoUrl("podcast 2.mp4"),
     label: "Podcast Edit",
     title: "Podcast 02",
   },
   {
-    src: podcast3,
+    src: videoUrl("podcast 3.mp4"),
     label: "Podcast Edit",
     title: "Podcast 03",
   },
   {
-    src: podcast4,
+    src: videoUrl("podcast 4.mp4"),
     label: "Podcast Edit",
     title: "Podcast 04",
   },
   {
-    src: podcast5,
+    src: videoUrl("podcast 5.mp4"),
     label: "Podcast Edit",
     title: "Podcast 05",
   },
@@ -144,7 +143,9 @@ function ProjectGalleryCard({
                     src={image}
                     alt={`${project.name} preview ${imageIndex + 1}`}
                     loading="lazy"
-                    className="h-full w-full object-contain transition duration-700 ease-out group-hover:scale-[1.02]"
+                    decoding="async"
+                    fetchPriority="low"
+                    className="h-full w-full object-contain transition duration-500 ease-out group-hover:scale-[1.02]"
                   />
                 </div>
               ))}
@@ -154,7 +155,9 @@ function ProjectGalleryCard({
               src={preview[0]}
               alt={`${project.name} preview`}
               loading="lazy"
-              className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.025]"
+              decoding="async"
+              fetchPriority="low"
+              className="h-full w-full object-cover transition duration-500 ease-out group-hover:scale-[1.025]"
             />
           )}
 
@@ -235,15 +238,11 @@ function VideoGalleryCard({
       {/* Video                                                          */}
       {/* -------------------------------------------------------------- */}
 
-      <video
-        src={video.src}
-        muted
-        loop
-        autoPlay
-        playsInline
-        preload="metadata"
-        className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.035]"
-      />
+      <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-[#202328] via-[#111214] to-[#08090A]">
+        <span className="grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-black/35 text-white/85 backdrop-blur">
+          <Play size={17} fill="currentColor" />
+        </span>
+      </div>
 
       {/* -------------------------------------------------------------- */}
       {/* Subtle cinematic gradient                                      */}
@@ -397,6 +396,8 @@ function ProjectModal({
               key={`${project.id}-gallery-${index}`}
               src={image}
               alt={`${project.name} ${index + 1}`}
+              loading="lazy"
+              decoding="async"
               className="w-full rounded-[30px] bg-white object-contain"
             />
           ))}
