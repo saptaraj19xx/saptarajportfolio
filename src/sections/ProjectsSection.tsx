@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Play, X } from "lucide-react";
 
 import { FadeIn } from "../components/FadeIn";
@@ -352,20 +352,48 @@ function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
-    <div
+    <motion.div
       className="fixed inset-0 z-[100] overflow-y-auto bg-[#0C0C0C]/95 p-4 backdrop-blur-md sm:p-8"
-      role="dialog"
-      aria-modal="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      onClick={onClose}
     >
-      <div className="mx-auto max-w-6xl rounded-[35px] border border-[#D7E2EA]/20 bg-[#101012] p-5 sm:rounded-[50px] sm:p-8">
+      <motion.div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="project-modal-title"
+        onClick={(event) => event.stopPropagation()}
+        className="mx-auto max-w-6xl rounded-[35px] border border-[#D7E2EA]/20 bg-[#101012] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:rounded-[50px] sm:p-8"
+        initial={{ opacity: 0, y: 18, scale: 0.985 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        exit={{ opacity: 0, y: 12, scale: 0.99 }}
+        transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+      >
         <div className="mb-6 flex items-start justify-between gap-6">
           <div>
             <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#D7E2EA]/50">
               {project.category}
             </p>
 
-            <h3 className="text-3xl font-black uppercase text-[#D7E2EA] sm:text-5xl">
+            <h3 id="project-modal-title" className="text-3xl font-black uppercase text-[#D7E2EA] sm:text-5xl">
               {project.name}
             </h3>
           </div>
@@ -424,8 +452,8 @@ function ProjectModal({
             />
           ) : null}
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -806,12 +834,15 @@ export function ProjectsSection() {
       {/* Project modal                                                       */}
       {/* ------------------------------------------------------------------ */}
 
-      {selected ? (
-        <ProjectModal
-          project={selected}
-          onClose={() => setSelected(null)}
-        />
-      ) : null}
+      <AnimatePresence initial={false}>
+        {selected ? (
+          <ProjectModal
+            key={selected.id}
+            project={selected}
+            onClose={() => setSelected(null)}
+          />
+        ) : null}
+      </AnimatePresence>
 
       {/* ------------------------------------------------------------------ */}
       {/* Video modal                                                         */}
