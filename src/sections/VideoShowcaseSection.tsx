@@ -2,14 +2,14 @@ import { useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import { X, Play } from "lucide-react";
 
-import reel1 from "../assets/videos/Instagram Reel 1.mp4";
-import reel2 from "../assets/videos/Instagram Reel 2.mp4";
-import reel3 from "../assets/videos/Instagram Reel 3.mp4";
-import podcast1 from "../assets/videos/podcast 1.mp4";
-import podcast2 from "../assets/videos/podcast 2.mp4";
-import podcast3 from "../assets/videos/podcast 3.mp4";
-import podcast4 from "../assets/videos/podcast 4.mp4";
-import podcast5 from "../assets/videos/podcast 5.mp4";
+const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
+  eager: true,
+  query: "?url",
+  import: "default",
+}) as Record<string, string>;
+
+const videoUrl = (filename: string) =>
+  videoFiles[`../assets/videos/${filename}`] ?? "";
 
 type VideoItem = {
   src: string;
@@ -19,14 +19,14 @@ type VideoItem = {
 };
 
 const VIDEOS: VideoItem[] = [
-  { src: reel1, label: "Instagram Reel", title: "Reel 01", vertical: true },
-  { src: reel2, label: "Instagram Reel", title: "Reel 02", vertical: true },
-  { src: reel3, label: "Instagram Reel", title: "Reel 03", vertical: true },
-  { src: podcast1, label: "Podcast Edit", title: "Podcast 01" },
-  { src: podcast2, label: "Podcast Edit", title: "Podcast 02" },
-  { src: podcast3, label: "Podcast Edit", title: "Podcast 03" },
-  { src: podcast4, label: "Podcast Edit", title: "Podcast 04" },
-  { src: podcast5, label: "Podcast Edit", title: "Podcast 05" },
+  { src: videoUrl("Instagram Reel 1.mp4"), label: "Instagram Reel", title: "Reel 01", vertical: true },
+  { src: videoUrl("Instagram Reel 2.mp4"), label: "Instagram Reel", title: "Reel 02", vertical: true },
+  { src: videoUrl("Instagram Reel 3.mp4"), label: "Instagram Reel", title: "Reel 03", vertical: true },
+  { src: videoUrl("podcast 1.mp4"), label: "Podcast Edit", title: "Podcast 01" },
+  { src: videoUrl("podcast 2.mp4"), label: "Podcast Edit", title: "Podcast 02" },
+  { src: videoUrl("podcast 3.mp4"), label: "Podcast Edit", title: "Podcast 03" },
+  { src: videoUrl("podcast 4.mp4"), label: "Podcast Edit", title: "Podcast 04" },
+  { src: videoUrl("podcast 5.mp4"), label: "Podcast Edit", title: "Podcast 05" },
 ];
 
 export const VIDEO_COUNT = VIDEOS.length;
@@ -47,10 +47,7 @@ function VideoCard({
     once: true,
     margin: "-80px",
   });
-const shouldLoadVideo = useInView(ref, {
-  once: true,
-  margin: "180px",
-});
+
 
   return (
     <motion.button
@@ -69,23 +66,14 @@ const shouldLoadVideo = useInView(ref, {
       }`}
       aria-label={`Open ${video.title}`}
     >
-      {shouldLoadVideo ? (
-        <video
-          src={video.src}
-          muted
-          loop
-          autoPlay
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          className="h-full w-full object-cover transition duration-700 ease-out group-hover:scale-[1.02]"
-        />
-      ) : (
-        <div
-          className="absolute inset-0 bg-gradient-to-br from-[#17191B] to-[#08090A]"
-          aria-hidden="true"
-        />
-      )}
+      <div
+        className="absolute inset-0 grid place-items-center bg-gradient-to-br from-[#202328] via-[#111214] to-[#08090A]"
+        aria-hidden="true"
+      >
+        <span className="grid h-12 w-12 place-items-center rounded-full border border-white/20 bg-black/35 text-white/85 backdrop-blur">
+          <Play size={17} fill="currentColor" />
+        </span>
+      </div>
 
       <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/75 transition-all duration-300 group-hover:bg-black/65 group-hover:text-white sm:right-5 sm:top-5 sm:h-9 sm:w-9">
         <Play size={13} fill="currentColor" />
@@ -158,7 +146,7 @@ function VideoModal({
           controls
           autoPlay
           playsInline
-          preload="auto"
+          preload="none"
           className={`mx-auto max-h-[88vh] w-full rounded-[22px] object-contain ${
             video.vertical ? "max-w-[520px]" : ""
           }`}
