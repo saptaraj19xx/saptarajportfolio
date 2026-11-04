@@ -4,7 +4,8 @@ import { SERVICES } from "../data/services";
 export function ServicesSection() {
   return (
     <section
-      className="rounded-t-[40px] bg-white px-5 py-20 sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
+      className="rounded-t-[40px] bg-white px-5 py-20 text-[#0C0C0C] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
+      style={{ backgroundColor: "#FFFFFF", color: "#0C0C0C", colorScheme: "only light" }}
     >
       <FadeIn>
         <h2
