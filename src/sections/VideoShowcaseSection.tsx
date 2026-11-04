@@ -42,7 +42,7 @@ function VideoCard({
 }) {
   const ref = useRef<HTMLButtonElement>(null);
 
-  // Reveal the card once, but load/unload its heavy video preview near the viewport.
+  // Reveal cards on scroll; video files load only after a visitor opens playback.
   const hasEnteredView = useInView(ref, {
     once: true,
     margin: "-80px",
@@ -74,10 +74,6 @@ function VideoCard({
           <Play size={17} fill="currentColor" />
         </span>
       </div>
-
-      <span className="absolute right-4 top-4 grid h-8 w-8 place-items-center rounded-full bg-black/45 text-white/75 transition-all duration-300 group-hover:bg-black/65 group-hover:text-white sm:right-5 sm:top-5 sm:h-9 sm:w-9">
-        <Play size={13} fill="currentColor" />
-      </span>
 
       <div className="absolute inset-x-0 bottom-0 px-4 pb-4 pt-12">
         <div className="flex items-end justify-between gap-3">
