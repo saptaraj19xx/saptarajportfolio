@@ -22,6 +22,21 @@ export function HeroSection() {
         md:min-h-[720px]
       "
     >
+      {/* A soft, static radial glow adds depth without running an animation loop. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-[12%] z-0 mx-auto h-[76%] max-w-[1100px] bg-[radial-gradient(ellipse_at_50%_45%,rgba(215,226,234,0.075)_0%,rgba(215,226,234,0.025)_34%,transparent_70%)]"
+      />
+
+      {/* Small portfolio identifier above the headline. */}
+      <div className="absolute left-0 right-0 top-[15.5%] z-10 flex justify-center px-4 sm:top-[26%] md:top-[29%]">
+        <FadeIn delay={0.08} y={10}>
+          <p className="text-center text-[8px] font-medium uppercase tracking-[0.34em] text-[#D7E2EA]/45 sm:text-[10px] sm:tracking-[0.42em]">
+            INDEPENDENT CREATIVE · DESIGN / MOTION / DIGITAL
+          </p>
+        </FadeIn>
+      </div>
+
       {/* =========================================================
     TOP NAVIGATION
     ========================================================= */}
