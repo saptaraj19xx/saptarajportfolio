@@ -367,9 +367,14 @@ function ProjectModal({
     };
   }, [onClose]);
 
+  const leadImage = project.hero_image || project.cover_image;
+  const galleryImages = (
+    project.gallery?.length ? project.gallery : [project.cover_image]
+  ).filter((image) => image !== leadImage);
+
   return (
     <motion.div
-      className="fixed inset-0 z-[100] overflow-y-auto bg-[#0C0C0C]/95 p-4 backdrop-blur-md sm:p-8"
+      className="fixed inset-0 z-[100] overflow-y-auto bg-[#050607]/95 p-0 backdrop-blur-md sm:p-5 lg:p-8"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -381,82 +386,160 @@ function ProjectModal({
         aria-modal="true"
         aria-labelledby="project-modal-title"
         onClick={(event) => event.stopPropagation()}
-        className="mx-auto max-w-6xl rounded-[35px] border border-[#D7E2EA]/20 bg-[#101012] p-5 shadow-[0_24px_80px_rgba(0,0,0,0.35)] sm:rounded-[50px] sm:p-8"
+        className="mx-auto min-h-screen max-w-7xl overflow-hidden border-x border-[#D7E2EA]/10 bg-[#0C0D0E] shadow-[0_24px_100px_rgba(0,0,0,0.55)] sm:min-h-0 sm:rounded-[30px] sm:border"
         initial={{ opacity: 0, y: 18, scale: 0.985 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 12, scale: 0.99 }}
         transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
       >
-        <div className="mb-6 flex items-start justify-between gap-6">
-          <div>
-            <p className="mb-2 text-xs uppercase tracking-[0.3em] text-[#D7E2EA]/50">
-              {project.category}
-            </p>
+        {/* Cinematic lead image */}
+        <header className="relative isolate flex min-h-[430px] flex-col justify-between overflow-hidden bg-[#111416] sm:min-h-[520px] lg:min-h-[650px]">
+          <img
+            src={leadImage}
+            alt={`${project.name} — featured project artwork`}
+            fetchPriority="high"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-contain px-3 pb-10 pt-16 sm:px-10 sm:pb-12 sm:pt-16"
+          />
+          <div className="pointer-events-none absolute inset-0 -z-0 bg-gradient-to-t from-[#0C0D0E] via-[#0C0D0E]/25 to-black/20" />
+          <div className="relative z-10 flex items-center justify-between gap-4 px-5 pt-5 sm:px-9 sm:pt-8">
+            <div>
+              <p className="text-[9px] font-semibold uppercase tracking-[0.32em] text-[#D7E2EA]/65 sm:text-[10px]">
+                Selected work <span className="px-2 text-[#D7E2EA]/25">/</span> {project.category}
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close project"
+              className="grid h-11 w-11 shrink-0 place-items-center rounded-full border border-white/20 bg-black/40 text-white backdrop-blur-md transition duration-300 hover:rotate-90 hover:bg-white hover:text-black"
+            >
+              <X size={19} />
+            </button>
+          </div>
 
-            <h3 id="project-modal-title" className="text-3xl font-black uppercase text-[#D7E2EA] sm:text-5xl">
+          <div className="relative z-10 px-5 pb-7 sm:px-9 sm:pb-10">
+            <p className="mb-3 text-[9px] font-medium uppercase tracking-[0.3em] text-[#D7E2EA]/45 sm:text-[10px]">
+              Case study <span className="px-2">—</span> {project.category}
+            </p>
+            <h3
+              id="project-modal-title"
+              className="max-w-5xl text-[clamp(2.5rem,7vw,6.8rem)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#E7EDF1]"
+            >
               {project.name}
             </h3>
           </div>
+        </header>
 
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close project"
-            className="shrink-0 rounded-full border border-[#D7E2EA]/30 p-3 text-[#D7E2EA] transition hover:bg-white/10"
-          >
-            <X size={20} />
-          </button>
-        </div>
-
-        {project.description ? (
-          <p className="mb-8 max-w-3xl text-base leading-relaxed text-[#D7E2EA]/65 sm:text-lg">
-            {project.description}
-          </p>
-        ) : null}
-
-        {project.live_url ? (
-          <div className="mb-8">
-            <LiveProjectButton href={project.live_url} />
+        {/* Project overview */}
+        <section className="grid gap-8 border-b border-[#D7E2EA]/10 px-5 py-8 sm:px-9 sm:py-10 lg:grid-cols-[minmax(0,1fr)_260px] lg:gap-14">
+          <div>
+            <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D7E2EA]/40">
+              The brief / overview
+            </p>
+            <p className="max-w-3xl text-base leading-[1.85] text-[#D7E2EA]/75 sm:text-lg">
+              {project.description || "A selected creative project by Saptaraj."}
+            </p>
           </div>
+
+          <aside className="flex flex-col justify-between gap-6 border-t border-[#D7E2EA]/10 pt-5 lg:border-l lg:border-t-0 lg:pl-7 lg:pt-0">
+            <div>
+              <p className="mb-2 text-[9px] uppercase tracking-[0.25em] text-[#D7E2EA]/35">
+                Discipline
+              </p>
+              <p className="text-sm font-medium uppercase tracking-[0.08em] text-[#D7E2EA]/85">
+                {project.category}
+              </p>
+            </div>
+            {project.live_url ? (
+              <div>
+                <LiveProjectButton href={project.live_url} />
+              </div>
+            ) : (
+              <p className="text-[9px] uppercase tracking-[0.22em] text-[#D7E2EA]/30">
+                Selected portfolio project
+              </p>
+            )}
+          </aside>
+        </section>
+
+        {/* Visual story / project gallery */}
+        {galleryImages.length > 0 ? (
+          <section className="px-5 py-9 sm:px-9 sm:py-12">
+            <div className="mb-6 flex items-end justify-between gap-4 sm:mb-8">
+              <div>
+                <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D7E2EA]/40">
+                  Behind the details
+                </p>
+                <h4 className="text-2xl font-bold uppercase tracking-[-0.03em] text-[#D7E2EA] sm:text-3xl">
+                  The visual story
+                </h4>
+              </div>
+              <span className="pb-1 text-[9px] uppercase tracking-[0.2em] text-[#D7E2EA]/35">
+                {String(galleryImages.length).padStart(2, "0")} frames
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-12 md:gap-5">
+              {galleryImages.map((image, index) => (
+                <figure
+                  key={`${project.id}-gallery-${index}`}
+                  className={`group relative overflow-hidden rounded-[20px] border border-[#D7E2EA]/10 bg-[#141719] sm:rounded-[26px] ${
+                    index % 3 === 0 ? "md:col-span-12" : "md:col-span-6"
+                  }`}
+                >
+                  <img
+                    src={image}
+                    alt={`${project.name} — visual ${index + 1}`}
+                    loading="lazy"
+                    decoding="async"
+                    className="block h-auto max-h-[900px] min-h-[220px] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+                  />
+                  <figcaption className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-black/45 px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.2em] text-white/60 backdrop-blur-md sm:bottom-4 sm:right-4">
+                    {String(index + 1).padStart(2, "0")} / {String(galleryImages.length).padStart(2, "0")}
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+          </section>
         ) : null}
 
-        <div className="grid gap-4 md:grid-cols-2">
-          {(project.gallery?.length
-            ? project.gallery
-            : [project.cover_image]
-          ).map((image, index) => (
-            <img
-              key={`${project.id}-gallery-${index}`}
-              src={image}
-              alt={`${project.name} ${index + 1}`}
-              loading="lazy"
-              decoding="async"
-              className="w-full rounded-[30px] bg-white object-contain"
-            />
-          ))}
-
-          {project.hero_image ? (
-            <img
-              src={project.hero_image}
-              alt=""
-              className="w-full rounded-[30px] object-cover md:col-span-2"
-            />
-          ) : null}
-
-          {project.video_url ? (
+        {/* Motion / video feature */}
+        {project.video_url ? (
+          <section className="border-t border-[#D7E2EA]/10 px-5 py-9 sm:px-9 sm:py-12">
+            <div className="mb-6">
+              <p className="mb-2 text-[9px] font-semibold uppercase tracking-[0.3em] text-[#D7E2EA]/40">
+                In motion
+              </p>
+              <h4 className="text-2xl font-bold uppercase tracking-[-0.03em] text-[#D7E2EA] sm:text-3xl">
+                Project film
+              </h4>
+            </div>
             <ProjectVideo
               videoUrl={project.video_url}
               posterUrl={project.video_poster}
               title={project.name}
-              className="aspect-video w-full rounded-[30px] md:col-span-2"
+              className="aspect-video w-full overflow-hidden rounded-[20px] border border-[#D7E2EA]/10 bg-[#141719] sm:rounded-[26px]"
             />
-          ) : null}
-        </div>
+          </section>
+        ) : null}
+
+        <footer className="flex items-center justify-between gap-4 border-t border-[#D7E2EA]/10 px-5 py-5 sm:px-9">
+          <p className="text-[8px] uppercase tracking-[0.24em] text-[#D7E2EA]/30 sm:text-[9px]">
+            Saptaraj Borthakur <span className="px-2">/</span> Selected work
+          </p>
+          <button
+            type="button"
+            onClick={onClose}
+            className="inline-flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.22em] text-[#D7E2EA]/65 transition hover:text-white"
+          >
+            Close case study <X size={13} />
+          </button>
+        </footer>
       </motion.div>
     </motion.div>
   );
 }
-
 /* -------------------------------------------------------------------------- */
 /* Empty state                                                                */
 /* -------------------------------------------------------------------------- */
