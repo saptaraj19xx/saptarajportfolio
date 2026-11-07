@@ -103,7 +103,7 @@ export function ContactSection() {
         </div>
       </section>
 
-      <footer className="relative isolate overflow-hidden border-t border-[#D7E2EA]/10 bg-[#08090A]">
+      <footer className="relative isolate starfield-section overflow-hidden border-t border-[#D7E2EA]/10 bg-[#08090A]">
         <ShootingStars className="z-[5]" />
         <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col gap-5 px-5 py-7 sm:px-8 sm:py-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-[#D7E2EA]">
