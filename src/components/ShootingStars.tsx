@@ -10,12 +10,16 @@ export function ShootingStars({ className = "" }: ShootingStarsProps) {
       aria-hidden="true"
       className={`shooting-stars-layer pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      {/* A real transparent starfield texture keeps the stars visible at every viewport size. */}
-      <img
-        src={starfieldSky}
-        alt=""
-        draggable={false}
-        className="absolute inset-0 z-0 h-full w-full select-none object-cover opacity-[0.88]"
+      {/* Repeat the same fixed-size sky tile in every section.
+          This keeps star size and spacing identical in short and tall sections. */}
+      <div
+        className="absolute inset-0 z-0 opacity-[0.88]"
+        style={{
+          backgroundImage: `url(${starfieldSky})`,
+          backgroundPosition: "center top",
+          backgroundRepeat: "repeat",
+          backgroundSize: "1600px 900px",
+        }}
       />
 
       {/* Fine meteor trails move over the static night sky. */}
