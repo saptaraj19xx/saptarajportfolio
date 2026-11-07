@@ -330,61 +330,6 @@ body {
 }
 
 /* =========================================================
-   STARFIELD BACKGROUND — APPLIED DIRECTLY TO EACH SECTION
-   This is a real section background, not a child overlay,
-   so opaque section backgrounds cannot cover the stars.
-   ========================================================= */
-
-.starfield-section {
-  /* Fine, densely scattered stars: independent repeat sizes prevent a grid look. */
-  background-image:
-    radial-gradient(0.75px 0.75px at 12px 17px, rgba(248, 250, 255, 0.82) 98%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 39px 52px, rgba(225, 234, 246, 0.64) 98%, transparent 100%),
-    radial-gradient(0.7px 0.7px at 67px 29px, rgba(255, 255, 255, 0.72) 98%, transparent 100%),
-    radial-gradient(0.9px 0.9px at 21px 73px, rgba(232, 240, 250, 0.58) 98%, transparent 100%),
-    radial-gradient(0.75px 0.75px at 84px 61px, rgba(248, 250, 255, 0.76) 98%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 48px 91px, rgba(220, 231, 244, 0.62) 98%, transparent 100%),
-    radial-gradient(0.7px 0.7px at 106px 24px, rgba(255, 255, 255, 0.7) 98%, transparent 100%),
-    radial-gradient(0.9px 0.9px at 31px 34px, rgba(237, 243, 250, 0.56) 98%, transparent 100%),
-    radial-gradient(0.8px 0.8px at 73px 79px, rgba(255, 255, 255, 0.68) 98%, transparent 100%),
-    radial-gradient(1px 1px at 118px 47px, rgba(244, 247, 252, 0.72) 98%, transparent 100%),
-    radial-gradient(1.15px 1.15px at 54px 18px, rgba(255, 255, 255, 0.84) 98%, transparent 100%),
-    radial-gradient(1.25px 1.25px at 96px 104px, rgba(232, 239, 248, 0.78) 98%, transparent 100%);
-  background-size:
-    78px 84px,
-    91px 103px,
-    107px 89px,
-    119px 111px,
-    86px 121px,
-    132px 97px,
-    101px 127px,
-    143px 116px,
-    112px 139px,
-    158px 126px,
-    177px 151px,
-    193px 167px;
-  background-position:
-    0 0,
-    23px 11px,
-    47px 31px,
-    9px 46px,
-    61px 4px,
-    34px 67px,
-    82px 23px,
-    14px 79px,
-    55px 42px,
-    103px 7px,
-    29px 91px,
-    121px 54px;
-  background-repeat: repeat;
-}
-@media (max-width: 767px) {
-  .starfield-section {
-    background-attachment: scroll;
-  }
-}
-
-/* =========================================================
    SITE-WIDE SHOOTING STARS — QUIET CINEMATIC PASS
    Sparse, fine champagne-white meteors with long pauses.
    ========================================================= */
