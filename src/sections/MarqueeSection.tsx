@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { ROW1_ITEMS, ROW2_ITEMS } from "../data/marqueeItems";
+import { ShootingStars } from "../components/ShootingStars";
 
 import chromeVideoCamera from "../assets/services/chrome-video-camera.webp";
 import glassPlayOrb from "../assets/services/glass-play-orb.webp";
@@ -156,6 +157,9 @@ export function MarqueeSection() {
     <section
       ref={sectionRef}
       className="
+        relative
+        isolate
+        overflow-hidden
         bg-[#0C0C0C]
         pb-20
         pt-32
@@ -166,7 +170,8 @@ export function MarqueeSection() {
       "
       style={{ overflowX: "clip" }}
     >
-      <div className="flex flex-col gap-10 sm:gap-14">
+      <ShootingStars className="z-[5]" />
+      <div className="relative z-10 flex flex-col gap-10 sm:gap-14">
         {/* ROW 1 */}
         <div
           ref={row1Ref}
