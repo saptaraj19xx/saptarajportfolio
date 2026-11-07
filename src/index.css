@@ -353,28 +353,28 @@ body {
 .shooting-star {
   position: absolute;
   z-index: 1;
-  top: var(--meteor-start-top, 4%);
-  left: 112%;
+  top: var(--meteor-top, -10vh);
+  left: 110vw;
   display: block;
   width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /* The trail extends up-right behind a meteor moving down-left. */
-  transform: rotate(-28deg);
+  /* Bright head is on the left; its tail points back to the upper-right. */
+  transform: rotate(-32deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.96) 0%,
-    rgba(239, 245, 255, 0.76) 12%,
-    rgba(218, 231, 250, 0.34) 48%,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(239, 245, 255, 0.82) 12%,
+    rgba(218, 231, 250, 0.38) 48%,
     rgba(218, 231, 250, 0.06) 84%,
     transparent 100%
   );
   box-shadow: 0 0 7px rgba(224, 237, 255, 0.3);
-  animation: shooting-star-sweep 8s cubic-bezier(0.38, 0.04, 0.55, 0.96) infinite;
-  will-change: left, top, opacity;
+  animation: shooting-star-fall 8.5s linear infinite;
+  will-change: transform, opacity;
 }
 
 .shooting-star::before {
@@ -384,7 +384,7 @@ body {
   border-radius: inherit;
   background: inherit;
   filter: blur(2px);
-  opacity: 0.5;
+  opacity: 0.55;
 }
 
 .shooting-star::after {
@@ -397,72 +397,61 @@ body {
   border-radius: 50%;
   background: #ffffff;
   box-shadow:
-    0 0 4px 1px rgba(247, 250, 255, 0.85),
-    0 0 11px 2px rgba(214, 230, 255, 0.45);
+    0 0 4px 1px rgba(247, 250, 255, 0.9),
+    0 0 11px 2px rgba(214, 230, 255, 0.5);
   transform: translate(-50%, -50%);
 }
 
-@keyframes shooting-star-sweep {
+@keyframes shooting-star-fall {
   0%,
-  7% {
-    left: 112%;
-    top: var(--meteor-start-top, -8%);
+  6% {
+    transform: translate3d(0, 0, 0) rotate(-32deg);
     opacity: 0;
   }
 
-  12% {
-    opacity: 0.92;
+  9% {
+    opacity: 0.96;
   }
 
   34% {
-    left: 48%;
-    top: var(--meteor-mid-top, 43%);
-    opacity: 0.8;
+    transform: translate3d(-110vw, 118vh, 0) rotate(-32deg);
+    opacity: 0.82;
   }
 
-  43% {
-    left: -18%;
-    top: var(--meteor-end-top, 100%);
+  41% {
+    transform: translate3d(-140vw, 150vh, 0) rotate(-32deg);
     opacity: 0;
   }
 
   100% {
-    left: -18%;
-    top: var(--meteor-end-top, 100%);
+    transform: translate3d(-140vw, 150vh, 0) rotate(-32deg);
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-start-top: -8%;
-  --meteor-mid-top: 43%;
-  --meteor-end-top: 100%;
-  animation-delay: -2s;
+  --meteor-top: -10vh;
+  animation-delay: -1.1s;
 }
 
 .shooting-star--two {
-  --meteor-start-top: 10%;
-  --meteor-mid-top: 61%;
-  --meteor-end-top: 118%;
+  --meteor-top: 5vh;
   width: clamp(125px, 12vw, 175px);
-  animation-delay: -4.7s;
+  animation-delay: -4s;
 }
 
 .shooting-star--three {
-  --meteor-start-top: -24%;
-  --meteor-mid-top: 27%;
-  --meteor-end-top: 84%;
+  --meteor-top: -23vh;
   width: clamp(105px, 10vw, 145px);
-  opacity: 0;
-  animation-delay: -7.35s;
+  animation-delay: -6.9s;
 }
 
 @media (max-width: 640px) {
   .shooting-star {
     width: 128px;
     height: 1.2px;
-    /* Portrait screens need a steeper falling angle. */
-    transform: rotate(-60deg);
+    /* A steeper diagonal reads naturally on a tall phone screen. */
+    transform: rotate(-68deg);
   }
 
   .shooting-star--two {
@@ -473,53 +462,31 @@ body {
     width: 96px;
   }
 
-  @keyframes shooting-star-sweep {
+  @keyframes shooting-star-fall {
     0%,
-    7% {
-      left: 115%;
-      top: var(--meteor-start-top, -6%);
+    6% {
+      transform: translate3d(0, 0, 0) rotate(-68deg);
       opacity: 0;
     }
 
-    12% {
-      opacity: 0.92;
+    9% {
+      opacity: 0.96;
     }
 
     34% {
-      left: 48%;
-      top: var(--meteor-mid-top, 50%);
-      opacity: 0.8;
+      transform: translate3d(-110vw, 118vh, 0) rotate(-68deg);
+      opacity: 0.82;
     }
 
-    43% {
-      left: -20%;
-      top: var(--meteor-end-top, 110%);
+    41% {
+      transform: translate3d(-140vw, 150vh, 0) rotate(-68deg);
       opacity: 0;
     }
 
     100% {
-      left: -20%;
-      top: var(--meteor-end-top, 110%);
+      transform: translate3d(-140vw, 150vh, 0) rotate(-68deg);
       opacity: 0;
     }
-  }
-
-  .shooting-star--one {
-    --meteor-start-top: -6%;
-    --meteor-mid-top: 50%;
-    --meteor-end-top: 110%;
-  }
-
-  .shooting-star--two {
-    --meteor-start-top: 10%;
-    --meteor-mid-top: 68%;
-    --meteor-end-top: 128%;
-  }
-
-  .shooting-star--three {
-    --meteor-start-top: -28%;
-    --meteor-mid-top: 32%;
-    --meteor-end-top: 92%;
   }
 }
 
