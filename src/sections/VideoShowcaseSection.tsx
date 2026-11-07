@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { useState } from "react";
+import { motion } from "framer-motion";
 import { X } from "lucide-react";
+import { VideoCarousel } from "../components/VideoCarousel";
 
 const videoFiles = import.meta.glob("../assets/videos/*.mp4", {
   eager: true,
@@ -40,84 +41,6 @@ const VIDEOS: VideoItem[] = [
 ];
 
 export const VIDEO_COUNT = VIDEOS.length;
-
-function VideoCard({
-  video,
-  index,
-  onOpen,
-}: {
-  video: VideoItem;
-  index: number;
-  onOpen: (video: VideoItem) => void;
-}) {
-  const ref = useRef<HTMLButtonElement>(null);
-
-  // Reveal cards on scroll; video files load only after a visitor opens playback.
-  const hasEnteredView = useInView(ref, {
-    once: true,
-    margin: "-80px",
-  });
-
-
-  return (
-    <motion.button
-      ref={ref}
-      type="button"
-      onClick={() => onOpen(video)}
-      initial={{ opacity: 0, y: 50 }}
-      animate={hasEnteredView ? { opacity: 1, y: 0 } : {}}
-      transition={{
-        duration: 0.7,
-        delay: hasEnteredView ? Math.min(index * 0.04, 0.2) : 0,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={`group relative overflow-hidden rounded-[28px] border border-[#D7E2EA]/10 bg-[#0C0C0C] text-left transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/25 sm:rounded-[36px] ${
-        video.vertical ? "aspect-[9/14]" : "aspect-video"
-      }`}
-      aria-label={`Open ${video.title}`}
-    >
-      <img
-        src={video.poster}
-        alt={`${video.title} video preview`}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-black/10" />
-
-      <div className="absolute inset-x-0 bottom-0 px-4 pb-4 pt-12">
-        <div className="flex items-end justify-between gap-3">
-          <div className="min-w-0">
-            <p className="mb-1 truncate text-[8px] font-medium uppercase tracking-[0.28em] text-white/48 sm:text-[9px]">
-              {video.label}
-            </p>
-            <h3 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-white/85 transition-colors duration-300 group-hover:text-white sm:text-base">
-              {video.title}
-            </h3>
-          </div>
-
-          <span className="flex shrink-0 items-center gap-1 text-[8px] font-medium uppercase tracking-[0.18em] text-white/38 transition-colors duration-300 group-hover:text-white/70 sm:text-[9px]">
-            View
-            <svg
-              viewBox="0 0 16 16"
-              fill="none"
-              className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-              aria-hidden="true"
-            >
-              <path
-                d="M4 12L12 4M6 4H12V10"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </motion.button>
-  );
-}
 
 function VideoModal({
   video,
@@ -198,17 +121,8 @@ export function VideoShowcaseSection() {
             </p>
           </motion.div>
 
-          {/* Videos */}
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-            {VIDEOS.map((video, index) => (
-              <VideoCard
-                key={video.title}
-                video={video}
-                index={index}
-                onOpen={setSelected}
-              />
-            ))}
-          </div>
+          {/* 3D video carousel */}
+          <VideoCarousel videos={VIDEOS} onSelect={setSelected} />
 
           {/* Bottom CTA */}
           <div className="mt-10 flex justify-center sm:mt-14">
