@@ -5,7 +5,7 @@ import { ShootingStars } from "../components/ShootingStars";
 export function ServicesSection() {
   return (
     <section
-      className="relative isolate overflow-hidden rounded-t-[40px] bg-[#0C0C0C] px-5 py-20 text-[#D7E2EA] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
+      className="relative isolate starfield-section overflow-hidden rounded-t-[40px] bg-[#0C0C0C] px-5 py-20 text-[#D7E2EA] sm:rounded-t-[50px] sm:px-8 sm:py-24 md:rounded-t-[60px] md:px-10 md:py-32"
       style={{ backgroundColor: "#0C0C0C", color: "#D7E2EA", colorScheme: "only light" }}
     >
       <ShootingStars className="z-[5]" />
