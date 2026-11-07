@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Mail } from "lucide-react";
+import { ShootingStars } from "../components/ShootingStars";
 
 const email = "borthakursaptaraj@gmail.com";
 
@@ -28,9 +29,10 @@ export function ContactSection() {
     <>
       <section
         id="contact"
-        className="relative overflow-hidden bg-[#08090A] py-24 sm:py-32 lg:py-48"
+        className="relative isolate overflow-hidden bg-[#08090A] py-24 sm:py-32 lg:py-48"
       >
-        <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+        <ShootingStars className="z-[5]" />
+        <div className="relative z-10 mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
           <motion.div
             initial={reducedMotion ? false : { opacity: 0, y: 30 }}
             whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
@@ -101,8 +103,9 @@ export function ContactSection() {
         </div>
       </section>
 
-      <footer className="border-t border-[#D7E2EA]/10 bg-[#08090A]">
-        <div className="mx-auto flex max-w-[1440px] flex-col gap-5 px-5 py-7 sm:px-8 sm:py-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
+      <footer className="relative isolate overflow-hidden border-t border-[#D7E2EA]/10 bg-[#08090A]">
+        <ShootingStars className="z-[5]" />
+        <div className="relative z-10 mx-auto flex max-w-[1440px] flex-col gap-5 px-5 py-7 sm:px-8 sm:py-8 lg:flex-row lg:items-center lg:justify-between lg:px-12">
           <p className="text-xs font-black uppercase tracking-[0.22em] text-[#D7E2EA]">
             SAPTARAJ BORTHAKUR
           </p>
