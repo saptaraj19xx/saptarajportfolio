@@ -350,24 +350,24 @@ body {
   top: -14%;
   left: 112%;
   display: block;
-  width: clamp(170px, 15vw, 235px);
-  height: 1.5px;
+  width: clamp(180px, 16vw, 245px);
+  height: 1.6px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /* A clean, softly illuminated streak — no separate meteor head. */
+  /* Fine diagonal streak inspired by the supplied reference — no meteor head. */
   transform: rotate(-28deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
-    rgba(224, 237, 255, 0.62) 0%,
-    rgba(231, 241, 255, 0.48) 28%,
-    rgba(220, 235, 255, 0.28) 62%,
-    rgba(210, 228, 255, 0.06) 100%
+    rgba(245, 249, 255, 0.86) 0%,
+    rgba(236, 245, 255, 0.70) 30%,
+    rgba(220, 235, 255, 0.42) 64%,
+    rgba(210, 228, 255, 0.10) 100%
   );
   box-shadow:
-    0 0 5px 1px rgba(224, 237, 255, 0.34),
-    0 0 12px 2px rgba(185, 214, 255, 0.18);
+    0 0 4px 1px rgba(230, 242, 255, 0.46),
+    0 0 10px 2px rgba(185, 214, 255, 0.26);
   mix-blend-mode: screen;
   animation: section-shooting-star 7.4s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
   will-change: left, top, opacity;
@@ -380,7 +380,7 @@ body {
   border-radius: inherit;
   background: inherit;
   filter: blur(3px);
-  opacity: 0.48;
+  opacity: 0.62;
 }
 
 
