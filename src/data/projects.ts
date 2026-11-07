@@ -264,9 +264,9 @@ const projectConfig: Record<
 
   "Website Hero": {
     name: "Website Hero Section",
-    category: "UI/UX",
+    category: "Web Design",
     description:
-      "Website hero interface concept focused on strong visual hierarchy and an engaging first impression.",
+      "Website hero design concept focused on strong visual hierarchy, clear messaging and an engaging first impression.",
   },
 };
 
