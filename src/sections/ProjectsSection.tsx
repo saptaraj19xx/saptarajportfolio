@@ -274,12 +274,20 @@ function ProjectModal({
   project: Project;
   onClose: () => void;
 }) {
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
+
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
+      if (event.key === "Escape") {
+        if (lightboxImage) {
+          setLightboxImage(null);
+        } else {
+          onClose();
+        }
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -287,7 +295,7 @@ function ProjectModal({
       document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [onClose]);
+  }, [lightboxImage, onClose]);
 
   const leadImage = project.hero_image || project.cover_image;
   const galleryImages = (
@@ -316,13 +324,20 @@ function ProjectModal({
       >
         {/* Cinematic lead image */}
         <header className="relative isolate flex min-h-[430px] flex-col justify-between overflow-hidden bg-[#111416] sm:min-h-[520px] lg:min-h-[650px]">
-          <img
-            src={leadImage}
-            alt={`${project.name} — featured project artwork`}
-            fetchPriority="high"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-contain px-3 pb-32 pt-16 sm:px-10 sm:pb-36 sm:pt-16"
-          />
+          <button
+            type="button"
+            onClick={() => setLightboxImage(leadImage)}
+            aria-label={`Enlarge ${project.name} artwork`}
+            className="absolute inset-0 z-[1] flex cursor-zoom-in items-center justify-center"
+          >
+            <img
+              src={leadImage}
+              alt={`${project.name} — featured project artwork`}
+              fetchPriority="high"
+              decoding="async"
+              className="h-full w-full object-contain px-3 pb-32 pt-16 sm:px-10 sm:pb-36 sm:pt-16"
+            />
+          </button>
           <div className="pointer-events-none absolute inset-0 -z-0 bg-gradient-to-t from-[#0C0D0E] via-[#0C0D0E]/25 to-black/20" />
           <div className="relative z-10 flex items-center justify-between gap-4 px-5 pt-5 sm:px-9 sm:pt-8">
             <div>
@@ -410,13 +425,20 @@ function ProjectModal({
                     index % 3 === 0 ? "md:col-span-12" : "md:col-span-6"
                   }`}
                 >
-                  <img
-                    src={image}
-                    alt={`${project.name} — visual ${index + 1}`}
-                    loading="lazy"
-                    decoding="async"
-                    className="block h-auto max-h-[900px] min-h-[220px] w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.01]"
-                  />
+                  <button
+                    type="button"
+                    onClick={() => setLightboxImage(image)}
+                    aria-label={`Enlarge ${project.name} visual ${index + 1}`}
+                    className="group/image block w-full cursor-zoom-in text-left"
+                  >
+                    <img
+                      src={image}
+                      alt={`${project.name} — visual ${index + 1}`}
+                      loading="lazy"
+                      decoding="async"
+                      className="block h-auto max-h-[900px] min-h-[220px] w-full object-contain transition-transform duration-700 ease-out group-hover/image:scale-[1.01]"
+                    />
+                  </button>
                   <figcaption className="absolute bottom-3 right-3 rounded-full border border-white/10 bg-black/45 px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.2em] text-white/60 backdrop-blur-md sm:bottom-4 sm:right-4">
                     {String(index + 1).padStart(2, "0")} / {String(galleryImages.length).padStart(2, "0")}
                   </figcaption>
@@ -459,6 +481,53 @@ function ProjectModal({
           </button>
         </footer>
       </motion.div>
+
+      <AnimatePresence>
+        {lightboxImage ? (
+          <motion.div
+            key={lightboxImage}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`Enlarged ${project.name} image`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={(event) => {
+              event.stopPropagation();
+              setLightboxImage(null);
+            }}
+            className="fixed inset-0 z-[160] flex items-center justify-center bg-black/95 p-4 backdrop-blur-xl sm:p-8"
+          >
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                setLightboxImage(null);
+              }}
+              aria-label="Close enlarged image"
+              className="absolute right-4 top-4 z-10 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-black/50 text-white backdrop-blur-md transition duration-300 hover:rotate-90 hover:bg-white hover:text-black sm:right-7 sm:top-7"
+            >
+              <X size={20} />
+            </button>
+
+            <motion.img
+              src={lightboxImage}
+              alt={`${project.name} enlarged artwork`}
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.97 }}
+              transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
+              onClick={(event) => event.stopPropagation()}
+              className="max-h-[92vh] max-w-[96vw] cursor-default select-none object-contain shadow-[0_24px_100px_rgba(0,0,0,0.65)]"
+            />
+
+            <p className="pointer-events-none absolute bottom-4 left-0 right-0 text-center text-[8px] font-medium uppercase tracking-[0.24em] text-white/45 sm:bottom-6">
+              {project.name} <span className="px-2 text-white/20">/</span> Press ESC or click outside to close
+            </p>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.div>
   );
 }
