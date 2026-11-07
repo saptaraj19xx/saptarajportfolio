@@ -321,7 +321,7 @@ function ProjectModal({
             alt={`${project.name} — featured project artwork`}
             fetchPriority="high"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-contain px-3 pb-10 pt-16 sm:px-10 sm:pb-12 sm:pt-16"
+            className="absolute inset-0 h-full w-full object-contain px-3 pb-32 pt-16 sm:px-10 sm:pb-36 sm:pt-16"
           />
           <div className="pointer-events-none absolute inset-0 -z-0 bg-gradient-to-t from-[#0C0D0E] via-[#0C0D0E]/25 to-black/20" />
           <div className="relative z-10 flex items-center justify-between gap-4 px-5 pt-5 sm:px-9 sm:pt-8">
@@ -346,7 +346,7 @@ function ProjectModal({
             </p>
             <h3
               id="project-modal-title"
-              className="max-w-4xl break-words text-[clamp(1.65rem,4.1vw,3.7rem)] font-black uppercase leading-[0.96] tracking-[-0.035em] text-[#E7EDF1]"
+              className="max-w-4xl break-words text-[clamp(1.3rem,2.8vw,2.5rem)] font-black uppercase leading-[1.02] tracking-[-0.03em] text-[#E7EDF1] [overflow-wrap:anywhere]"
             >
               {project.name}
             </h3>
