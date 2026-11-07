@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Plus, X } from "lucide-react";
 
 import { FadeIn } from "../components/FadeIn";
 import { LiveProjectButton } from "../components/LiveProjectButton";
@@ -538,13 +538,13 @@ function ProjectCategoryBlock({
   title,
   subtitle,
   onOpen,
-  layout = "grid",
+  layout = "showcase",
 }: {
   projects: Project[];
   title: string;
   subtitle: string;
   onOpen: (project: Project) => void;
-  layout?: "grid" | "editorial";
+  layout?: "grid" | "showcase";
 }) {
   const [showAll, setShowAll] = useState(false);
 
@@ -564,8 +564,8 @@ function ProjectCategoryBlock({
         count={projects.length}
       />
 
-      {layout === "editorial" ? (
-        <GraphicDesignEditorial projects={projects} onSelect={onOpen} />
+      {layout === "showcase" ? (
+        <ProjectShowcase projects={projects} onSelect={onOpen} />
       ) : (
         <>
           <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3">
@@ -603,167 +603,286 @@ function ProjectCategoryBlock({
 }
 
 /* -------------------------------------------------------------------------- */
-/* Graphic design editorial spread                                           */
+/* Project category showcase                                                  */
 /* -------------------------------------------------------------------------- */
 
-function GraphicDesignEditorial({
+function ProjectShowcase({
   projects,
   onSelect,
 }: {
   projects: Project[];
   onSelect: (project: Project) => void;
 }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [showMore, setShowMore] = useState(false);
+
   if (!projects.length) return null;
 
-  const [featured, ...rest] = projects;
-  const sideProjects = rest.slice(0, 4);
-  const remainingProjects = rest.slice(4);
+  const activeProject = projects[activeIndex] ?? projects[0];
+  const activeImage = activeProject.thumbnail_image || activeProject.cover_image;
 
-  const imageFor = (project: Project) =>
+  const sideProjects = Array.from(
+    { length: Math.min(4, projects.length - 1) },
+    (_, offset) => {
+      const index = (activeIndex + offset + 1) % projects.length;
+      return { project: projects[index], index };
+    },
+  );
+
+  const sideIndices = new Set(sideProjects.map((item) => item.index));
+  const remainingProjects = projects
+    .map((project, index) => ({ project, index }))
+    .filter(({ index }) => index !== activeIndex && !sideIndices.has(index));
+
+  const changeProject = (direction: -1 | 1) => {
+    setActiveIndex((current) => (current + direction + projects.length) % projects.length);
+  };
+
+  const selectProject = (index: number) => {
+    setActiveIndex(index);
+    setShowMore(false);
+  };
+
+  const projectImage = (project: Project) =>
     project.thumbnail_image || project.cover_image;
 
   return (
-    <div className="space-y-5 sm:space-y-6">
-      <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
-        {/* Featured project: artwork + editorial introduction */}
-        <motion.article
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-70px" }}
-          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-          className="group overflow-hidden rounded-[26px] border border-[#D7E2EA]/12 bg-[#111416] sm:rounded-[32px] lg:col-span-7"
+    <div className="relative isolate overflow-hidden rounded-[28px] border border-[#8D713B]/35 bg-[#100D08] p-3 shadow-[0_28px_100px_rgba(0,0,0,0.32)] sm:rounded-[36px] sm:p-5 lg:p-7">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-75"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, rgba(190,145,58,0.13) 1px, transparent 1.8px), repeating-linear-gradient(132deg, transparent 0 36px, rgba(169,126,48,0.055) 37px 39px, transparent 40px 68px), radial-gradient(ellipse at 22% 60%, rgba(161,111,34,0.2), transparent 48%)",
+          backgroundSize: "64px 64px, 100% 100%, 100% 100%",
+          backgroundPosition: "8px 0, center, center",
+        }}
+      />
+
+      <div className="relative grid gap-6 lg:grid-cols-[minmax(250px,1.04fr)_minmax(230px,0.88fr)_minmax(300px,1.08fr)] lg:items-center lg:gap-7">
+        {/* Featured artwork */}
+        <motion.div
+          key={activeProject.id}
+          initial={{ opacity: 0, x: -16, scale: 0.985 }}
+          animate={{ opacity: 1, x: 0, scale: 1 }}
+          transition={{ duration: 0.36, ease: [0.22, 1, 0.36, 1] }}
+          className="relative mx-auto w-full max-w-[430px] lg:max-w-none"
         >
+          <div className="pointer-events-none absolute -left-2 top-7 h-[86%] w-[94%] rotate-[-5deg] rounded-[24px] border border-[#B18A43]/40 bg-[#241A0B]/55 sm:rounded-[30px]" />
+          <div className="pointer-events-none absolute -left-1 top-4 h-[91%] w-[97%] rotate-[-2.5deg] rounded-[24px] border border-[#B18A43]/35 bg-[#19130A]/75 sm:rounded-[30px]" />
+
           <button
             type="button"
-            onClick={() => onSelect(featured)}
-            aria-label={`Open case study: ${featured.name}`}
-            className="grid h-full w-full text-left md:grid-cols-[1.05fr_0.95fr]"
+            onClick={() => onSelect(activeProject)}
+            aria-label={`Open featured project: ${activeProject.name}`}
+            className="group relative block aspect-[4/5] w-full overflow-hidden rounded-[22px] border border-[#C69B4B]/70 bg-[#17130C] shadow-[0_0_42px_rgba(188,135,43,0.17),0_28px_70px_rgba(0,0,0,0.52)] transition duration-500 hover:border-[#E0B85F] hover:shadow-[0_0_55px_rgba(188,135,43,0.24),0_28px_70px_rgba(0,0,0,0.58)] sm:rounded-[30px]"
           >
-            <div className="relative min-h-[350px] overflow-hidden bg-[#15191C] sm:min-h-[450px] md:min-h-[520px]">
-              <img
-                src={imageFor(featured)}
-                alt={`${featured.name} project artwork`}
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.025] sm:p-5"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
-              <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 text-[8px] font-semibold uppercase tracking-[0.23em] text-white/75 backdrop-blur-md sm:left-5 sm:top-5">
-                Featured project / 01
-              </span>
-              <span className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-black/35 text-white backdrop-blur-md transition duration-300 group-hover:rotate-45 group-hover:bg-white group-hover:text-black">
-                <ArrowUpRight size={17} />
-              </span>
-            </div>
-
-            <div className="flex flex-col justify-between gap-8 p-6 sm:p-8 lg:p-9">
-              <div>
-                <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#D7E2EA]/45">
-                  {featured.category} <span className="px-2 text-[#D7E2EA]/20">/</span> Selected work
-                </p>
-                <h4 className="max-w-md text-3xl font-black uppercase leading-[0.95] tracking-[-0.045em] text-[#D7E2EA] transition-colors duration-300 group-hover:text-white sm:text-4xl lg:text-[clamp(2rem,3.2vw,3.5rem)]">
-                  {featured.name}
-                </h4>
-                <p className="mt-5 max-w-md text-sm leading-[1.8] text-[#D7E2EA]/55 sm:text-[15px]">
-                  {featured.description || "A selected creative project by Saptaraj."}
-                </p>
-              </div>
-
-              <div className="flex items-center justify-between gap-4 border-t border-[#D7E2EA]/12 pt-5">
-                <span className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#D7E2EA]/65">
-                  Explore case study
-                </span>
-                <span className="text-[9px] uppercase tracking-[0.2em] text-[#D7E2EA]/30">
-                  01 / {String(projects.length).padStart(2, "0")}
-                </span>
-              </div>
-            </div>
+            <img
+              src={activeImage}
+              alt={`${activeProject.name} featured artwork`}
+              loading="eager"
+              decoding="async"
+              className="absolute inset-0 h-full w-full object-contain p-2.5 transition-transform duration-700 ease-out group-hover:scale-[1.025] sm:p-4"
+            />
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+            <span className="absolute left-3 top-3 rounded-full border border-white/15 bg-black/45 px-3 py-1.5 text-[7px] font-semibold uppercase tracking-[0.22em] text-white/80 backdrop-blur-md sm:left-4 sm:top-4 sm:text-[8px]">
+              Featured / {String(activeIndex + 1).padStart(2, "0")}
+            </span>
+            <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center rounded-full border border-white/25 bg-black/35 text-white backdrop-blur-md transition duration-300 group-hover:rotate-45 group-hover:bg-white group-hover:text-black sm:right-4 sm:top-4">
+              <ArrowUpRight size={16} />
+            </span>
           </button>
-        </motion.article>
+        </motion.div>
 
-        {/* Compact project index */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-5">
-          {sideProjects.map((project, index) => (
-            <motion.button
-              key={project.id}
+        {/* Project information */}
+        <motion.div
+          key={`${activeProject.id}-details`}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.32, delay: 0.05 }}
+          className="flex min-w-0 flex-col justify-center py-1 lg:py-5"
+        >
+          <span className="mb-5 inline-flex w-fit items-center rounded-full border border-[#B98A36]/70 bg-[#2A1D0A]/45 px-3.5 py-2 text-[8px] font-bold uppercase tracking-[0.22em] text-[#E4B654] sm:text-[9px]">
+            Featured project
+          </span>
+
+          <p className="mb-3 text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D7E2EA]/40 sm:text-[9px]">
+            {activeProject.category} <span className="px-2 text-[#D7E2EA]/20">/</span> Selected work
+          </p>
+
+          <h4 className="max-w-md text-3xl font-black uppercase leading-[0.94] tracking-[-0.045em] text-[#E3E9ED] sm:text-4xl lg:text-[clamp(2rem,3vw,3.25rem)]">
+            {activeProject.name}
+          </h4>
+
+          <p className="mt-5 max-w-md text-sm leading-[1.8] text-[#D7E2EA]/65 sm:text-[15px]">
+            {activeProject.description || "A selected creative project by Saptaraj."}
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2">
+            {[activeProject.category, "Visual design", "Selected work"].map((tag, index) => (
+              <span
+                key={`${tag}-${index}`}
+                className="rounded-full border border-[#D7E2EA]/15 bg-white/[0.025] px-3 py-1.5 text-[8px] font-medium uppercase tracking-[0.13em] text-[#D7E2EA]/65"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <button
               type="button"
-              onClick={() => onSelect(project)}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{
-                duration: 0.55,
-                delay: Math.min(index * 0.07, 0.2),
-                ease: [0.22, 1, 0.36, 1],
-              }}
-              aria-label={`Open case study: ${project.name}`}
-              className="group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#D7E2EA]/10 bg-[#111416] text-left transition duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[26px]"
+              onClick={() => onSelect(activeProject)}
+              className="inline-flex items-center gap-4 rounded-xl border border-[#E2B65A] bg-gradient-to-b from-[#EAC46E] to-[#BE8730] px-5 py-3.5 text-[10px] font-bold uppercase tracking-[0.12em] text-[#171108] shadow-[0_8px_28px_rgba(185,130,41,0.2)] transition duration-300 hover:-translate-y-0.5 hover:brightness-110 sm:px-6"
             >
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#171B1E]">
-                <img
-                  src={imageFor(project)}
-                  alt={`${project.name} project artwork`}
-                  loading="lazy"
-                  decoding="async"
-                  className="absolute inset-0 h-full w-full object-contain p-2 transition-transform duration-700 group-hover:scale-[1.035] sm:p-3"
-                />
-                <span className="absolute left-3 top-3 text-[8px] font-semibold tracking-[0.2em] text-white/70">
-                  {String(index + 2).padStart(2, "0")}
-                </span>
-                <span className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-full bg-black/45 text-white/70 opacity-0 transition group-hover:opacity-100">
-                  <ArrowUpRight size={13} />
-                </span>
-              </div>
-              <div className="min-h-[76px] px-3 pb-3 pt-3 sm:min-h-[88px] sm:px-4 sm:pb-4">
-                <p className="mb-1 truncate text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/38 sm:text-[8px]">
-                  {project.category}
-                </p>
-                <h5 className="line-clamp-2 text-[11px] font-semibold uppercase leading-snug text-[#D7E2EA]/85 transition-colors group-hover:text-white sm:text-xs">
-                  {project.name}
-                </h5>
-              </div>
-            </motion.button>
-          ))}
+              View project <ArrowUpRight size={15} />
+            </button>
+            {activeProject.live_url ? (
+              <span onClick={(event) => event.stopPropagation()}>
+                <LiveProjectButton href={activeProject.live_url} />
+              </span>
+            ) : null}
+          </div>
+        </motion.div>
+
+        {/* Four project previews */}
+        <div className="min-w-0 border-t border-[#B18A43]/20 pt-5 lg:border-l lg:border-t-0 lg:pl-6 lg:pt-0">
+          <div className="mb-4 flex items-center justify-between gap-3">
+            <p className="text-[8px] font-semibold uppercase tracking-[0.24em] text-[#D7E2EA]/40">
+              More selected work
+            </p>
+            <span className="text-[8px] uppercase tracking-[0.18em] text-[#D7E2EA]/30">
+              {String(projects.length).padStart(2, "0")} projects
+            </span>
+          </div>
+
+          {sideProjects.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {sideProjects.map(({ project, index }) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  onClick={() => selectProject(index)}
+                  aria-label={`Feature project: ${project.name}`}
+                  className="group relative overflow-hidden rounded-[17px] border border-[#D7E2EA]/15 bg-[#17130D] text-left transition duration-300 hover:-translate-y-1 hover:border-[#C69B4B]/70 sm:rounded-[21px]"
+                >
+                  <div className="relative aspect-[4/5] overflow-hidden">
+                    <img
+                      src={projectImage(project)}
+                      alt={`${project.name} preview`}
+                      loading="lazy"
+                      decoding="async"
+                      className="absolute inset-0 h-full w-full object-contain p-1.5 transition-transform duration-500 group-hover:scale-[1.035] sm:p-2"
+                    />
+                    <span className="absolute left-2.5 top-2.5 text-[7px] font-semibold tracking-[0.18em] text-white/70 sm:left-3 sm:top-3">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent opacity-60 transition-opacity group-hover:opacity-30" />
+                  </div>
+                  <div className="px-2.5 pb-2.5 pt-2 sm:px-3 sm:pb-3">
+                    <p className="mb-1 truncate text-[6px] font-semibold uppercase tracking-[0.18em] text-[#D7E2EA]/40 sm:text-[7px]">
+                      {project.category}
+                    </p>
+                    <p className="line-clamp-2 text-[9px] font-semibold uppercase leading-snug text-[#D7E2EA]/85 sm:text-[10px]">
+                      {project.name}
+                    </p>
+                  </div>
+                </button>
+              ))}
+            </div>
+          ) : (
+            <div className="grid min-h-[180px] place-items-center rounded-2xl border border-dashed border-[#D7E2EA]/15 text-center text-[9px] uppercase tracking-[0.2em] text-[#D7E2EA]/35">
+              This is the first project
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Remaining projects: a clean horizontal editorial index */}
-      {remainingProjects.length > 0 ? (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {remainingProjects.map((project, index) => (
-            <motion.button
+      {/* Navigation and more-projects controls */}
+      <div className="relative mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[#B18A43]/20 pt-5 sm:mt-7 sm:pt-6">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => changeProject(-1)}
+            aria-label="Previous project"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#B18A43]/65 bg-[#171108]/80 text-[#E4C88F] transition duration-300 hover:border-[#E0B85F] hover:bg-[#2B1E0A] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C69B4B]"
+          >
+            <ArrowLeft size={17} />
+          </button>
+          <button
+            type="button"
+            onClick={() => changeProject(1)}
+            aria-label="Next project"
+            className="grid h-10 w-10 place-items-center rounded-full border border-[#C69B4B] bg-[#C69B4B] text-[#171108] transition duration-300 hover:bg-[#E0B85F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E0B85F]"
+          >
+            <ArrowRight size={17} />
+          </button>
+          <span className="ml-2 min-w-[66px] text-center text-[9px] font-semibold uppercase tracking-[0.2em] text-[#D7C6A2]/70 tabular-nums">
+            {String(activeIndex + 1).padStart(2, "0")} <span className="text-[#8D713B]">/</span> {String(projects.length).padStart(2, "0")}
+          </span>
+        </div>
+
+        <div className="flex flex-1 items-center justify-center gap-1.5 px-2 sm:gap-2">
+          {projects.map((project, index) => (
+            <button
               key={project.id}
               type="button"
-              onClick={() => onSelect(project)}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.18) }}
-              className="group flex items-center gap-4 rounded-[22px] border border-[#D7E2EA]/10 bg-[#101315] p-3 text-left transition duration-300 hover:border-[#D7E2EA]/25 hover:bg-[#14191C] sm:rounded-[26px] sm:p-4"
-            >
-              <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-xl bg-[#1A1F22] sm:h-28 sm:w-24">
-                <img
-                  src={imageFor(project)}
-                  alt={`${project.name} project artwork`}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-contain p-1 transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="mb-2 text-[8px] font-semibold uppercase tracking-[0.22em] text-[#D7E2EA]/38">
-                  Project {String(index + 6).padStart(2, "0")} <span className="px-1.5 text-[#D7E2EA]/20">/</span> {project.category}
-                </p>
-                <h5 className="line-clamp-2 text-sm font-semibold uppercase leading-snug text-[#D7E2EA]/85 transition-colors group-hover:text-white">
-                  {project.name}
-                </h5>
-                <span className="mt-3 inline-flex items-center gap-1.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-[#D7E2EA]/40 transition-colors group-hover:text-[#D7E2EA]/80">
-                  View project <ArrowUpRight size={11} />
-                </span>
-              </div>
-            </motion.button>
+              onClick={() => selectProject(index)}
+              aria-label={`Go to project ${index + 1}: ${project.name}`}
+              aria-current={index === activeIndex ? "step" : undefined}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                index === activeIndex
+                  ? "w-8 bg-[#D9A94D]"
+                  : "w-3 bg-[#D7E2EA]/20 hover:bg-[#D7E2EA]/50"
+              }`}
+            />
           ))}
         </div>
+
+        {remainingProjects.length > 0 ? (
+          <button
+            type="button"
+            onClick={() => setShowMore((current) => !current)}
+            aria-expanded={showMore}
+            className="inline-flex min-h-[48px] min-w-[124px] items-center justify-center gap-2 rounded-xl border border-[#D7E2EA]/20 bg-[#15130F]/80 px-4 py-2.5 text-[#E7DDC8] transition duration-300 hover:border-[#C69B4B]/70 hover:bg-[#211A0F] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C69B4B]"
+          >
+            <Plus size={17} className={`transition-transform duration-300 ${showMore ? "rotate-45" : ""}`} />
+            <span className="text-[8px] font-semibold uppercase tracking-[0.18em]">
+              {showMore ? "Show less" : `${remainingProjects.length} more projects`}
+            </span>
+          </button>
+        ) : null}
+      </div>
+
+      {showMore && remainingProjects.length > 0 ? (
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          className="relative mt-6 grid grid-cols-2 gap-3 border-t border-[#B18A43]/20 pt-6 sm:grid-cols-3 lg:grid-cols-4"
+        >
+          {remainingProjects.map(({ project, index }) => (
+            <button
+              key={project.id}
+              type="button"
+              onClick={() => selectProject(index)}
+              className="group overflow-hidden rounded-[18px] border border-[#D7E2EA]/12 bg-[#15130F] text-left transition hover:border-[#C69B4B]/65"
+            >
+              <div className="aspect-[4/3] overflow-hidden bg-[#1A1711]">
+                <img
+                  src={projectImage(project)}
+                  alt={`${project.name} artwork`}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-contain p-2 transition-transform duration-500 group-hover:scale-[1.04]"
+                />
+              </div>
+              <div className="p-3">
+                <p className="mb-1 text-[7px] uppercase tracking-[0.18em] text-[#D7E2EA]/40">{project.category}</p>
+                <p className="line-clamp-2 text-[10px] font-semibold uppercase leading-snug text-[#D7E2EA]/85">{project.name}</p>
+              </div>
+            </button>
+          ))}
+        </motion.div>
       ) : null}
     </div>
   );
@@ -959,7 +1078,7 @@ export function ProjectsSection() {
                 title="Graphic Design"
                 subtitle="POSTERS · CAMPAIGNS · VISUAL DESIGN"
                 onOpen={setSelected}
-                layout="editorial"
+                layout="showcase"
               />
 
               {/* Branding */}
@@ -968,6 +1087,7 @@ export function ProjectsSection() {
                 title="Branding"
                 subtitle="IDENTITY · VISUAL SYSTEMS · BRAND APPLICATIONS"
                 onOpen={setSelected}
+                layout="showcase"
               />
 
               {/* UI/UX */}
@@ -976,6 +1096,7 @@ export function ProjectsSection() {
                 title="UI/UX"
                 subtitle="PRODUCT · APP · INTERFACE DESIGN"
                 onOpen={setSelected}
+                layout="showcase"
               />
 
               {/* Other existing work */}
@@ -984,6 +1105,7 @@ export function ProjectsSection() {
                 title="Other Work"
                 subtitle="SELECTED CREATIVE WORK"
                 onOpen={setSelected}
+                layout="showcase"
               />
 
               {/* Video */}
@@ -997,7 +1119,7 @@ export function ProjectsSection() {
               title={activeFilter}
               subtitle={`SELECTED ${activeFilter.toUpperCase()}`}
               onOpen={setSelected}
-              layout={activeFilter === "Graphic Design" ? "editorial" : "grid"}
+              layout="showcase"
             />
           )}
         </div>
