@@ -340,8 +340,8 @@ const groupedProjects = new Map<
 
 Object.entries(files)
   .sort(([a], [b]) => {
-    const aIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.webp$/i.test(a);
-    const bIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.webp$/i.test(b);
+    const aIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(a);
+    const bIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(b);
     const aFolder = a.slice(0, a.lastIndexOf("/"));
     const bFolder = b.slice(0, b.lastIndexOf("/"));
 
