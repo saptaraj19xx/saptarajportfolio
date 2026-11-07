@@ -47,7 +47,7 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
         }}
       />
 
-      <div className="relative mx-auto h-[490px] w-full max-w-[1220px] sm:h-[570px] lg:h-[620px]" aria-label="Video carousel">
+      <div className="relative mx-auto h-[500px] w-full max-w-[1220px] sm:h-[570px] lg:h-[660px]" aria-label="Video carousel">
         {videos.map((video, index) => {
           const offset = getRelativeOffset(index, activeIndex, videos.length);
           const isActive = offset === 0;
