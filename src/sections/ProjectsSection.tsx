@@ -6,6 +6,7 @@ import { FadeIn } from "../components/FadeIn";
 import { LiveProjectButton } from "../components/LiveProjectButton";
 import { ProjectVideo } from "../components/ProjectVideo";
 import { VideoCarousel } from "../components/VideoCarousel";
+import { ProjectCarousel } from "../components/ProjectCarousel";
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
 import { CATEGORIES } from "../data/projects";
@@ -537,11 +538,13 @@ function ProjectCategoryBlock({
   title,
   subtitle,
   onOpen,
+  layout = "grid",
 }: {
   projects: Project[];
   title: string;
   subtitle: string;
   onOpen: (project: Project) => void;
+  layout?: "grid" | "carousel";
 }) {
   const [showAll, setShowAll] = useState(false);
 
@@ -561,18 +564,22 @@ function ProjectCategoryBlock({
         count={projects.length}
       />
 
-      <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3">
-        {visibleProjects.map((project, index) => (
-          <ProjectGalleryCard
-            key={project.id}
-            project={project}
-            index={index}
-            onOpen={onOpen}
-          />
-        ))}
-      </div>
+      {layout === "carousel" ? (
+        <ProjectCarousel projects={projects} onSelect={onOpen} />
+      ) : (
+        <>
+          <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3">
+            {visibleProjects.map((project, index) => (
+              <ProjectGalleryCard
+                key={project.id}
+                project={project}
+                index={index}
+                onOpen={onOpen}
+              />
+            ))}
+          </div>
 
-      {projects.length > INITIAL_PROJECT_COUNT ? (
+          {projects.length > INITIAL_PROJECT_COUNT ? (
         <div className="mt-8 flex justify-center">
           <button
             type="button"
@@ -588,7 +595,9 @@ function ProjectCategoryBlock({
             </span>
           </button>
         </div>
-      ) : null}
+          ) : null}
+        </>
+      )}
     </section>
   );
 }
@@ -783,6 +792,7 @@ export function ProjectsSection() {
                 title="Graphic Design"
                 subtitle="POSTERS · CAMPAIGNS · VISUAL DESIGN"
                 onOpen={setSelected}
+                layout="carousel"
               />
 
               {/* Branding */}
@@ -820,6 +830,7 @@ export function ProjectsSection() {
               title={activeFilter}
               subtitle={`SELECTED ${activeFilter.toUpperCase()}`}
               onOpen={setSelected}
+              layout={activeFilter === "Graphic Design" ? "carousel" : "grid"}
             />
           )}
         </div>
