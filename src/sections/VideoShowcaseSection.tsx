@@ -93,7 +93,7 @@ export function VideoShowcaseSection() {
     <>
       <section
         id="video-work"
-        className="relative isolate overflow-hidden bg-[#0C0C0C] px-5 pb-24 pt-16 sm:px-8 sm:pb-28 sm:pt-20 md:px-10 md:pb-36 md:pt-28"
+        className="relative isolate starfield-section overflow-hidden bg-[#0C0C0C] px-5 pb-24 pt-16 sm:px-8 sm:pb-28 sm:pt-20 md:px-10 md:pb-36 md:pt-28"
       >
         <ShootingStars className="z-[5]" />
         <div className="relative z-10 mx-auto max-w-[1500px]">
