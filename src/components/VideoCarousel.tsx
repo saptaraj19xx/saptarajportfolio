@@ -130,9 +130,10 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
           type="button"
           onClick={() => move(-1)}
           aria-label="Previous video"
-          className="grid h-[64px] w-[64px] place-items-center rounded-full border-2 border-[#8D713B]/80 bg-[#171108]/90 text-[#F0E7D4] shadow-[0_8px_30px_rgba(0,0,0,0.28)] transition duration-300 hover:border-[#C6A45D] hover:bg-[#2A1E0B] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A45D] sm:h-[78px] sm:w-[78px]"
+          className="group inline-flex h-12 min-w-[104px] items-center justify-center gap-2 rounded-xl border border-[#8D713B]/65 bg-[#171108]/70 px-4 text-[#E6D7B9] shadow-[0_8px_26px_rgba(0,0,0,0.22)] transition duration-300 hover:-translate-x-1 hover:border-[#C6A45D] hover:bg-[#21190D] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A45D] sm:h-[54px] sm:min-w-[124px] sm:rounded-2xl"
         >
-          <ChevronLeft size={28} strokeWidth={1.8} />
+          <ChevronLeft size={17} strokeWidth={1.9} className="transition-transform duration-300 group-hover:-translate-x-1" />
+          <span className="text-[9px] font-semibold uppercase tracking-[0.2em]">Prev</span>
         </button>
 
         <p className="min-w-[68px] text-center text-[10px] font-medium uppercase tracking-[0.24em] text-[#D7C6A2]/65 tabular-nums">
@@ -143,9 +144,10 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
           type="button"
           onClick={() => move(1)}
           aria-label="Next video"
-          className="grid h-[64px] w-[64px] place-items-center rounded-full border-2 border-[#8D713B]/80 bg-[#171108]/90 text-[#F0E7D4] shadow-[0_8px_30px_rgba(0,0,0,0.28)] transition duration-300 hover:border-[#C6A45D] hover:bg-[#2A1E0B] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#C6A45D] sm:h-[78px] sm:w-[78px]"
+          className="group inline-flex h-12 min-w-[104px] items-center justify-center gap-2 rounded-xl border border-[#C6A45D] bg-[#C6A45D] px-4 text-[#171108] shadow-[0_10px_30px_rgba(0,0,0,0.25)] transition duration-300 hover:translate-x-1 hover:bg-[#D8B96F] hover:text-black focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E4C77E] sm:h-[54px] sm:min-w-[124px] sm:rounded-2xl"
         >
-          <ChevronRight size={28} strokeWidth={1.8} />
+          <span className="text-[9px] font-bold uppercase tracking-[0.2em]">Next</span>
+          <ChevronRight size={17} strokeWidth={2} className="transition-transform duration-300 group-hover:translate-x-1" />
         </button>
       </div>
     </div>
