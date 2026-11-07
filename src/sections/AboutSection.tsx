@@ -1,6 +1,7 @@
 import { FadeIn } from "../components/FadeIn";
 import { AnimatedText } from "../components/AnimatedText";
 import { ContactButton } from "../components/ContactButton";
+import { ShootingStars } from "../components/ShootingStars";
 
 import crystalStar from "../assets/about/crystal-star.webp";
 import neonCursor from "../assets/about/neon-cursor.webp";
@@ -14,8 +15,9 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative flex min-h-[680px] flex-col items-center justify-center overflow-hidden px-5 py-20 sm:min-h-screen sm:px-8 md:px-10"
+      className="relative isolate flex min-h-[680px] flex-col items-center justify-center overflow-hidden px-5 py-20 sm:min-h-screen sm:px-8 md:px-10"
     >
+      <ShootingStars className="z-[5]" />
       {/* =========================================================
           DECORATIVE 3D ASSETS
           ========================================================= */}
