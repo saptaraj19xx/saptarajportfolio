@@ -15,7 +15,7 @@ export function AboutSection() {
   return (
     <section
       id="about"
-      className="relative isolate flex min-h-[680px] flex-col items-center justify-center overflow-hidden px-5 py-20 sm:min-h-screen sm:px-8 md:px-10"
+      className="relative isolate starfield-section flex min-h-[680px] flex-col items-center justify-center overflow-hidden px-5 py-20 sm:min-h-screen sm:px-8 md:px-10"
     >
       <ShootingStars className="z-[5]" />
       {/* =========================================================
