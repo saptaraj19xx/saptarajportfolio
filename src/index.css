@@ -328,3 +328,119 @@ body {
     animation: none !important;
   }
 }
+
+/* =========================================================
+   PROJECTS SECTION — SUBTLE SHOOTING STARS
+   Meteors are distributed through the complete work section,
+   so they appear as visitors scroll from the first project to
+   the last. They remain behind all interactive content.
+   ========================================================= */
+
+.project-shooting-star {
+  position: absolute;
+  top: 0;
+  right: 2%;
+  width: 116px;
+  height: 2px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(215, 226, 234, 0.08) 20%,
+    rgba(225, 190, 115, 0.55) 68%,
+    rgba(255, 250, 232, 0.98) 100%
+  );
+  box-shadow: 0 0 7px rgba(225, 190, 115, 0.55), 0 0 18px rgba(225, 190, 115, 0.2);
+  transform-origin: right center;
+  animation: project-shooting-star 13s cubic-bezier(0.2, 0.55, 0.35, 1) infinite;
+  will-change: transform, opacity;
+}
+
+.project-shooting-star::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -2px;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #fffdf4;
+  box-shadow: 0 0 7px 2px rgba(255, 248, 220, 0.72), 0 0 16px 4px rgba(225, 190, 115, 0.32);
+  transform: translate(50%, -50%);
+}
+
+@keyframes project-shooting-star {
+  0%,
+  64% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.55);
+  }
+
+  67% {
+    opacity: 0.92;
+  }
+
+  76% {
+    opacity: 0.72;
+    transform: translate3d(-8vw, 10vh, 0) rotate(135deg) scale(0.9);
+  }
+
+  86%,
+  100% {
+    opacity: 0;
+    transform: translate3d(-25vw, 30vh, 0) rotate(135deg) scale(0.72);
+  }
+}
+
+.project-shooting-star--one {
+  top: 5%;
+  right: 4%;
+  animation-delay: -1s;
+}
+
+.project-shooting-star--two {
+  top: 22%;
+  right: 11%;
+  width: 92px;
+  animation-duration: 15s;
+  animation-delay: -8s;
+}
+
+.project-shooting-star--three {
+  top: 39%;
+  right: 1%;
+  animation-duration: 14s;
+  animation-delay: -4s;
+}
+
+.project-shooting-star--four {
+  top: 57%;
+  right: 8%;
+  width: 104px;
+  animation-duration: 16s;
+  animation-delay: -11s;
+}
+
+.project-shooting-star--five {
+  top: 76%;
+  right: 3%;
+  animation-duration: 14s;
+  animation-delay: -6s;
+}
+
+.project-shooting-star--six {
+  top: 93%;
+  right: 13%;
+  width: 88px;
+  animation-duration: 15s;
+  animation-delay: -3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-shooting-star {
+    display: none;
+    animation: none;
+  }
+}
