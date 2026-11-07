@@ -1,6 +1,7 @@
 import { FadeIn } from "../components/FadeIn";
 import { Magnet } from "../components/Magnet";
 import { ContactButton } from "../components/ContactButton";
+import { ShootingStars } from "../components/ShootingStars";
 import saptarajCharacter from "../assets/saptaraj-character.webp";
 
 const NAV_LINKS = [
@@ -27,6 +28,8 @@ export function HeroSection() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-[12%] z-0 mx-auto h-[76%] max-w-[1100px] bg-[radial-gradient(ellipse_at_50%_45%,rgba(215,226,234,0.075)_0%,rgba(215,226,234,0.025)_34%,transparent_70%)]"
       />
+
+      <ShootingStars className="z-[5]" />
 
       {/* Small portfolio identifier above the headline. */}
       <div className="absolute left-0 right-0 top-[15.5%] z-10 flex justify-center px-4 sm:top-[26%] md:top-[29%]">
