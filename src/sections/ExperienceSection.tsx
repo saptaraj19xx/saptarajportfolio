@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Download } from "lucide-react";
+import { ShootingStars } from "../components/ShootingStars";
 
 const experience = [
   {
@@ -96,9 +97,10 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative overflow-hidden bg-[#08090A] py-24 sm:py-36 lg:py-44"
+      className="relative isolate overflow-hidden bg-[#08090A] py-24 sm:py-36 lg:py-44"
     >
-      <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+      <ShootingStars className="z-[5]" />
+      <div className="relative z-10 mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
         {/* Section intro */}
         <motion.div
           initial={reducedMotion ? false : { opacity: 0, y: 30 }}
