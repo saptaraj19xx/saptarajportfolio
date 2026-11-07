@@ -15,6 +15,8 @@ export function HeroSection() {
     <section
       className="
         relative
+        isolate
+        starfield-section
         h-[760px]
         w-full
         overflow-hidden
