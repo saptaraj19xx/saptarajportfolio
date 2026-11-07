@@ -97,7 +97,7 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
                   loading={Math.abs(offset) <= 1 ? "eager" : "lazy"}
                   decoding="async"
                   draggable={false}
-                  className="absolute inset-0 h-full w-full select-none object-cover"
+                  className="absolute inset-0 h-full w-full select-none object-cover object-top"
                 />
               ) : (
                 <div className="absolute inset-0 grid place-items-center bg-gradient-to-br from-[#262019] to-black">
