@@ -69,7 +69,7 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
               animate={{
                 left: isActive ? "50%" : side === "left-[20%]" ? "20%" : "80%",
                 x: "-50%",
-                y: isActive ? 0 : 20,
+                y: "-50%",
                 scale: isActive ? 1 : isNeighbour ? 0.76 : 0.58,
                 rotateY: isActive ? 0 : offset < 0 ? 17 : -17,
                 opacity: isActive ? 1 : isNeighbour ? 0.68 : 0,
