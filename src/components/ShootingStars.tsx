@@ -10,8 +10,6 @@ export function ShootingStars({ className = "" }: ShootingStarsProps) {
     >
       <span className="shooting-star shooting-star--one" />
       <span className="shooting-star shooting-star--two" />
-      <span className="shooting-star shooting-star--three" />
-      <span className="shooting-star shooting-star--four" />
     </div>
   );
 }
