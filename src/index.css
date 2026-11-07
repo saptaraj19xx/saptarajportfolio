@@ -353,16 +353,16 @@ body {
 .shooting-star {
   position: absolute;
   z-index: 1;
-  top: var(--meteor-top, -10vh);
-  left: 110vw;
+  top: -25vh;
+  left: var(--meteor-x, 70vw);
   display: block;
   width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /* Bright head is on the left; its tail points back to the upper-right. */
-  transform: rotate(-32deg);
+  /* Head sits at the bottom; the luminous tail trails upward behind it. */
+  transform: rotate(-90deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
@@ -374,7 +374,7 @@ body {
   );
   box-shadow: 0 0 7px rgba(224, 237, 255, 0.3);
   animation: shooting-star-fall 8.5s linear infinite;
-  will-change: transform, opacity;
+  will-change: top, opacity;
 }
 
 .shooting-star::before {
@@ -402,46 +402,48 @@ body {
   transform: translate(-50%, -50%);
 }
 
+/* Pure vertical travel: the star never moves left or right. */
 @keyframes shooting-star-fall {
   0%,
-  6% {
-    transform: translate3d(0, 0, 0) rotate(-32deg);
+  5% {
+    top: -25vh;
     opacity: 0;
   }
 
-  9% {
+  10% {
+    top: -10vh;
     opacity: 0.96;
   }
 
-  34% {
-    transform: translate3d(-110vw, 118vh, 0) rotate(-32deg);
+  70% {
+    top: 100vh;
     opacity: 0.82;
   }
 
-  41% {
-    transform: translate3d(-140vw, 150vh, 0) rotate(-32deg);
+  78% {
+    top: 125vh;
     opacity: 0;
   }
 
   100% {
-    transform: translate3d(-140vw, 150vh, 0) rotate(-32deg);
+    top: 125vh;
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-top: -10vh;
+  --meteor-x: 72vw;
   animation-delay: -1.1s;
 }
 
 .shooting-star--two {
-  --meteor-top: 5vh;
+  --meteor-x: 36vw;
   width: clamp(125px, 12vw, 175px);
   animation-delay: -4s;
 }
 
 .shooting-star--three {
-  --meteor-top: -23vh;
+  --meteor-x: 86vw;
   width: clamp(105px, 10vw, 145px);
   animation-delay: -6.9s;
 }
@@ -450,8 +452,7 @@ body {
   .shooting-star {
     width: 128px;
     height: 1.2px;
-    /* A steeper diagonal reads naturally on a tall phone screen. */
-    transform: rotate(-68deg);
+    transform: rotate(-90deg);
   }
 
   .shooting-star--two {
@@ -460,33 +461,6 @@ body {
 
   .shooting-star--three {
     width: 96px;
-  }
-
-  @keyframes shooting-star-fall {
-    0%,
-    6% {
-      transform: translate3d(0, 0, 0) rotate(-68deg);
-      opacity: 0;
-    }
-
-    9% {
-      opacity: 0.96;
-    }
-
-    34% {
-      transform: translate3d(-110vw, 118vh, 0) rotate(-68deg);
-      opacity: 0.82;
-    }
-
-    41% {
-      transform: translate3d(-140vw, 150vh, 0) rotate(-68deg);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translate3d(-140vw, 150vh, 0) rotate(-68deg);
-      opacity: 0;
-    }
   }
 }
 
