@@ -339,30 +339,24 @@ body {
   isolation: isolate;
 }
 
-/* A single viewport-wide layer keeps meteors visible during page scrolling. */
-.shooting-stars-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 35;
-  overflow: hidden;
-  pointer-events: none;
-  isolation: isolate;
-  mix-blend-mode: screen;
-}
-
+/*
+ * Meteors are children of the section starfield layer.
+ * They render above the tiny background dots, but the entire layer sits
+ * below each section's z-10 content wrapper.
+ */
 .shooting-star {
   position: absolute;
   z-index: 1;
-  top: var(--meteor-top, -10vh);
-  left: var(--meteor-left, 104vw);
+  top: -14%;
+  left: 112%;
   display: block;
   width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /* Bright head leads at the lower-left; the tail points back up-right. */
-  transform: translate3d(0, 0, 0) rotate(-28deg);
+  /* Bright head at the lower-left, luminous tail trailing upper-right. */
+  transform: rotate(-28deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
@@ -373,8 +367,9 @@ body {
     transparent 100%
   );
   box-shadow: 0 0 7px rgba(224, 237, 255, 0.32);
-  animation: shooting-star-top-right-to-bottom-left 6.8s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
-  will-change: transform, opacity;
+  mix-blend-mode: screen;
+  animation: section-shooting-star 7.4s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
+  will-change: left, top, opacity;
 }
 
 .shooting-star::before {
@@ -402,14 +397,12 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/*
- * A single transform moves the head down and left together:
- * upper-right start -> lower-left finish. No separate x/y animations.
- */
-@keyframes shooting-star-top-right-to-bottom-left {
+/* The head travels diagonally from the section's upper-right to lower-left. */
+@keyframes section-shooting-star {
   0%,
   5% {
-    transform: translate3d(0, 0, 0) rotate(-28deg);
+    left: 112%;
+    top: -14%;
     opacity: 0;
   }
 
@@ -418,37 +411,36 @@ body {
   }
 
   68% {
-    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
+    left: -22%;
+    top: 112%;
     opacity: 0.84;
   }
 
   75% {
-    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
+    left: -22%;
+    top: 112%;
     opacity: 0;
   }
 
   100% {
-    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
+    left: -22%;
+    top: 112%;
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-top: -10vh;
-  --meteor-left: 104vw;
   animation-delay: -0.8s;
 }
 
 .shooting-star--two {
-  --meteor-top: 3vh;
-  --meteor-left: 108vw;
+  top: 3%;
   width: clamp(125px, 12vw, 175px);
   animation-delay: -3.1s;
 }
 
 .shooting-star--three {
-  --meteor-top: -25vh;
-  --meteor-left: 116vw;
+  top: -25%;
   width: clamp(105px, 10vw, 145px);
   animation-delay: -5.4s;
 }
@@ -457,8 +449,7 @@ body {
   .shooting-star {
     width: 128px;
     height: 1.2px;
-    /* Match the steeper top-right to bottom-left path on portrait screens. */
-    transform: translate3d(0, 0, 0) rotate(-64deg);
+    transform: rotate(-50deg);
   }
 
   .shooting-star--two {
@@ -468,43 +459,16 @@ body {
   .shooting-star--three {
     width: 96px;
   }
-
-  @keyframes shooting-star-top-right-to-bottom-left {
-    0%,
-    5% {
-      transform: translate3d(0, 0, 0) rotate(-64deg);
-      opacity: 0;
-    }
-
-    10% {
-      opacity: 0.96;
-    }
-
-    68% {
-      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
-      opacity: 0.84;
-    }
-
-    75% {
-      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
-      opacity: 0;
-    }
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .shooting-star {
     display: block !important;
     animation: none !important;
-    left: 58% !important;
-    top: 21% !important;
+    left: 72% !important;
+    top: 18% !important;
     opacity: 0.72 !important;
-    transform: translate3d(0, 0, 0) rotate(-28deg) !important;
+    transform: rotate(-28deg) !important;
   }
 
   .shooting-star--two,
