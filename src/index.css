@@ -353,28 +353,31 @@ body {
 .shooting-star {
   position: absolute;
   z-index: 1;
-  top: -25vh;
-  left: var(--meteor-x, 70vw);
+  top: var(--meteor-start-y, -14vh);
+  left: var(--meteor-start-x, 112vw);
   display: block;
   width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /* Head sits at the bottom; the luminous tail trails upward behind it. */
-  transform: rotate(-90deg);
+  /*
+   * The bright head is at the lower-left end.
+   * Its tail extends up-right behind it as it travels down-left.
+   */
+  transform: rotate(-38deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 1) 0%,
-    rgba(239, 245, 255, 0.82) 12%,
+    rgba(239, 245, 255, 0.84) 12%,
     rgba(218, 231, 250, 0.38) 48%,
     rgba(218, 231, 250, 0.06) 84%,
     transparent 100%
   );
-  box-shadow: 0 0 7px rgba(224, 237, 255, 0.3);
-  animation: shooting-star-fall 8.5s linear infinite;
-  will-change: top, opacity;
+  box-shadow: 0 0 7px rgba(224, 237, 255, 0.32);
+  animation: shooting-star-fall-diagonal 6.8s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
+  will-change: left, top, opacity;
 }
 
 .shooting-star::before {
@@ -402,57 +405,70 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* Pure vertical travel: the star never moves left or right. */
-@keyframes shooting-star-fall {
+/* Head travels from beyond the upper-right edge to beyond the lower-left. */
+@keyframes shooting-star-fall-diagonal {
   0%,
   5% {
-    top: -25vh;
+    left: var(--meteor-start-x, 112vw);
+    top: var(--meteor-start-y, -14vh);
     opacity: 0;
   }
 
   10% {
-    top: -10vh;
     opacity: 0.96;
   }
 
-  70% {
-    top: 100vh;
-    opacity: 0.82;
+  68% {
+    left: var(--meteor-end-x, -22vw);
+    top: var(--meteor-end-y, 112vh);
+    opacity: 0.84;
   }
 
-  78% {
-    top: 125vh;
+  75% {
+    left: var(--meteor-end-x, -22vw);
+    top: var(--meteor-end-y, 112vh);
     opacity: 0;
   }
 
   100% {
-    top: 125vh;
+    left: var(--meteor-end-x, -22vw);
+    top: var(--meteor-end-y, 112vh);
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-x: 72vw;
-  animation-delay: -1.1s;
+  --meteor-start-x: 112vw;
+  --meteor-start-y: -14vh;
+  --meteor-end-x: -22vw;
+  --meteor-end-y: 112vh;
+  animation-delay: -0.8s;
 }
 
 .shooting-star--two {
-  --meteor-x: 36vw;
+  --meteor-start-x: 104vw;
+  --meteor-start-y: 4vh;
+  --meteor-end-x: -26vw;
+  --meteor-end-y: 126vh;
   width: clamp(125px, 12vw, 175px);
-  animation-delay: -4s;
+  animation-delay: -3.1s;
 }
 
 .shooting-star--three {
-  --meteor-x: 86vw;
+  --meteor-start-x: 118vw;
+  --meteor-start-y: -27vh;
+  --meteor-end-x: -16vw;
+  --meteor-end-y: 96vh;
   width: clamp(105px, 10vw, 145px);
-  animation-delay: -6.9s;
+  animation-delay: -5.4s;
 }
 
 @media (max-width: 640px) {
   .shooting-star {
     width: 128px;
     height: 1.2px;
-    transform: rotate(-90deg);
+    /* Steeper, but still clearly top-right to bottom-left on phones. */
+    transform: rotate(-50deg);
   }
 
   .shooting-star--two {
@@ -461,6 +477,27 @@ body {
 
   .shooting-star--three {
     width: 96px;
+  }
+
+  .shooting-star--one {
+    --meteor-start-x: 118vw;
+    --meteor-start-y: -10vh;
+    --meteor-end-x: -24vw;
+    --meteor-end-y: 112vh;
+  }
+
+  .shooting-star--two {
+    --meteor-start-x: 108vw;
+    --meteor-start-y: 2vh;
+    --meteor-end-x: -28vw;
+    --meteor-end-y: 126vh;
+  }
+
+  .shooting-star--three {
+    --meteor-start-x: 122vw;
+    --meteor-start-y: -24vh;
+    --meteor-end-x: -18vw;
+    --meteor-end-y: 100vh;
   }
 }
 
@@ -471,7 +508,7 @@ body {
     left: 58% !important;
     top: 21% !important;
     opacity: 0.72 !important;
-    transform: rotate(-90deg) !important;
+    transform: rotate(-38deg) !important;
   }
 
   .shooting-star--two,
