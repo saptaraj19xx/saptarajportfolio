@@ -339,7 +339,43 @@ body {
   isolation: isolate;
 }
 
+/* Hundreds of tiny, softly lit points create the actual night-sky field. */
+.shooting-stars-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.46;
+  background-image:
+    radial-gradient(1px 1px at 14px 24px, rgba(248, 249, 252, 0.78) 99%, transparent 100%),
+    radial-gradient(1px 1px at 72px 112px, rgba(220, 229, 238, 0.62) 99%, transparent 100%),
+    radial-gradient(1.3px 1.3px at 138px 46px, rgba(255, 255, 255, 0.72) 99%, transparent 100%),
+    radial-gradient(1px 1px at 188px 164px, rgba(228, 233, 240, 0.58) 99%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 218px 82px, rgba(255, 255, 255, 0.7) 99%, transparent 100%),
+    radial-gradient(1px 1px at 42px 188px, rgba(222, 229, 239, 0.64) 99%, transparent 100%),
+    radial-gradient(1px 1px at 116px 202px, rgba(255, 255, 255, 0.48) 99%, transparent 100%);
+  background-size:
+    240px 220px,
+    270px 250px,
+    310px 280px,
+    230px 260px,
+    290px 240px,
+    260px 230px,
+    320px 300px;
+  background-position:
+    0 0,
+    38px 17px,
+    82px 46px,
+    16px 91px,
+    124px 12px,
+    62px 128px,
+    171px 73px;
+  animation: starfield-soft-twinkle 11s ease-in-out infinite alternate;
+}
+
 .shooting-star {
+  z-index: 1;
   position: absolute;
   top: 0;
   right: 0;
@@ -373,6 +409,16 @@ body {
   background: rgba(255, 253, 246, 0.9);
   box-shadow: 0 0 5px 1px rgba(247, 236, 211, 0.34);
   transform: translate(50%, -50%);
+}
+
+@keyframes starfield-soft-twinkle {
+  from {
+    opacity: 0.28;
+  }
+
+  to {
+    opacity: 0.58;
+  }
 }
 
 @keyframes shooting-star-travel {
