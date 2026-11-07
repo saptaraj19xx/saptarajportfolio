@@ -346,7 +346,7 @@ function ProjectModal({
             </p>
             <h3
               id="project-modal-title"
-              className="max-w-5xl text-[clamp(2.5rem,7vw,6.8rem)] font-black uppercase leading-[0.9] tracking-[-0.045em] text-[#E7EDF1]"
+              className="max-w-4xl break-words text-[clamp(1.65rem,4.1vw,3.7rem)] font-black uppercase leading-[0.96] tracking-[-0.035em] text-[#E7EDF1]"
             >
               {project.name}
             </h3>
