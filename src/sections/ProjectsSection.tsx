@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Play, X } from "lucide-react";
+import { ArrowUpRight, X } from "lucide-react";
 
 import { FadeIn } from "../components/FadeIn";
 import { LiveProjectButton } from "../components/LiveProjectButton";
 import { ProjectVideo } from "../components/ProjectVideo";
+import { VideoCarousel } from "../components/VideoCarousel";
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
 import { CATEGORIES } from "../data/projects";
@@ -215,86 +216,6 @@ function ProjectGalleryCard({
 /* Video card                                                                 */
 /* -------------------------------------------------------------------------- */
 
-function VideoGalleryCard({
-  video,
-  index,
-  onOpen,
-}: {
-  video: VideoItem;
-  index: number;
-  onOpen: (video: VideoItem) => void;
-}) {
-  return (
-    <motion.button
-      type="button"
-      onClick={() => onOpen(video)}
-      initial={{ opacity: 0, y: 35 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: 0.65,
-        delay: Math.min(index * 0.05, 0.3),
-        ease: [0.22, 1, 0.36, 1],
-      }}
-      className={`group relative overflow-hidden rounded-[26px] border border-[#D7E2EA]/15 bg-[#111214] text-left shadow-[0_18px_60px_rgba(0,0,0,0.25)] transition-all duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[32px] ${
-        video.vertical ? "aspect-[9/14]" : "aspect-video"
-      }`}
-      aria-label={`Open ${video.title}`}
-    >
-      {/* -------------------------------------------------------------- */}
-      {/* Video                                                          */}
-      {/* -------------------------------------------------------------- */}
-
-      <img
-        src={video.poster}
-        alt={`${video.title} video preview`}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-[1.025]"
-      />
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/5 to-black/10" />
-
-      {/* -------------------------------------------------------------- */}
-      {/* Play button                                                     */}
-      {/* -------------------------------------------------------------- */}
-
-      <span className="absolute right-4 top-4 grid h-9 w-9 place-items-center rounded-full border border-white/15 bg-black/25 text-white/75 backdrop-blur-md transition-all duration-300 group-hover:bg-[#D7E2EA] group-hover:text-[#08090A] sm:right-5 sm:top-5 sm:h-10 sm:w-10">
-        <Play size={14} fill="currentColor" />
-      </span>
-
-      {/* -------------------------------------------------------------- */}
-      {/* Small premium video caption                                    */}
-      {/* -------------------------------------------------------------- */}
-
-      <div className="absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
-        <div className="flex items-center justify-between gap-3 rounded-full border border-white/10 bg-[#08090A]/55 px-4 py-2.5 shadow-[0_8px_30px_rgba(0,0,0,0.25)] backdrop-blur-md transition-all duration-500 group-hover:border-white/20 group-hover:bg-[#08090A]/70 sm:px-5 sm:py-3">
-          
-          <div className="min-w-0">
-            <p className="mb-0.5 truncate text-[7px] font-medium uppercase tracking-[0.28em] text-[#D7E2EA]/45 sm:text-[8px]">
-              {video.label}
-            </p>
-
-            <h4 className="truncate text-sm font-semibold uppercase tracking-[-0.01em] text-[#E2E8ED] transition-colors duration-300 group-hover:text-white sm:text-base">
-              {video.title}
-            </h4>
-          </div>
-
-          <span className="flex shrink-0 items-center gap-1.5 text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/40 transition-colors duration-300 group-hover:text-[#D7E2EA]/75 sm:text-[8px]">
-            View
-            <ArrowUpRight
-              size={12}
-              strokeWidth={1.7}
-              className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
-          </span>
-
-        </div>
-      </div>
-    </motion.button>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
 /* Video modal                                                                */
 /* -------------------------------------------------------------------------- */
 
@@ -689,16 +610,7 @@ function VideoCategoryBlock({
         count={VIDEO_COUNT}
       />
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-4">
-        {VIDEOS.map((video, index) => (
-          <VideoGalleryCard
-            key={video.title}
-            video={video}
-            index={index}
-            onOpen={onOpen}
-          />
-        ))}
-      </div>
+      <VideoCarousel videos={VIDEOS} onSelect={onOpen} />
     </section>
   );
 }
