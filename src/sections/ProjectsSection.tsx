@@ -544,7 +544,7 @@ function ProjectCategoryBlock({
   title: string;
   subtitle: string;
   onOpen: (project: Project) => void;
-  layout?: "grid" | "carousel";
+  layout?: "grid" | "editorial";
 }) {
   const [showAll, setShowAll] = useState(false);
 
