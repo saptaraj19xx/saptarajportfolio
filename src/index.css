@@ -330,31 +330,34 @@ body {
 }
 
 /* =========================================================
-   PROJECTS SECTION — SUBTLE SHOOTING STARS
-   Meteors are distributed through the complete work section,
-   so they appear as visitors scroll from the first project to
-   the last. They remain behind all interactive content.
+   PROJECTS SECTION — VISIBLE SHOOTING STARS
+   More visible meteors are spaced from the top to the bottom
+   of the complete work section. They sit behind all content.
    ========================================================= */
 
 .project-shooting-star {
   position: absolute;
   top: 0;
   right: 2%;
-  width: 116px;
-  height: 2px;
+  display: block;
+  width: 176px;
+  height: 3px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(215, 226, 234, 0.08) 20%,
-    rgba(225, 190, 115, 0.55) 68%,
-    rgba(255, 250, 232, 0.98) 100%
+    rgba(225, 235, 244, 0.16) 20%,
+    rgba(239, 205, 135, 0.72) 70%,
+    #fffdf4 100%
   );
-  box-shadow: 0 0 7px rgba(225, 190, 115, 0.55), 0 0 18px rgba(225, 190, 115, 0.2);
+  box-shadow:
+    0 0 8px rgba(255, 244, 214, 0.78),
+    0 0 20px rgba(225, 177, 87, 0.5),
+    0 0 38px rgba(225, 177, 87, 0.22);
   transform-origin: right center;
-  animation: project-shooting-star 13s cubic-bezier(0.2, 0.55, 0.35, 1) infinite;
+  animation: project-shooting-star 8.5s cubic-bezier(0.2, 0.55, 0.35, 1) infinite;
   will-change: transform, opacity;
 }
 
@@ -363,84 +366,85 @@ body {
   position: absolute;
   top: 50%;
   right: -2px;
-  width: 4px;
-  height: 4px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #fffdf4;
-  box-shadow: 0 0 7px 2px rgba(255, 248, 220, 0.72), 0 0 16px 4px rgba(225, 190, 115, 0.32);
+  background: #fffef8;
+  box-shadow:
+    0 0 8px 3px rgba(255, 251, 235, 0.95),
+    0 0 18px 6px rgba(225, 190, 115, 0.6);
   transform: translate(50%, -50%);
 }
 
 @keyframes project-shooting-star {
   0%,
-  64% {
+  3% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.55);
+    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.65);
   }
 
-  67% {
-    opacity: 0.92;
+  7% {
+    opacity: 1;
   }
 
-  76% {
-    opacity: 0.72;
-    transform: translate3d(-8vw, 10vh, 0) rotate(135deg) scale(0.9);
+  21% {
+    opacity: 0.82;
+    transform: translate3d(-27vw, 31vh, 0) rotate(135deg) scale(1);
   }
 
-  86%,
+  27%,
   100% {
     opacity: 0;
-    transform: translate3d(-25vw, 30vh, 0) rotate(135deg) scale(0.72);
+    transform: translate3d(-34vw, 39vh, 0) rotate(135deg) scale(0.78);
   }
 }
 
 .project-shooting-star--one {
-  top: 5%;
-  right: 4%;
-  animation-delay: -1s;
+  top: 4%;
+  right: 3%;
+  animation-delay: -0.4s;
 }
 
 .project-shooting-star--two {
-  top: 22%;
-  right: 11%;
-  width: 92px;
-  animation-duration: 15s;
-  animation-delay: -8s;
+  top: 19%;
+  right: 13%;
+  width: 138px;
+  animation-delay: -1.8s;
 }
 
 .project-shooting-star--three {
-  top: 39%;
-  right: 1%;
-  animation-duration: 14s;
-  animation-delay: -4s;
+  top: 35%;
+  right: 5%;
+  width: 196px;
+  animation-delay: -3.2s;
 }
 
 .project-shooting-star--four {
-  top: 57%;
-  right: 8%;
-  width: 104px;
-  animation-duration: 16s;
-  animation-delay: -11s;
+  top: 52%;
+  right: 15%;
+  width: 148px;
+  animation-delay: -4.6s;
 }
 
 .project-shooting-star--five {
-  top: 76%;
-  right: 3%;
-  animation-duration: 14s;
+  top: 70%;
+  right: 4%;
+  width: 184px;
   animation-delay: -6s;
 }
 
 .project-shooting-star--six {
-  top: 93%;
-  right: 13%;
-  width: 88px;
-  animation-duration: 15s;
-  animation-delay: -3s;
+  top: 88%;
+  right: 12%;
+  width: 142px;
+  animation-delay: -7.4s;
 }
 
+/* In reduced-motion mode, keep soft static streaks instead of animation. */
 @media (prefers-reduced-motion: reduce) {
   .project-shooting-star {
-    display: none;
-    animation: none;
+    animation: none !important;
+    opacity: 0.5;
+    transform: rotate(135deg);
   }
 }
