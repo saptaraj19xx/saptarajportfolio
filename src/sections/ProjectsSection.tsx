@@ -6,7 +6,7 @@ import { FadeIn } from "../components/FadeIn";
 import { LiveProjectButton } from "../components/LiveProjectButton";
 import { ProjectVideo } from "../components/ProjectVideo";
 import { VideoCarousel } from "../components/VideoCarousel";
-import { ProjectCarousel } from "../components/ProjectCarousel";
+
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
 import { CATEGORIES } from "../data/projects";
@@ -564,8 +564,8 @@ function ProjectCategoryBlock({
         count={projects.length}
       />
 
-      {layout === "carousel" ? (
-        <ProjectCarousel projects={projects} onSelect={onOpen} />
+      {layout === "editorial" ? (
+        <GraphicDesignEditorial projects={projects} onSelect={onOpen} />
       ) : (
         <>
           <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3">
@@ -599,6 +599,173 @@ function ProjectCategoryBlock({
         </>
       )}
     </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Graphic design editorial spread                                           */
+/* -------------------------------------------------------------------------- */
+
+function GraphicDesignEditorial({
+  projects,
+  onSelect,
+}: {
+  projects: Project[];
+  onSelect: (project: Project) => void;
+}) {
+  if (!projects.length) return null;
+
+  const [featured, ...rest] = projects;
+  const sideProjects = rest.slice(0, 4);
+  const remainingProjects = rest.slice(4);
+
+  const imageFor = (project: Project) =>
+    project.thumbnail_image || project.cover_image;
+
+  return (
+    <div className="space-y-5 sm:space-y-6">
+      <div className="grid gap-4 lg:grid-cols-12 lg:gap-5">
+        {/* Featured project: artwork + editorial introduction */}
+        <motion.article
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-70px" }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+          className="group overflow-hidden rounded-[26px] border border-[#D7E2EA]/12 bg-[#111416] sm:rounded-[32px] lg:col-span-7"
+        >
+          <button
+            type="button"
+            onClick={() => onSelect(featured)}
+            aria-label={`Open case study: ${featured.name}`}
+            className="grid h-full w-full text-left md:grid-cols-[1.05fr_0.95fr]"
+          >
+            <div className="relative min-h-[350px] overflow-hidden bg-[#15191C] sm:min-h-[450px] md:min-h-[520px]">
+              <img
+                src={imageFor(featured)}
+                alt={`${featured.name} project artwork`}
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 h-full w-full object-contain p-3 transition-transform duration-700 ease-out group-hover:scale-[1.025] sm:p-5"
+              />
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-black/10" />
+              <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 text-[8px] font-semibold uppercase tracking-[0.23em] text-white/75 backdrop-blur-md sm:left-5 sm:top-5">
+                Featured project / 01
+              </span>
+              <span className="absolute bottom-4 right-4 grid h-10 w-10 place-items-center rounded-full border border-white/25 bg-black/35 text-white backdrop-blur-md transition duration-300 group-hover:rotate-45 group-hover:bg-white group-hover:text-black">
+                <ArrowUpRight size={17} />
+              </span>
+            </div>
+
+            <div className="flex flex-col justify-between gap-8 p-6 sm:p-8 lg:p-9">
+              <div>
+                <p className="mb-4 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#D7E2EA]/45">
+                  {featured.category} <span className="px-2 text-[#D7E2EA]/20">/</span> Selected work
+                </p>
+                <h4 className="max-w-md text-3xl font-black uppercase leading-[0.95] tracking-[-0.045em] text-[#D7E2EA] transition-colors duration-300 group-hover:text-white sm:text-4xl lg:text-[clamp(2rem,3.2vw,3.5rem)]">
+                  {featured.name}
+                </h4>
+                <p className="mt-5 max-w-md text-sm leading-[1.8] text-[#D7E2EA]/55 sm:text-[15px]">
+                  {featured.description || "A selected creative project by Saptaraj."}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-between gap-4 border-t border-[#D7E2EA]/12 pt-5">
+                <span className="text-[9px] font-semibold uppercase tracking-[0.23em] text-[#D7E2EA]/65">
+                  Explore case study
+                </span>
+                <span className="text-[9px] uppercase tracking-[0.2em] text-[#D7E2EA]/30">
+                  01 / {String(projects.length).padStart(2, "0")}
+                </span>
+              </div>
+            </div>
+          </button>
+        </motion.article>
+
+        {/* Compact project index */}
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:col-span-5">
+          {sideProjects.map((project, index) => (
+            <motion.button
+              key={project.id}
+              type="button"
+              onClick={() => onSelect(project)}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{
+                duration: 0.55,
+                delay: Math.min(index * 0.07, 0.2),
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              aria-label={`Open case study: ${project.name}`}
+              className="group relative flex min-w-0 flex-col overflow-hidden rounded-[22px] border border-[#D7E2EA]/10 bg-[#111416] text-left transition duration-500 hover:-translate-y-1 hover:border-[#D7E2EA]/30 sm:rounded-[26px]"
+            >
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-[#171B1E]">
+                <img
+                  src={imageFor(project)}
+                  alt={`${project.name} project artwork`}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 h-full w-full object-contain p-2 transition-transform duration-700 group-hover:scale-[1.035] sm:p-3"
+                />
+                <span className="absolute left-3 top-3 text-[8px] font-semibold tracking-[0.2em] text-white/70">
+                  {String(index + 2).padStart(2, "0")}
+                </span>
+                <span className="absolute right-3 top-3 grid h-7 w-7 place-items-center rounded-full bg-black/45 text-white/70 opacity-0 transition group-hover:opacity-100">
+                  <ArrowUpRight size={13} />
+                </span>
+              </div>
+              <div className="min-h-[76px] px-3 pb-3 pt-3 sm:min-h-[88px] sm:px-4 sm:pb-4">
+                <p className="mb-1 truncate text-[7px] font-semibold uppercase tracking-[0.2em] text-[#D7E2EA]/38 sm:text-[8px]">
+                  {project.category}
+                </p>
+                <h5 className="line-clamp-2 text-[11px] font-semibold uppercase leading-snug text-[#D7E2EA]/85 transition-colors group-hover:text-white sm:text-xs">
+                  {project.name}
+                </h5>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      </div>
+
+      {/* Remaining projects: a clean horizontal editorial index */}
+      {remainingProjects.length > 0 ? (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {remainingProjects.map((project, index) => (
+            <motion.button
+              key={project.id}
+              type="button"
+              onClick={() => onSelect(project)}
+              initial={{ opacity: 0, y: 22 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.5, delay: Math.min(index * 0.06, 0.18) }}
+              className="group flex items-center gap-4 rounded-[22px] border border-[#D7E2EA]/10 bg-[#101315] p-3 text-left transition duration-300 hover:border-[#D7E2EA]/25 hover:bg-[#14191C] sm:rounded-[26px] sm:p-4"
+            >
+              <div className="relative h-24 w-20 shrink-0 overflow-hidden rounded-xl bg-[#1A1F22] sm:h-28 sm:w-24">
+                <img
+                  src={imageFor(project)}
+                  alt={`${project.name} project artwork`}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-contain p-1 transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="mb-2 text-[8px] font-semibold uppercase tracking-[0.22em] text-[#D7E2EA]/38">
+                  Project {String(index + 6).padStart(2, "0")} <span className="px-1.5 text-[#D7E2EA]/20">/</span> {project.category}
+                </p>
+                <h5 className="line-clamp-2 text-sm font-semibold uppercase leading-snug text-[#D7E2EA]/85 transition-colors group-hover:text-white">
+                  {project.name}
+                </h5>
+                <span className="mt-3 inline-flex items-center gap-1.5 text-[8px] font-semibold uppercase tracking-[0.18em] text-[#D7E2EA]/40 transition-colors group-hover:text-[#D7E2EA]/80">
+                  View project <ArrowUpRight size={11} />
+                </span>
+              </div>
+            </motion.button>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }
 
@@ -792,7 +959,7 @@ export function ProjectsSection() {
                 title="Graphic Design"
                 subtitle="POSTERS · CAMPAIGNS · VISUAL DESIGN"
                 onOpen={setSelected}
-                layout="carousel"
+                layout="editorial"
               />
 
               {/* Branding */}
@@ -830,7 +997,7 @@ export function ProjectsSection() {
               title={activeFilter}
               subtitle={`SELECTED ${activeFilter.toUpperCase()}`}
               onOpen={setSelected}
-              layout={activeFilter === "Graphic Design" ? "carousel" : "grid"}
+              layout={activeFilter === "Graphic Design" ? "editorial" : "grid"}
             />
           )}
         </div>
