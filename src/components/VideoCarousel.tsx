@@ -86,7 +86,7 @@ export function VideoCarousel({ videos, onSelect }: VideoCarouselProps) {
                 perspective: 1200,
                 pointerEvents: isVisible ? "auto" : "none",
               }}
-              className={`absolute top-1/2 -mt-[235px] block w-[min(76vw,340px)] overflow-hidden rounded-[26px] border border-[#A88A4E]/55 bg-[#080808] text-left shadow-[0_24px_70px_rgba(0,0,0,0.6)] outline-none transition-[border-color,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-[#C5A45F] sm:-mt-[270px] sm:w-[min(38vw,370px)] sm:rounded-[32px] lg:-mt-[290px] lg:w-[min(31vw,390px)] ${
+              className={`absolute top-[calc(50%+22px)] block w-[min(76vw,340px)] overflow-hidden rounded-[26px] border border-[#A88A4E]/55 bg-[#080808] text-left shadow-[0_24px_70px_rgba(0,0,0,0.6)] outline-none transition-[border-color,box-shadow] duration-300 focus-visible:ring-2 focus-visible:ring-[#C5A45F] sm:w-[min(38vw,370px)] sm:rounded-[32px] lg:w-[min(31vw,390px)] ${
                 isActive ? "border-[#C6A45D]/85 shadow-[0_28px_90px_rgba(0,0,0,0.65)]" : "hover:border-[#C6A45D]/75"
               } ${video.vertical ? "aspect-[9/14]" : "aspect-video"}`}
             >
