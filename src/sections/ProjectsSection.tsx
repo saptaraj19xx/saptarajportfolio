@@ -1008,42 +1008,43 @@ export function ProjectsSection() {
   /* Group categories                                                         */
   /* ------------------------------------------------------------------------ */
 
-  const graphicProjects = filteredProjects.filter((project) => {
+  const isCategory = (project: Project, ...categories: string[]) => {
     const category = project.category.toLowerCase();
+    return categories.some((item) => category === item.toLowerCase());
+  };
 
-    return (
-      category.includes("graphic design") ||
-      (!category.includes("ui/ux") &&
-        !category.includes("ui ux") &&
-        !category.includes("branding") &&
-        !category.includes("video editing"))
-    );
-  });
-
-  const brandingProjects = filteredProjects.filter((project) =>
-    project.category.toLowerCase().includes("branding"),
+  const graphicProjects = filteredProjects.filter((project) =>
+    isCategory(project, "Graphic Design"),
   );
 
-  const uiuxProjects = filteredProjects.filter((project) => {
-    const category = project.category.toLowerCase();
+  const brandingProjects = filteredProjects.filter((project) =>
+    isCategory(project, "Branding"),
+  );
 
-    return (
-      category.includes("ui/ux") ||
-      category.includes("ui ux")
-    );
-  });
+  const uiuxProjects = filteredProjects.filter((project) =>
+    isCategory(project, "UI/UX"),
+  );
 
-  const otherProjects = filteredProjects.filter((project) => {
-    const category = project.category.toLowerCase();
+  const webDesignProjects = filteredProjects.filter((project) =>
+    isCategory(project, "Web Design"),
+  );
 
-    return (
-      !category.includes("graphic design") &&
-      !category.includes("ui/ux") &&
-      !category.includes("ui ux") &&
-      !category.includes("branding") &&
-      !category.includes("video editing")
-    );
-  });
+  const otherProjects = filteredProjects.filter((project) =>
+    ![
+      "Graphic Design",
+      "Branding",
+      "UI/UX",
+      "Web Design",
+      "Video Editing",
+    ].some((category) => isCategory(project, category)),
+  );
+
+  // Don't show empty filters. Add them automatically once matching work exists.
+  const availableCategories = CATEGORIES.filter((category) =>
+    category === "Video Editing"
+      ? VIDEO_COUNT > 0
+      : projects.some((project) => isCategory(project, category)),
+  );
 
   /* ------------------------------------------------------------------------ */
   /* Render                                                                   */
@@ -1091,7 +1092,7 @@ export function ProjectsSection() {
     role="tablist"
     aria-label="Filter projects by category"
   >
-            {["All", ...CATEGORIES].map((category) => {
+            {["All", ...availableCategories].map((category) => {
               const isActive = activeFilter === category;
 
               const count =
@@ -1167,6 +1168,15 @@ export function ProjectsSection() {
                 projects={uiuxProjects}
                 title="UI/UX"
                 subtitle="PRODUCT · APP · INTERFACE DESIGN"
+                onOpen={setSelected}
+                layout="showcase"
+              />
+
+              {/* Web Design */}
+              <ProjectCategoryBlock
+                projects={webDesignProjects}
+                title="Web Design"
+                subtitle="WEBSITES · LANDING PAGES · DIGITAL EXPERIENCES"
                 onOpen={setSelected}
                 layout="showcase"
               />
