@@ -37,7 +37,12 @@ export type Project = {
  */
 
 const files = import.meta.glob(
-  "../assets/projects/**/*.webp",
+  [
+    "../assets/projects/**/*.webp",
+    "../assets/projects/**/*.png",
+    "../assets/projects/**/*.jpg",
+    "../assets/projects/**/*.jpeg",
+  ],
   {
     eager: true,
     query: "?url",
@@ -45,11 +50,19 @@ const files = import.meta.glob(
   },
 ) as Record<string, string>;
 
-const thumbnails = import.meta.glob("../assets/project-thumbnails/**/*.webp", {
-  eager: true,
-  query: "?url",
-  import: "default",
-}) as Record<string, string>;
+const thumbnails = import.meta.glob(
+  [
+    "../assets/project-thumbnails/**/*.webp",
+    "../assets/project-thumbnails/**/*.png",
+    "../assets/project-thumbnails/**/*.jpg",
+    "../assets/project-thumbnails/**/*.jpeg",
+  ],
+  {
+    eager: true,
+    query: "?url",
+    import: "default",
+  },
+) as Record<string, string>;
 
 const thumbnailFor = (projectAssetPath: string, fallback: string) => {
   const thumbnailPath = projectAssetPath
@@ -210,6 +223,13 @@ const projectConfig: Record<
     category: "Branding",
     description:
       "A cohesive brand identity system developed across visual direction, colour, typography, presentation and real-world applications.",
+  },
+
+  "REFORM Performance Wear": {
+    name: "RE:FORM — Performance Wear",
+    category: "Branding",
+    description:
+      "A complete performance sportswear identity, from logo and campaign posters to the FLOW running shoe, packaging system and apparel collection.",
   },
 
     /* -----------------------------------------------------
