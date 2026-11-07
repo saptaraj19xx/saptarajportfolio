@@ -97,7 +97,7 @@ export function ExperienceSection() {
   return (
     <section
       id="experience"
-      className="relative isolate starfield-section overflow-hidden bg-[#08090A] py-24 sm:py-36 lg:py-44"
+      className="relative isolate  overflow-hidden bg-[#08090A] py-24 sm:py-36 lg:py-44"
     >
       <ShootingStars className="z-[5]" />
       <div className="relative z-10 mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
