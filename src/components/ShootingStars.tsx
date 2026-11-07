@@ -20,7 +20,6 @@ export function ShootingStars({ className = "" }: ShootingStarsProps) {
 
       {/* Fine meteor trails move over the static night sky. */}
       <span className="shooting-star shooting-star--one" />
-      <span className="shooting-star shooting-star--two" />
     </div>
   );
 }
