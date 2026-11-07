@@ -330,9 +330,8 @@ body {
 }
 
 /* =========================================================
-   SITE-WIDE SHOOTING STARS
-   A consistent meteor effect appears throughout the portfolio,
-   from the hero through projects, experience and contact.
+   SITE-WIDE SHOOTING STARS — QUIET CINEMATIC PASS
+   Sparse, fine champagne-white meteors with long pauses.
    ========================================================= */
 
 .shooting-stars-layer {
@@ -345,24 +344,21 @@ body {
   top: 0;
   right: 0;
   display: block;
-  width: clamp(118px, 13vw, 190px);
-  height: 3px;
+  width: 136px;
+  height: 1px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(225, 235, 244, 0.18) 18%,
-    rgba(239, 205, 135, 0.78) 72%,
-    #fffef7 100%
+    rgba(235, 231, 218, 0.04) 28%,
+    rgba(235, 231, 218, 0.28) 72%,
+    rgba(255, 251, 239, 0.76) 100%
   );
-  box-shadow:
-    0 0 8px rgba(255, 247, 224, 0.85),
-    0 0 20px rgba(225, 177, 87, 0.58),
-    0 0 38px rgba(225, 177, 87, 0.24);
+  box-shadow: 0 0 4px rgba(239, 229, 202, 0.22);
   transform-origin: right center;
-  animation: shooting-star-travel 5.8s cubic-bezier(0.2, 0.55, 0.35, 1) infinite;
+  animation: shooting-star-travel 19s cubic-bezier(0.22, 0.58, 0.32, 1) infinite;
   will-change: transform, opacity;
 }
 
@@ -370,83 +366,65 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  right: -2px;
-  width: 6px;
-  height: 6px;
+  right: -1px;
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
-  background: #fffef8;
-  box-shadow:
-    0 0 8px 3px rgba(255, 251, 235, 0.98),
-    0 0 18px 6px rgba(225, 190, 115, 0.7);
+  background: rgba(255, 253, 246, 0.9);
+  box-shadow: 0 0 5px 1px rgba(247, 236, 211, 0.34);
   transform: translate(50%, -50%);
 }
 
 @keyframes shooting-star-travel {
   0%,
-  7% {
+  69% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.58);
+    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.72);
   }
 
-  11% {
-    opacity: 1;
+  72% {
+    opacity: 0.56;
   }
 
-  31% {
-    opacity: 0.86;
-    transform: translate3d(-29vw, 32vh, 0) rotate(135deg) scale(1);
+  80% {
+    opacity: 0.38;
+    transform: translate3d(-15vw, 17vh, 0) rotate(135deg) scale(0.9);
   }
 
-  39%,
+  86%,
   100% {
     opacity: 0;
-    transform: translate3d(-36vw, 40vh, 0) rotate(135deg) scale(0.78);
+    transform: translate3d(-21vw, 24vh, 0) rotate(135deg) scale(0.78);
   }
 }
 
 .shooting-star--one {
-  top: 8%;
-  right: 5%;
-  animation-delay: -0.7s;
+  top: 13%;
+  right: 7%;
+  animation-delay: -3.8s;
 }
 
 .shooting-star--two {
-  top: 31%;
-  right: 15%;
-  width: clamp(105px, 11vw, 160px);
-  animation-delay: -2.15s;
-}
-
-.shooting-star--three {
-  top: 57%;
-  right: 4%;
-  width: clamp(130px, 14vw, 205px);
-  animation-delay: -3.6s;
-}
-
-.shooting-star--four {
-  top: 81%;
-  right: 18%;
-  width: clamp(100px, 10vw, 150px);
-  animation-delay: -5.05s;
+  top: 68%;
+  right: 17%;
+  width: 106px;
+  animation-duration: 24s;
+  animation-delay: -16.2s;
 }
 
 @media (max-width: 640px) {
   .shooting-star {
-    height: 2px;
-    width: 112px;
+    width: 96px;
   }
 
-  .shooting-star--two,
-  .shooting-star--four {
-    width: 92px;
+  .shooting-star--two {
+    width: 78px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .shooting-star {
+    display: none;
     animation: none !important;
-    opacity: 0.48;
-    transform: rotate(135deg);
   }
 }
