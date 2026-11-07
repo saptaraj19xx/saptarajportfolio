@@ -353,19 +353,16 @@ body {
 .shooting-star {
   position: absolute;
   z-index: 1;
-  top: var(--meteor-start-y, -14vh);
-  left: var(--meteor-start-x, 112vw);
+  top: var(--meteor-top, -10vh);
+  left: var(--meteor-left, 104vw);
   display: block;
   width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  /*
-   * The bright head is at the lower-left end.
-   * Its tail extends up-right behind it as it travels down-left.
-   */
-  transform: rotate(-38deg);
+  /* Bright head leads at the lower-left; the tail points back up-right. */
+  transform: translate3d(0, 0, 0) rotate(-28deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
@@ -376,8 +373,8 @@ body {
     transparent 100%
   );
   box-shadow: 0 0 7px rgba(224, 237, 255, 0.32);
-  animation: shooting-star-fall-diagonal 6.8s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
-  will-change: left, top, opacity;
+  animation: shooting-star-top-right-to-bottom-left 6.8s cubic-bezier(0.32, 0.02, 0.52, 0.98) infinite;
+  will-change: transform, opacity;
 }
 
 .shooting-star::before {
@@ -405,12 +402,14 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* Head travels from beyond the upper-right edge to beyond the lower-left. */
-@keyframes shooting-star-fall-diagonal {
+/*
+ * A single transform moves the head down and left together:
+ * upper-right start -> lower-left finish. No separate x/y animations.
+ */
+@keyframes shooting-star-top-right-to-bottom-left {
   0%,
   5% {
-    left: var(--meteor-start-x, 112vw);
-    top: var(--meteor-start-y, -14vh);
+    transform: translate3d(0, 0, 0) rotate(-28deg);
     opacity: 0;
   }
 
@@ -419,46 +418,37 @@ body {
   }
 
   68% {
-    left: var(--meteor-end-x, -22vw);
-    top: var(--meteor-end-y, 112vh);
+    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
     opacity: 0.84;
   }
 
   75% {
-    left: var(--meteor-end-x, -22vw);
-    top: var(--meteor-end-y, 112vh);
+    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
     opacity: 0;
   }
 
   100% {
-    left: var(--meteor-end-x, -22vw);
-    top: var(--meteor-end-y, 112vh);
+    transform: translate3d(-125vw, 120vh, 0) rotate(-28deg);
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-start-x: 112vw;
-  --meteor-start-y: -14vh;
-  --meteor-end-x: -22vw;
-  --meteor-end-y: 112vh;
+  --meteor-top: -10vh;
+  --meteor-left: 104vw;
   animation-delay: -0.8s;
 }
 
 .shooting-star--two {
-  --meteor-start-x: 104vw;
-  --meteor-start-y: 4vh;
-  --meteor-end-x: -26vw;
-  --meteor-end-y: 126vh;
+  --meteor-top: 3vh;
+  --meteor-left: 108vw;
   width: clamp(125px, 12vw, 175px);
   animation-delay: -3.1s;
 }
 
 .shooting-star--three {
-  --meteor-start-x: 118vw;
-  --meteor-start-y: -27vh;
-  --meteor-end-x: -16vw;
-  --meteor-end-y: 96vh;
+  --meteor-top: -25vh;
+  --meteor-left: 116vw;
   width: clamp(105px, 10vw, 145px);
   animation-delay: -5.4s;
 }
@@ -467,8 +457,8 @@ body {
   .shooting-star {
     width: 128px;
     height: 1.2px;
-    /* Steeper, but still clearly top-right to bottom-left on phones. */
-    transform: rotate(-50deg);
+    /* Match the steeper top-right to bottom-left path on portrait screens. */
+    transform: translate3d(0, 0, 0) rotate(-64deg);
   }
 
   .shooting-star--two {
@@ -479,25 +469,31 @@ body {
     width: 96px;
   }
 
-  .shooting-star--one {
-    --meteor-start-x: 118vw;
-    --meteor-start-y: -10vh;
-    --meteor-end-x: -24vw;
-    --meteor-end-y: 112vh;
-  }
+  @keyframes shooting-star-top-right-to-bottom-left {
+    0%,
+    5% {
+      transform: translate3d(0, 0, 0) rotate(-64deg);
+      opacity: 0;
+    }
 
-  .shooting-star--two {
-    --meteor-start-x: 108vw;
-    --meteor-start-y: 2vh;
-    --meteor-end-x: -28vw;
-    --meteor-end-y: 126vh;
-  }
+    10% {
+      opacity: 0.96;
+    }
 
-  .shooting-star--three {
-    --meteor-start-x: 122vw;
-    --meteor-start-y: -24vh;
-    --meteor-end-x: -18vw;
-    --meteor-end-y: 100vh;
+    68% {
+      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
+      opacity: 0.84;
+    }
+
+    75% {
+      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translate3d(-125vw, 120vh, 0) rotate(-64deg);
+      opacity: 0;
+    }
   }
 }
 
@@ -508,7 +504,7 @@ body {
     left: 58% !important;
     top: 21% !important;
     opacity: 0.72 !important;
-    transform: rotate(-38deg) !important;
+    transform: translate3d(0, 0, 0) rotate(-28deg) !important;
   }
 
   .shooting-star--two,
