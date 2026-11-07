@@ -421,26 +421,28 @@ body {
 }
 
 .shooting-star {
-  z-index: 1;
   position: absolute;
-  top: 0;
-  right: 0;
+  z-index: 2;
+  top: 8%;
+  left: 76%;
   display: block;
-  width: 136px;
-  height: 1px;
+  width: clamp(150px, 18vw, 250px);
+  height: 2px;
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
+  transform-origin: right center;
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(235, 231, 218, 0.04) 28%,
-    rgba(235, 231, 218, 0.28) 72%,
-    rgba(255, 251, 239, 0.76) 100%
+    rgba(205, 224, 255, 0.08) 22%,
+    rgba(218, 233, 255, 0.62) 78%,
+    #ffffff 100%
   );
-  box-shadow: 0 0 4px rgba(239, 229, 202, 0.22);
-  transform-origin: right center;
-  animation: shooting-star-travel 19s cubic-bezier(0.22, 0.58, 0.32, 1) infinite;
+  box-shadow:
+    0 0 6px rgba(207, 225, 255, 0.45),
+    0 0 16px rgba(164, 196, 255, 0.28);
+  animation: shooting-star-cross 9s cubic-bezier(0.2, 0.55, 0.35, 1) infinite;
   will-change: transform, opacity;
 }
 
@@ -448,62 +450,54 @@ body {
   content: "";
   position: absolute;
   top: 50%;
-  right: -1px;
-  width: 3px;
-  height: 3px;
+  right: -2px;
+  width: 5px;
+  height: 5px;
   border-radius: 50%;
-  background: rgba(255, 253, 246, 0.9);
-  box-shadow: 0 0 5px 1px rgba(247, 236, 211, 0.34);
+  background: #ffffff;
+  box-shadow:
+    0 0 7px 2px rgba(255, 255, 255, 0.95),
+    0 0 18px 5px rgba(184, 211, 255, 0.58);
   transform: translate(50%, -50%);
 }
 
-@keyframes starfield-soft-twinkle {
-  from {
-    opacity: 0.28;
-  }
-
-  to {
-    opacity: 0.58;
-  }
-}
-
-@keyframes shooting-star-travel {
+@keyframes shooting-star-cross {
   0%,
-  69% {
+  8% {
     opacity: 0;
-    transform: translate3d(0, 0, 0) rotate(135deg) scale(0.72);
+    transform: translate3d(0, 0, 0) rotate(135deg) scaleX(0.35);
   }
 
-  72% {
-    opacity: 0.56;
+  12% {
+    opacity: 0.98;
   }
 
-  80% {
-    opacity: 0.38;
-    transform: translate3d(-15vw, 17vh, 0) rotate(135deg) scale(0.9);
+  35% {
+    opacity: 0.9;
+    transform: translate3d(-47vw, 42vh, 0) rotate(135deg) scaleX(1);
   }
 
-  86%,
+  43%,
   100% {
     opacity: 0;
-    transform: translate3d(-21vw, 24vh, 0) rotate(135deg) scale(0.78);
+    transform: translate3d(-56vw, 50vh, 0) rotate(135deg) scaleX(0.72);
   }
 }
 
 .shooting-star--one {
-  top: 13%;
-  right: 7%;
-  animation-delay: -3.8s;
+  top: 9%;
+  left: 78%;
+  animation-duration: 9s;
+  animation-delay: -2s;
 }
 
 .shooting-star--two {
-  top: 68%;
-  right: 17%;
-  width: 106px;
-  animation-duration: 24s;
-  animation-delay: -16.2s;
+  top: 22%;
+  left: 88%;
+  width: clamp(125px, 15vw, 205px);
+  animation-duration: 12s;
+  animation-delay: -3s;
 }
-
 @media (max-width: 640px) {
   .shooting-star {
     width: 96px;
@@ -515,8 +509,11 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  /* Keep a still meteor visible while respecting the no-motion preference. */
   .shooting-star {
-    display: none;
+    display: block;
     animation: none !important;
+    opacity: 0.72;
+    transform: rotate(135deg);
   }
 }
