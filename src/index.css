@@ -361,7 +361,8 @@ body {
   border-radius: 999px;
   opacity: 0;
   pointer-events: none;
-  transform: rotate(145deg);
+  /* The trail extends up-right behind a meteor moving down-left. */
+  transform: rotate(-28deg);
   transform-origin: left center;
   background: linear-gradient(
     90deg,
@@ -405,7 +406,7 @@ body {
   0%,
   7% {
     left: 112%;
-    top: var(--meteor-start-top, 4%);
+    top: var(--meteor-start-top, -8%);
     opacity: 0;
   }
 
@@ -414,43 +415,43 @@ body {
   }
 
   34% {
-    left: 42%;
-    top: var(--meteor-mid-top, 28%);
+    left: 48%;
+    top: var(--meteor-mid-top, 43%);
     opacity: 0.8;
   }
 
   43% {
-    left: -24%;
-    top: var(--meteor-end-top, 50%);
+    left: -18%;
+    top: var(--meteor-end-top, 100%);
     opacity: 0;
   }
 
   100% {
-    left: -24%;
-    top: var(--meteor-end-top, 50%);
+    left: -18%;
+    top: var(--meteor-end-top, 100%);
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  --meteor-start-top: 3%;
-  --meteor-mid-top: 28%;
-  --meteor-end-top: 48%;
+  --meteor-start-top: -8%;
+  --meteor-mid-top: 43%;
+  --meteor-end-top: 100%;
   animation-delay: -2s;
 }
 
 .shooting-star--two {
-  --meteor-start-top: 18%;
-  --meteor-mid-top: 43%;
-  --meteor-end-top: 63%;
+  --meteor-start-top: 10%;
+  --meteor-mid-top: 61%;
+  --meteor-end-top: 118%;
   width: clamp(125px, 12vw, 175px);
   animation-delay: -4.7s;
 }
 
 .shooting-star--three {
-  --meteor-start-top: 0%;
-  --meteor-mid-top: 20%;
-  --meteor-end-top: 39%;
+  --meteor-start-top: -24%;
+  --meteor-mid-top: 27%;
+  --meteor-end-top: 84%;
   width: clamp(105px, 10vw, 145px);
   opacity: 0;
   animation-delay: -7.35s;
@@ -460,6 +461,8 @@ body {
   .shooting-star {
     width: 128px;
     height: 1.2px;
+    /* Portrait screens need a steeper falling angle. */
+    transform: rotate(-60deg);
   }
 
   .shooting-star--two {
@@ -468,6 +471,55 @@ body {
 
   .shooting-star--three {
     width: 96px;
+  }
+
+  @keyframes shooting-star-sweep {
+    0%,
+    7% {
+      left: 115%;
+      top: var(--meteor-start-top, -6%);
+      opacity: 0;
+    }
+
+    12% {
+      opacity: 0.92;
+    }
+
+    34% {
+      left: 48%;
+      top: var(--meteor-mid-top, 50%);
+      opacity: 0.8;
+    }
+
+    43% {
+      left: -20%;
+      top: var(--meteor-end-top, 110%);
+      opacity: 0;
+    }
+
+    100% {
+      left: -20%;
+      top: var(--meteor-end-top, 110%);
+      opacity: 0;
+    }
+  }
+
+  .shooting-star--one {
+    --meteor-start-top: -6%;
+    --meteor-mid-top: 50%;
+    --meteor-end-top: 110%;
+  }
+
+  .shooting-star--two {
+    --meteor-start-top: 10%;
+    --meteor-mid-top: 68%;
+    --meteor-end-top: 128%;
+  }
+
+  .shooting-star--three {
+    --meteor-start-top: -28%;
+    --meteor-mid-top: 32%;
+    --meteor-end-top: 92%;
   }
 }
 
