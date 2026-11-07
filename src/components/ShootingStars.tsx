@@ -10,7 +10,7 @@ export function ShootingStars({ className = "" }: ShootingStarsProps) {
       aria-hidden="true"
       className={`shooting-stars-layer pointer-events-none absolute inset-0 overflow-hidden ${className}`}
     >
-      {/* Repeat the same fixed-size sky tile in every section. */}
+      {/* The same fixed-size star texture is used in every section. */}
       <div
         className="absolute inset-0 z-0 opacity-[0.88]"
         style={{
@@ -20,21 +20,9 @@ export function ShootingStars({ className = "" }: ShootingStarsProps) {
           backgroundSize: "1600px 900px",
         }}
       />
-    </div>
-  );
-}
 
-/**
- * One viewport-wide meteor layer stays active while the visitor scrolls.
- * Keeping it outside individual sections prevents the animation from
- * restarting or being missed when a section enters the viewport.
- */
-export function ShootingStarOverlay() {
-  return (
-    <div
-      aria-hidden="true"
-      className="shooting-stars-overlay pointer-events-none fixed inset-0 overflow-hidden"
-    >
+      {/* Meteors stay in the background stack: above the tiny stars,
+          but behind headings, cards, buttons and other section content. */}
       <span className="shooting-star shooting-star--one" />
       <span className="shooting-star shooting-star--two" />
       <span className="shooting-star shooting-star--three" />
