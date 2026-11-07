@@ -159,7 +159,7 @@ export function MarqueeSection() {
       className="
         relative
         isolate
-        starfield-section
+        
         overflow-hidden
         bg-[#0C0C0C]
         pb-20
