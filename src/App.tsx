@@ -6,6 +6,7 @@ import { ServicesSection } from "./sections/ServicesSection";
 import { ProjectsSection } from "./sections/ProjectsSection";
 import ExperienceSection from "./sections/ExperienceSection";
 import ContactSection from "./sections/ContactSection";
+import { ShootingStarOverlay } from "./components/ShootingStars";
 
 function Portfolio() {
   return (
@@ -18,6 +19,7 @@ function Portfolio() {
       <ProjectsSection />
       <ExperienceSection />
       <ContactSection />
+      <ShootingStarOverlay />
     </div>
   );
 }
