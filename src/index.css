@@ -339,39 +339,24 @@ body {
   isolation: isolate;
 }
 
-.shooting-starfield-dot {
-  position: absolute;
-  z-index: 0;
-  display: block;
-  border-radius: 50%;
-  background: rgba(245, 248, 252, 0.96);
-  box-shadow:
-    0 0 2px rgba(240, 245, 252, 0.72),
-    0 0 5px rgba(220, 230, 242, 0.28);
-  transform: scale(0.9);
-  animation: star-dot-twinkle 4.8s ease-in-out infinite alternate;
-  will-change: transform, filter;
-}
-
-@keyframes star-dot-twinkle {
-  from {
-    transform: scale(0.72);
-    filter: brightness(0.82);
-  }
-
-  to {
-    transform: scale(1.16);
-    filter: brightness(1.18);
-  }
+/* A single viewport-wide layer keeps meteors visible during page scrolling. */
+.shooting-stars-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 35;
+  overflow: hidden;
+  pointer-events: none;
+  isolation: isolate;
+  mix-blend-mode: screen;
 }
 
 .shooting-star {
   position: absolute;
-  z-index: 2;
-  top: 4%;
-  left: 108%;
+  z-index: 1;
+  top: var(--meteor-start-top, 4%);
+  left: 112%;
   display: block;
-  width: clamp(150px, 14vw, 210px);
+  width: clamp(150px, 14vw, 220px);
   height: 1.5px;
   border-radius: 999px;
   opacity: 0;
@@ -381,13 +366,13 @@ body {
   background: linear-gradient(
     90deg,
     rgba(255, 255, 255, 0.96) 0%,
-    rgba(239, 245, 255, 0.72) 10%,
-    rgba(218, 231, 250, 0.28) 42%,
-    rgba(218, 231, 250, 0.04) 82%,
+    rgba(239, 245, 255, 0.76) 12%,
+    rgba(218, 231, 250, 0.34) 48%,
+    rgba(218, 231, 250, 0.06) 84%,
     transparent 100%
   );
-  box-shadow: 0 0 5px rgba(224, 237, 255, 0.22);
-  animation: shooting-star-right-to-left 11s cubic-bezier(0.38, 0.04, 0.55, 0.96) infinite;
+  box-shadow: 0 0 7px rgba(224, 237, 255, 0.3);
+  animation: shooting-star-sweep 8s cubic-bezier(0.38, 0.04, 0.55, 0.96) infinite;
   will-change: left, top, opacity;
 }
 
@@ -398,7 +383,7 @@ body {
   border-radius: inherit;
   background: inherit;
   filter: blur(2px);
-  opacity: 0.4;
+  opacity: 0.5;
 }
 
 .shooting-star::after {
@@ -411,86 +396,82 @@ body {
   border-radius: 50%;
   background: #ffffff;
   box-shadow:
-    0 0 4px 1px rgba(247, 250, 255, 0.75),
-    0 0 10px 2px rgba(214, 230, 255, 0.34);
+    0 0 4px 1px rgba(247, 250, 255, 0.85),
+    0 0 11px 2px rgba(214, 230, 255, 0.45);
   transform: translate(-50%, -50%);
 }
 
-@keyframes shooting-star-right-to-left {
+@keyframes shooting-star-sweep {
   0%,
-  5% {
-    left: 108%;
-    top: 3%;
+  7% {
+    left: 112%;
+    top: var(--meteor-start-top, 4%);
     opacity: 0;
   }
 
-  8% {
-    opacity: 0.82;
+  12% {
+    opacity: 0.92;
   }
 
-  24% {
-    left: 32%;
-    top: 29%;
-    opacity: 0.72;
+  34% {
+    left: 42%;
+    top: var(--meteor-mid-top, 28%);
+    opacity: 0.8;
   }
 
-  30% {
-    left: -18%;
-    top: 48%;
+  43% {
+    left: -24%;
+    top: var(--meteor-end-top, 50%);
     opacity: 0;
   }
 
   100% {
-    left: -18%;
-    top: 48%;
+    left: -24%;
+    top: var(--meteor-end-top, 50%);
     opacity: 0;
   }
 }
 
 .shooting-star--one {
-  animation-delay: 0s;
+  --meteor-start-top: 3%;
+  --meteor-mid-top: 28%;
+  --meteor-end-top: 48%;
+  animation-delay: -2s;
+}
+
+.shooting-star--two {
+  --meteor-start-top: 18%;
+  --meteor-mid-top: 43%;
+  --meteor-end-top: 63%;
+  width: clamp(125px, 12vw, 175px);
+  animation-delay: -4.7s;
+}
+
+.shooting-star--three {
+  --meteor-start-top: 0%;
+  --meteor-mid-top: 20%;
+  --meteor-end-top: 39%;
+  width: clamp(105px, 10vw, 145px);
+  opacity: 0;
+  animation-delay: -7.35s;
 }
 
 @media (max-width: 640px) {
   .shooting-star {
-    width: 126px;
-    height: 1px;
+    width: 128px;
+    height: 1.2px;
   }
 
-  @keyframes shooting-star-right-to-left {
-    0%,
-    5% {
-      left: 112%;
-      top: 5%;
-      opacity: 0;
-    }
+  .shooting-star--two {
+    width: 112px;
+  }
 
-    8% {
-      opacity: 0.78;
-    }
-
-    24% {
-      left: 28%;
-      top: 27%;
-      opacity: 0.68;
-    }
-
-    30% {
-      left: -24%;
-      top: 44%;
-      opacity: 0;
-    }
-
-    100% {
-      left: -24%;
-      top: 44%;
-      opacity: 0;
-    }
+  .shooting-star--three {
+    width: 96px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  /* Keep a subtle stationary meteor visible when motion is disabled. */
   .shooting-star {
     display: block !important;
     animation: none !important;
@@ -498,5 +479,10 @@ body {
     top: 21% !important;
     opacity: 0.72 !important;
     transform: rotate(145deg) !important;
+  }
+
+  .shooting-star--two,
+  .shooting-star--three {
+    display: none !important;
   }
 }
