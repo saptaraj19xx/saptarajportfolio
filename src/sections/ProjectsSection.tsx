@@ -1053,7 +1053,7 @@ export function ProjectsSection() {
     <>
       <section
         id="work"
-        className="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 md:-mt-14 md:rounded-t-[60px] md:px-10"
+        className="relative z-10 isolate starfield-section -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 md:-mt-14 md:rounded-t-[60px] md:px-10"
       >
         <ShootingStars className="z-[5]" />
         <div className="relative z-10">
