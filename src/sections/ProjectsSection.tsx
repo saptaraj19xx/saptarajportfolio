@@ -6,6 +6,7 @@ import { FadeIn } from "../components/FadeIn";
 import { LiveProjectButton } from "../components/LiveProjectButton";
 import { ProjectVideo } from "../components/ProjectVideo";
 import { VideoCarousel } from "../components/VideoCarousel";
+import { ShootingStars } from "../components/ShootingStars";
 
 import { useProjects } from "../lib/projects";
 import type { Project } from "../data/projects";
@@ -1054,15 +1055,7 @@ export function ProjectsSection() {
         id="work"
         className="relative z-10 -mt-10 rounded-t-[40px] bg-[#0C0C0C] px-5 pb-24 pt-20 sm:-mt-12 sm:rounded-t-[50px] sm:px-8 md:-mt-14 md:rounded-t-[60px] md:px-10"
       >
-        {/* Shooting stars run behind the complete projects experience. */}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-          <span className="project-shooting-star project-shooting-star--one" />
-          <span className="project-shooting-star project-shooting-star--two" />
-          <span className="project-shooting-star project-shooting-star--three" />
-          <span className="project-shooting-star project-shooting-star--four" />
-          <span className="project-shooting-star project-shooting-star--five" />
-          <span className="project-shooting-star project-shooting-star--six" />
-        </div>
+        <ShootingStars className="z-[5]" />
         <div className="relative z-10">
         {/* ---------------------------------------------------------------- */}
         {/* Heading                                                           */}
