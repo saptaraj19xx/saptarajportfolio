@@ -67,21 +67,37 @@ const education = [
   },
 ];
 
+const certificationsUrl =
+  "https://www.linkedin.com/in/saptaraj-borthakur-94741b28b/details/certifications/";
+
 const certifications = [
-  { title: "Adobe Photoshop Certification" },
-  { title: "Graphic Design Basics — California Institute of the Arts" },
-  { title: "UX Design Workshop — Google UX Design Team" },
-  { title: "Video Editing Bootcamp — SkillShare" },
   {
-    title: "Generative AI Tools — Skill Nation (Live Workshop)",
+    title: "AI Tools Workshop",
+    issuer: "United Latino Students Association",
+    detail: "Issued Jul 2025 · Credential ID 46",
+  },
+  {
+    title: "Build Real World AI Applications with Gemini and Imagen Skill Badge",
+    issuer: "Google",
+    detail: "Issued Feb 2025",
+  },
+  {
+    title: "AI Foundations",
+    issuer: "OpenAI",
+    detail: "Issued Oct 2026 · Expires Apr 2027 · Credential ID 195802709",
+  },
+  {
+    title: "Applied AI Foundation",
+    issuer: "OpenAI",
+    detail: "Issued Oct 2026 · Expires Apr 2027",
+  },
+  {
+    title: "Generative AI Tools — Live Workshop",
+    issuer: "Skill Nation",
+    detail: "Completed 23 Jul 2025",
     proofUrl:
       "https://www.linkedin.com/feed/update/urn:li:activity:7353833123039600640/",
   },
-  {
-    title:
-      "Build Real-World AI Applications with Gemini and Imagen — Google Cloud",
-  },
-  { title: "AI for Beginners — HP LIFE" },
 ];
 
 const tools = [
@@ -273,7 +289,12 @@ export function ExperienceSection() {
                   key={item.title}
                   className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
                 >
-                  <span>{item.title}</span>
+                  <div className="min-w-0">
+                    <p>{item.title}</p>
+                    <p className="mt-1 text-xs text-[#71808C]">
+                      {item.issuer} · {item.detail}
+                    </p>
+                  </div>
                   {item.proofUrl ? (
                     <a
                       href={item.proofUrl}
@@ -288,6 +309,14 @@ export function ExperienceSection() {
                 </li>
               ))}
             </ul>
+            <a
+              href={certificationsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/70 transition-colors hover:text-[#D7E2EA]"
+            >
+              View all certifications on LinkedIn <ArrowUpRight size={13} />
+            </a>
           </div>
 
           <div>
