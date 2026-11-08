@@ -67,6 +67,9 @@ const education = [
   },
 ];
 
+const certificationProofUrl =
+  "https://www.linkedin.com/feed/update/urn:li:activity:7353833123039600640/";
+
 const certifications = [
   "Adobe Photoshop Certification",
   "Graphic Design Basics — California Institute of the Arts",
@@ -264,9 +267,18 @@ export function ExperienceSection() {
               {certifications.map((item) => (
                 <li
                   key={item}
-                  className="border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
+                  className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
                 >
-                  {item}
+                  <span>{item}</span>
+                  <a
+                    href={certificationProofUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex shrink-0 items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/65 transition-colors hover:text-[#D7E2EA]"
+                    aria-label={`View LinkedIn proof for ${item}`}
+                  >
+                    View proof <ArrowUpRight size={12} />
+                  </a>
                 </li>
               ))}
             </ul>
