@@ -67,17 +67,21 @@ const education = [
   },
 ];
 
-const certificationProofUrl =
-  "https://www.linkedin.com/feed/update/urn:li:activity:7353833123039600640/";
-
 const certifications = [
-  "Adobe Photoshop Certification",
-  "Graphic Design Basics — California Institute of the Arts",
-  "UX Design Workshop — Google UX Design Team",
-  "Video Editing Bootcamp — SkillShare",
-  "AI Tools Mastery Workshop — Clapingo",
-  "Build Real-World AI Applications with Gemini and Imagen — Google Cloud",
-  "AI for Beginners — HP LIFE",
+  { title: "Adobe Photoshop Certification" },
+  { title: "Graphic Design Basics — California Institute of the Arts" },
+  { title: "UX Design Workshop — Google UX Design Team" },
+  { title: "Video Editing Bootcamp — SkillShare" },
+  {
+    title: "Generative AI Tools — Skill Nation (Live Workshop)",
+    proofUrl:
+      "https://www.linkedin.com/feed/update/urn:li:activity:7353833123039600640/",
+  },
+  {
+    title:
+      "Build Real-World AI Applications with Gemini and Imagen — Google Cloud",
+  },
+  { title: "AI for Beginners — HP LIFE" },
 ];
 
 const tools = [
@@ -266,19 +270,21 @@ export function ExperienceSection() {
             <ul className="space-y-3">
               {certifications.map((item) => (
                 <li
-                  key={item}
+                  key={item.title}
                   className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
                 >
-                  <span>{item}</span>
-                  <a
-                    href={certificationProofUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex shrink-0 items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/65 transition-colors hover:text-[#D7E2EA]"
-                    aria-label={`View LinkedIn proof for ${item}`}
-                  >
-                    View proof <ArrowUpRight size={12} />
-                  </a>
+                  <span>{item.title}</span>
+                  {item.proofUrl ? (
+                    <a
+                      href={item.proofUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex shrink-0 items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/65 transition-colors hover:text-[#D7E2EA]"
+                      aria-label={`View proof for ${item.title}`}
+                    >
+                      View proof <ArrowUpRight size={12} />
+                    </a>
+                  ) : null}
                 </li>
               ))}
             </ul>
