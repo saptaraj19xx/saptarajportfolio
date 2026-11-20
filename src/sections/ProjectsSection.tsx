@@ -1029,12 +1029,17 @@ export function ProjectsSection() {
     isCategory(project, "Web Design"),
   );
 
+  const illustrationProjects = filteredProjects.filter((project) =>
+    isCategory(project, "Illustration"),
+  );
+
   const otherProjects = filteredProjects.filter((project) =>
     ![
       "Graphic Design",
       "Branding",
       "UI/UX",
       "Web Design",
+      "Illustration",
       "Video Editing",
     ].some((category) => isCategory(project, category)),
   );
@@ -1177,6 +1182,15 @@ export function ProjectsSection() {
                 projects={webDesignProjects}
                 title="Web Design"
                 subtitle="WEBSITES · LANDING PAGES · DIGITAL EXPERIENCES"
+                onOpen={setSelected}
+                layout="showcase"
+              />
+
+              {/* Illustration */}
+              <ProjectCategoryBlock
+                projects={illustrationProjects}
+                title="Illustration"
+                subtitle="DIGITAL ART · CHARACTER DESIGN · VISUAL EXPERIMENTS"
                 onOpen={setSelected}
                 layout="showcase"
               />
