@@ -325,7 +325,7 @@ const titleFromFilename = (path: string) => {
    GET PARENT FOLDER
 ------------------------------------------------------- */
 
-const getProjectRootFolder = (path: string) => {
+const getProjectFolderKey = (path: string) => {
   const projectsPrefix = "../assets/projects/";
   const relativePath = path.startsWith(projectsPrefix)
     ? path.slice(projectsPrefix.length)
@@ -334,9 +334,47 @@ const getProjectRootFolder = (path: string) => {
   const parts = relativePath.split("/");
 
   // A root-level image has no project folder.
-  // For nested files, always use the first folder below /projects.
-  // Example: Illustrations/3d/render.png -> Illustrations
-  return parts.length > 1 ? parts[0] : null;
+  if (parts.length < 2) return null;
+
+  // Illustration subfolders are separate portfolio projects:
+  // Illustrations/3d/render.png -> Illustrations/3d
+  if (parts[0].toLowerCase() === "illustrations") {
+    return parts.length > 2
+      ? `Illustrations/${parts[1]}`
+      : "Illustrations/General";
+  }
+
+  // Other project folders remain grouped at their first folder level.
+  return parts[0];
+};
+
+const illustrationFolderTitles: Record<string, string> = {
+  "3d": "3D Product Illustration",
+  abstract: "Abstract & Line Art",
+  car: "Automotive Illustration",
+  character: "Character Illustration",
+  cutout: "Paper Cutout Illustration",
+  "exterior and interior": "Interior & Exterior Illustration",
+  poster: "Illustration Posters",
+};
+
+const getIllustrationProjectConfig = (projectFolder: string) => {
+  if (!projectFolder.startsWith("Illustrations/")) return undefined;
+
+  const folderName = projectFolder.slice("Illustrations/".length);
+  const title =
+    illustrationFolderTitles[folderName.toLowerCase()] ??
+    `${folderName
+      .replace(/[_-]+/g, " ")
+      .replace(/\s+/g, " ")
+      .trim()
+      .replace(/\b\w/g, (letter) => letter.toUpperCase())} Illustrations`;
+
+  return {
+    name: title,
+    category: "Illustration",
+    description: `A curated selection of ${title.toLowerCase()} from the RE:FORM-independent illustration portfolio.`,
+  };
 };
 
 
@@ -367,8 +405,8 @@ Object.entries(files)
   .sort(([a], [b]) => {
     const aIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(a);
     const bIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(b);
-    const aProjectFolder = getProjectRootFolder(a);
-    const bProjectFolder = getProjectRootFolder(b);
+    const aProjectFolder = getProjectFolderKey(a);
+    const bProjectFolder = getProjectFolderKey(b);
 
     // Put a project's cover first, even when its other images are nested.
     if (
@@ -384,7 +422,7 @@ Object.entries(files)
   .forEach(([path, url]) => {
 
     const projectFolder =
-      getProjectRootFolder(path);
+      getProjectFolderKey(path);
 
 
     /* ---------------------------------------------------
@@ -447,7 +485,8 @@ Object.entries(files)
     --------------------------------------------------- */
 
     const config =
-      projectConfig[projectFolder];
+      projectConfig[projectFolder] ??
+      getIllustrationProjectConfig(projectFolder);
 
 
     /*
