@@ -237,6 +237,14 @@ const projectConfig: Record<
       "A curated collection of original digital illustrations, visual experiments and character or editorial artwork.",
   },
 
+  // Also accept the plural folder name used in the local project directory.
+  "Illustrations": {
+    name: "Illustration Collection",
+    category: "Illustration",
+    description:
+      "A curated collection of original digital illustrations, visual experiments and character or editorial artwork.",
+  },
+
   /* -----------------------------------------------------
      BRANDING
   ----------------------------------------------------- */
