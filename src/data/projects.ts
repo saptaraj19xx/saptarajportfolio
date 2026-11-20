@@ -82,6 +82,7 @@ const CATEGORIES = [
   "UI/UX",
   "Branding",
   "Web Design",
+  "Illustration",
   "Motion",
   "Creative Direction",
   "Social Media",
@@ -138,6 +139,17 @@ const categoryRules: Array<[string, string[]]> = [
       "logo",
       "commission",
       "fund",
+    ],
+  ],
+
+  [
+    "Illustration",
+    [
+      "illustration",
+      "illustrations",
+      "illustrator",
+      "digital art",
+      "character art",
     ],
   ],
 
@@ -213,6 +225,17 @@ const projectConfig: Record<
     description: string;
   }
 > = {
+
+  /* -----------------------------------------------------
+     ILLUSTRATION
+  ----------------------------------------------------- */
+
+  "Illustration": {
+    name: "Illustration Collection",
+    category: "Illustration",
+    description:
+      "A curated collection of original digital illustrations, visual experiments and character or editorial artwork.",
+  },
 
   /* -----------------------------------------------------
      BRANDING
