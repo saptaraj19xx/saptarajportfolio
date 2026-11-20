@@ -67,14 +67,37 @@ const education = [
   },
 ];
 
+const certificationsUrl =
+  "https://www.linkedin.com/in/saptaraj-borthakur-94741b28b/details/certifications/";
+
 const certifications = [
-  "Adobe Photoshop Certification",
-  "Graphic Design Basics — California Institute of the Arts",
-  "UX Design Workshop — Google UX Design Team",
-  "Video Editing Bootcamp — SkillShare",
-  "AI Tools Mastery Workshop — Clapingo",
-  "Build Real-World AI Applications with Gemini and Imagen — Google Cloud",
-  "AI for Beginners — HP LIFE",
+  {
+    title: "AI Tools Workshop",
+    issuer: "United Latino Students Association",
+    detail: "Issued Jul 2025 · Credential ID 46",
+  },
+  {
+    title: "Build Real World AI Applications with Gemini and Imagen Skill Badge",
+    issuer: "Google",
+    detail: "Issued Feb 2025",
+  },
+  {
+    title: "AI Foundations",
+    issuer: "OpenAI",
+    detail: "Issued Oct 2026 · Expires Apr 2027 · Credential ID 195802709",
+  },
+  {
+    title: "Applied AI Foundation",
+    issuer: "OpenAI",
+    detail: "Issued Oct 2026 · Expires Apr 2027",
+  },
+  {
+    title: "Generative AI Tools — Live Workshop",
+    issuer: "Skill Nation",
+    detail: "Completed 23 Jul 2025",
+    proofUrl:
+      "https://www.linkedin.com/feed/update/urn:li:activity:7353833123039600640/",
+  },
 ];
 
 const tools = [
@@ -263,13 +286,37 @@ export function ExperienceSection() {
             <ul className="space-y-3">
               {certifications.map((item) => (
                 <li
-                  key={item}
-                  className="border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
+                  key={item.title}
+                  className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-[#D7E2EA]/10 pb-3 text-sm font-medium leading-6 text-[#9AA7B0]"
                 >
-                  {item}
+                  <div className="min-w-0">
+                    <p>{item.title}</p>
+                    <p className="mt-1 text-xs text-[#71808C]">
+                      {item.issuer} · {item.detail}
+                    </p>
+                  </div>
+                  {item.proofUrl ? (
+                    <a
+                      href={item.proofUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="inline-flex shrink-0 items-center gap-1 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/65 transition-colors hover:text-[#D7E2EA]"
+                      aria-label={`View proof for ${item.title}`}
+                    >
+                      View proof <ArrowUpRight size={12} />
+                    </a>
+                  ) : null}
                 </li>
               ))}
             </ul>
+            <a
+              href={certificationsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-5 inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#D7E2EA]/70 transition-colors hover:text-[#D7E2EA]"
+            >
+              View all certifications on LinkedIn <ArrowUpRight size={13} />
+            </a>
           </div>
 
           <div>

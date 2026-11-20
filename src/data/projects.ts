@@ -82,6 +82,7 @@ const CATEGORIES = [
   "UI/UX",
   "Branding",
   "Web Design",
+  "Illustration",
   "Motion",
   "Creative Direction",
   "Social Media",
@@ -138,6 +139,17 @@ const categoryRules: Array<[string, string[]]> = [
       "logo",
       "commission",
       "fund",
+    ],
+  ],
+
+  [
+    "Illustration",
+    [
+      "illustration",
+      "illustrations",
+      "illustrator",
+      "digital art",
+      "character art",
     ],
   ],
 
@@ -215,6 +227,25 @@ const projectConfig: Record<
 > = {
 
   /* -----------------------------------------------------
+     ILLUSTRATION
+  ----------------------------------------------------- */
+
+  "Illustration": {
+    name: "Illustration Collection",
+    category: "Illustration",
+    description:
+      "A curated collection of original digital illustrations, visual experiments and character or editorial artwork.",
+  },
+
+  // Also accept the plural folder name used in the local project directory.
+  "Illustrations": {
+    name: "Illustration Collection",
+    category: "Illustration",
+    description:
+      "A curated collection of original digital illustrations, visual experiments and character or editorial artwork.",
+  },
+
+  /* -----------------------------------------------------
      BRANDING
   ----------------------------------------------------- */
 
@@ -264,9 +295,9 @@ const projectConfig: Record<
 
   "Website Hero": {
     name: "Website Hero Section",
-    category: "UI/UX",
+    category: "Web Design",
     description:
-      "Website hero interface concept focused on strong visual hierarchy and an engaging first impression.",
+      "Website hero design concept focused on strong visual hierarchy, clear messaging and an engaging first impression.",
   },
 };
 
