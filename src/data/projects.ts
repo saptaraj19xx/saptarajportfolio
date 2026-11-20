@@ -325,24 +325,18 @@ const titleFromFilename = (path: string) => {
    GET PARENT FOLDER
 ------------------------------------------------------- */
 
-const getParentFolder = (path: string) => {
-  const parts = path.split("/");
+const getProjectRootFolder = (path: string) => {
+  const projectsPrefix = "../assets/projects/";
+  const relativePath = path.startsWith(projectsPrefix)
+    ? path.slice(projectsPrefix.length)
+    : "";
 
-  /*
-   * Example:
-   *
-   * ../assets/projects/Brand Identity/01-logo-evolution.webp
-   *
-   * returns:
-   *
-   * Brand Identity
-   */
+  const parts = relativePath.split("/");
 
-  if (parts.length < 2) {
-    return null;
-  }
-
-  return parts[parts.length - 2];
+  // A root-level image has no project folder.
+  // For nested files, always use the first folder below /projects.
+  // Example: Illustrations/3d/render.png -> Illustrations
+  return parts.length > 1 ? parts[0] : null;
 };
 
 
@@ -373,11 +367,15 @@ Object.entries(files)
   .sort(([a], [b]) => {
     const aIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(a);
     const bIsCover = /(?:^|\/)cover(?:[-_ ]?\d*)?\.(?:webp|png|jpe?g)$/i.test(b);
-    const aFolder = a.slice(0, a.lastIndexOf("/"));
-    const bFolder = b.slice(0, b.lastIndexOf("/"));
+    const aProjectFolder = getProjectRootFolder(a);
+    const bProjectFolder = getProjectRootFolder(b);
 
-    // Put an explicitly named cover first inside a project's image folder.
-    if (aFolder === bFolder && aIsCover !== bIsCover) {
+    // Put a project's cover first, even when its other images are nested.
+    if (
+      aProjectFolder &&
+      aProjectFolder === bProjectFolder &&
+      aIsCover !== bIsCover
+    ) {
       return aIsCover ? -1 : 1;
     }
 
@@ -385,8 +383,8 @@ Object.entries(files)
   })
   .forEach(([path, url]) => {
 
-    const parentFolder =
-      getParentFolder(path);
+    const projectFolder =
+      getProjectRootFolder(path);
 
 
     /* ---------------------------------------------------
@@ -399,10 +397,7 @@ Object.entries(files)
        This remains an individual project.
     --------------------------------------------------- */
 
-    if (
-      !parentFolder ||
-      parentFolder === "projects"
-    ) {
+    if (!projectFolder) {
 
       const name =
         titleFromFilename(path);
@@ -452,7 +447,7 @@ Object.entries(files)
     --------------------------------------------------- */
 
     const config =
-      projectConfig[parentFolder];
+      projectConfig[projectFolder];
 
 
     /*
@@ -465,7 +460,7 @@ Object.entries(files)
 
 
     const existing =
-      groupedProjects.get(parentFolder);
+      groupedProjects.get(projectFolder);
 
 
     if (existing) {
@@ -475,7 +470,7 @@ Object.entries(files)
     } else {
 
       groupedProjects.set(
-        parentFolder,
+        projectFolder,
         {
           name:
             config.name,
