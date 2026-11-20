@@ -373,7 +373,7 @@ const getIllustrationProjectConfig = (projectFolder: string) => {
   return {
     name: title,
     category: "Illustration",
-    description: `A curated selection of ${title.toLowerCase()} from the RE:FORM-independent illustration portfolio.`,
+    description: `A curated collection of ${title.toLowerCase()} artwork by Saptaraj.`,
   };
 };
 
